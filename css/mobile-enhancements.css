@@ -1,0 +1,252 @@
+/* ========================================
+   MOBILE-SPECIFIC ENHANCEMENTS
+   Additional CSS for optimal mobile experience
+   ======================================== */
+
+/* Prevent text size adjustment on mobile */
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+/* Smooth scrolling for mobile */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Prevent horizontal scroll */
+body {
+    overflow-x: hidden;
+}
+
+/* Mobile-friendly images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Touch-friendly links and buttons */
+a,
+button,
+.btn {
+    -webkit-tap-highlight-color: rgba(255, 107, 53, 0.3);
+}
+
+/* Improve readability on mobile */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mobile Navigation Improvements */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background: var(--ocean-blue);
+        padding: 20px;
+        margin-top: 10px;
+        border-radius: 8px;
+    }
+
+    .navbar-nav .nav-item {
+        margin: 5px 0;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 12px 15px !important;
+        border-radius: 5px;
+    }
+
+    .navbar-nav .nav-item.active .nav-link,
+    .navbar-nav .nav-link:hover {
+        background: rgba(255, 107, 53, 0.2);
+    }
+}
+
+/* Mobile Hero Section */
+@media (max-width: 576px) {
+    .hero-wrap {
+        padding: 60px 0 !important;
+    }
+
+    .hero-wrap .overlay {
+        opacity: 0.6;
+    }
+
+    .breadcrumbs {
+        font-size: 12px;
+    }
+}
+
+/* Mobile Card Layouts */
+@media (max-width: 576px) {
+
+    .project-wrap,
+    .services-1,
+    .package-card,
+    .destination-detail,
+    .review-card,
+    .testimony-wrap {
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Mobile Table Responsiveness */
+@media (max-width: 576px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Mobile Form Improvements */
+@media (max-width: 576px) {
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .form-check-label {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+}
+
+/* Mobile Gallery Improvements */
+@media (max-width: 576px) {
+    .btn-group {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .gallery-caption {
+        font-size: 14px;
+    }
+}
+
+/* Mobile Footer */
+@media (max-width: 576px) {
+    .ftco-footer {
+        text-align: center;
+    }
+
+    .ftco-footer .border-left {
+        border-left: none !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 30px;
+    }
+
+    .ftco-footer-social {
+        justify-content: center;
+        margin-top: 20px;
+    }
+}
+
+/* Mobile Contact Section */
+@media (max-width: 576px) {
+    .block-9 .contact-form {
+        order: 2;
+        margin-top: 20px;
+    }
+
+    #map iframe {
+        min-height: 300px;
+    }
+}
+
+/* Mobile Spacing Utilities */
+@media (max-width: 576px) {
+
+    .pb-5,
+    .py-5 {
+        padding-bottom: 3rem !important;
+    }
+
+    .pt-5,
+    .py-5 {
+        padding-top: 3rem !important;
+    }
+
+    .mb-5,
+    .my-5 {
+        margin-bottom: 2rem !important;
+    }
+
+    .mt-5,
+    .my-5 {
+        margin-top: 2rem !important;
+    }
+}
+
+/* Loading Spinner Mobile */
+@media (max-width: 576px) {
+    #ftco-loader .circular {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Mobile Intro Section */
+@media (max-width: 576px) {
+    .ftco-intro .img {
+        padding: 40px 20px;
+    }
+
+    .ftco-intro h2 {
+        font-size: 22px;
+    }
+
+    .ftco-intro p {
+        font-size: 14px;
+    }
+}
+
+/* Accessibility - Larger touch targets */
+@media (max-width: 576px) {
+    .navbar-toggler {
+        padding: 10px;
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .ftco-footer-social li a {
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+    }
+}
+
+/* Prevent zoom on input focus (iOS) */
+@media (max-width: 576px) {
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
+}
+
+/* Mobile Optimized Animations */
+@media (max-width: 576px) {
+    .ftco-animate {
+        animation-duration: 0.5s !important;
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
