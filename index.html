@@ -6,8 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Arizonia&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -52,54 +53,72 @@
     </nav>
     <!-- END nav -->
 
-    <!-- Hero Section -->
-    <section class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');">
+
+
+    <!-- Hero Section with Video Background -->
+    <section class="hero-wrap js-fullheight">
+        <!-- Video Background -->
+        <video autoplay muted loop playsinline id="hero-video" class="hero-video">
+            <source src="https://cdn.pixabay.com/video/2022/09/21/132140-752588954_large.mp4" type="video/mp4">
+            <!-- Fallback for browsers that don't support video -->
+        </video>
+
+        <!-- Fallback Background Image -->
+        <div class="hero-video-fallback" style="background-image: url('images/bg_1.jpg');"></div>
+
         <div class="overlay"></div>
         <div class="container">
-            <div class="row no-gutters slider-text js-fullheight align-items-center" data-scrollax-parent="true">
-                <div class="col-md-7 ftco-animate">
-                    <span class="subheading">Welcome to Ceylon Sang</span>
+            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
+                data-scrollax-parent="true">
+                <div class="col-md-10 text-center ftco-animate">
+                    <span class="subheading"><br /> to Ceylon Sang</span>
                     <h1 class="mb-4">Discover the Pearl of the Indian Ocean</h1>
-                    <p class="caps">Experience the magic of Sri Lanka with expert local guidance</p>
-                    <p><a href="packages.html" class="btn btn-primary">Explore Our Tours</a> <a href="contact.html"
-                            class="btn btn-white">Contact Us</a></p>
-                </div>
-                <div class="col-md-5 ftco-animate">
-                    <div class="request-form ftco-animate">
-                        <h2>Plan Your Dream Trip</h2>
-                        <form action="#">
-                            <div class="form-group">
-                                <label for="">Destination</label>
-                                <input type="text" class="form-control" placeholder="Where to?">
-                            </div>
-                            <div class="d-flex">
-                                <div class="form-group mr-2">
-                                    <label for="">Check In</label>
-                                    <input type="text" class="form-control checkin_date" placeholder="Date">
+                    <p class="caps mb-4">Experience the magic of Sri Lanka with expert local guidance</p>
+
+                    <!-- Key Highlights -->
+                    <div class="row mt-5 mb-4">
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="hero-stat">
+                                <div class="icon-circle">
+                                    <span class="fa fa-map-marker"></span>
                                 </div>
-                                <div class="form-group ml-2">
-                                    <label for="">Check Out</label>
-                                    <input type="text" class="form-control checkout_date" placeholder="Date">
+                                <h3>50+</h3>
+                                <p>Destinations</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="hero-stat">
+                                <div class="icon-circle">
+                                    <span class="fa fa-users"></span>
                                 </div>
+                                <h3>5000+</h3>
+                                <p>Happy Travelers</p>
                             </div>
-                            <div class="form-group">
-                                <label for="">Guests</label>
-                                <div class="select-wrap one-third">
-                                    <div class="icon"><span class="fa fa-chevron-down"></span></div>
-                                    <select name="" id="" class="form-control" placeholder="Guest">
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                        <option value="">3</option>
-                                        <option value="">4</option>
-                                        <option value="">5+</option>
-                                    </select>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="hero-stat">
+                                <div class="icon-circle">
+                                    <span class="fa fa-star"></span>
                                 </div>
+                                <h3>4.9/5</h3>
+                                <p>Rating</p>
                             </div>
-                            <div class="form-group">
-                                <input type="submit" value="Get Quote" class="btn btn-primary py-3 px-5">
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="hero-stat">
+                                <div class="icon-circle">
+                                    <span class="fa fa-calendar"></span>
+                                </div>
+                                <h3>10+</h3>
+                                <p>Years Experience</p>
                             </div>
-                        </form>
+                        </div>
                     </div>
+
+                    <p class="mt-4">
+                        <a href="packages.html" class="btn btn-primary px-4 py-3 mr-2">Explore Our Tours</a>
+                        <a href="contact.html" class="btn btn-white px-4 py-3">Contact Us</a>
+                    </p>
                 </div>
             </div>
         </div>

@@ -75,6 +75,28 @@ body {
     .breadcrumbs {
         font-size: 12px;
     }
+
+    /* Hero Statistics Mobile */
+    .hero-stat {
+        padding: 15px 10px;
+    }
+
+    .hero-stat .icon-circle {
+        width: 60px;
+        height: 60px;
+    }
+
+    .hero-stat .icon-circle span {
+        font-size: 24px;
+    }
+
+    .hero-stat h3 {
+        font-size: 24px;
+    }
+
+    .hero-stat p {
+        font-size: 12px;
+    }
 }
 
 /* Mobile Card Layouts */

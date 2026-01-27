@@ -1,5 +1,23 @@
 /* Ceylon Sang Custom Styles - Ocean Blue & Sunset Orange Theme */
 
+/* Premium Typography */
+body {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.heading-section h2,
+.ftco-heading-2,
+.navbar-brand {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 700;
+}
+
 :root {
     --ocean-blue: #006994;
     --ocean-blue-dark: #004d6d;
@@ -13,11 +31,31 @@
 .btn-primary {
     background: var(--sunset-orange) !important;
     border-color: var(--sunset-orange) !important;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4) !important;
+    font-weight: 600 !important;
 }
 
 .btn-primary:hover {
     background: var(--sunset-orange-dark) !important;
     border-color: var(--sunset-orange-dark) !important;
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6) !important;
+    transform: translateY(-2px);
+}
+
+.btn-white {
+    background: #fff !important;
+    border: 2px solid #fff !important;
+    color: var(--ocean-blue) !important;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3) !important;
+    font-weight: 600 !important;
+}
+
+.btn-white:hover {
+    background: transparent !important;
+    border: 2px solid #fff !important;
+    color: #fff !important;
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.5) !important;
+    transform: translateY(-2px);
 }
 
 .ftco_navbar {
@@ -37,23 +75,130 @@
 }
 
 /* Hero Section */
+.hero-wrap {
+    position: relative;
+}
+
 .hero-wrap .subheading {
     color: var(--sunset-orange);
     font-size: 18px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 2px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 .hero-wrap h1 {
     font-size: 50px;
     color: #fff;
     font-weight: 700;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
 }
 
 .hero-wrap .caps {
     font-size: 18px;
     color: #fff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Hero Video Background */
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.hero-video-fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+    display: none;
+}
+
+/* Show fallback if video fails to load */
+.hero-wrap:not(:has(video)) .hero-video-fallback,
+.hero-video[poster]~.hero-video-fallback {
+    display: block;
+}
+
+/* Ensure content is above video */
+.hero-wrap .overlay {
+    position: relative;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.65) !important;
+}
+
+.hero-wrap .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Mobile: Use image instead of video for better performance */
+@media (max-width: 768px) {
+    .hero-video {
+        display: none;
+    }
+
+    .hero-video-fallback {
+        display: block !important;
+    }
+}
+
+/* Hero Statistics */
+.hero-stat {
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-stat .icon-circle {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid var(--sunset-orange);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    transition: all 0.3s ease;
+}
+
+.hero-stat .icon-circle span {
+    font-size: 32px;
+    color: var(--sunset-orange);
+}
+
+.hero-stat:hover .icon-circle {
+    background: var(--sunset-orange);
+    transform: scale(1.1);
+}
+
+.hero-stat:hover .icon-circle span {
+    color: #fff;
+}
+
+.hero-stat h3 {
+    color: #fff;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.hero-stat p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* Request Form */
