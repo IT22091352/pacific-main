@@ -494,9 +494,11 @@ h6,
 
 /* Star Rating */
 .star-rating {
-    direction: rtl;
-    display: inline-block;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
     font-size: 30px;
+    gap: 5px;
 }
 
 .star-rating input[type="radio"] {
@@ -832,4 +834,13 @@ h6,
     .gallery-item img {
         image-rendering: -webkit-optimize-contrast;
     }
+}
+
+/* Fix for long text overflow in review cards */
+.review-card p {
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
 }
