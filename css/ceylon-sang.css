@@ -381,17 +381,320 @@
     color: var(--sunset-orange);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* ========================================
+   MOBILE-FIRST RESPONSIVE STYLES
+   ======================================== */
+
+/* Mobile Devices (up to 576px) */
+@media (max-width: 576px) {
+
+    /* Typography */
     .hero-wrap h1 {
-        font-size: 32px;
+        font-size: 28px !important;
+        line-height: 1.3;
+    }
+
+    .hero-wrap .subheading {
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    .hero-wrap .caps {
+        font-size: 14px;
     }
 
     .heading-section h2 {
-        font-size: 28px;
+        font-size: 24px !important;
+        line-height: 1.3;
+    }
+
+    .heading-section .subheading {
+        font-size: 13px;
+    }
+
+    /* Navigation */
+    .navbar-brand {
+        font-size: 20px !important;
+    }
+
+    .navbar-brand span {
+        font-size: 11px !important;
+    }
+
+    /* Buttons - Touch Friendly */
+    .btn {
+        padding: 12px 24px !important;
+        font-size: 14px !important;
+        min-height: 44px;
+    }
+
+    .btn-block {
+        width: 100%;
+    }
+
+    /* Request Form */
+    .request-form {
+        padding: 20px;
+        margin: 15px;
+    }
+
+    .request-form h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .request-form .form-control {
+        font-size: 16px;
+        padding: 12px;
+        min-height: 44px;
+    }
+
+    /* Services Cards */
+    .services-1 {
+        margin-bottom: 20px;
+        padding: 30px 20px !important;
+    }
+
+    .services-1 .icon {
+        font-size: 50px !important;
+    }
+
+    .services-1 h3 {
+        font-size: 18px;
+    }
+
+    /* Package Cards */
+    .package-card {
+        margin-bottom: 20px;
     }
 
     .package-img {
-        height: 200px;
+        height: 220px;
+    }
+
+    .package-content {
+        padding: 20px;
+    }
+
+    .package-card h3 {
+        font-size: 20px;
+    }
+
+    .package-price {
+        font-size: 20px;
+    }
+
+    .package-card ul {
+        font-size: 14px;
+    }
+
+    /* Destination Cards */
+    .destination-detail-img {
+        height: 250px;
+    }
+
+    .destination-detail-content {
+        padding: 25px 20px;
+    }
+
+    .destination-detail h2 {
+        font-size: 24px;
+    }
+
+    .destination-highlight {
+        padding: 10px 15px;
+        font-size: 13px;
+        margin: 5px 5px 5px 0;
+    }
+
+    /* Gallery */
+    .gallery-item img {
+        height: 250px;
+    }
+
+    .filter-btn {
+        font-size: 12px !important;
+        padding: 8px 12px !important;
+        margin: 3px !important;
+    }
+
+    /* Contact Info */
+    .contact-info-item {
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+
+    .contact-info-item .icon {
+        font-size: 24px;
+    }
+
+    .contact-info-item h3 {
+        font-size: 16px;
+    }
+
+    /* Review Cards */
+    .review-card {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .review-rating {
+        font-size: 16px;
+    }
+
+    .review-card p {
+        font-size: 14px;
+    }
+
+    /* Forms */
+    .contact-form {
+        padding: 25px 20px !important;
+    }
+
+    .contact-form h3 {
+        font-size: 20px;
+    }
+
+    .form-control {
+        font-size: 16px !important;
+        padding: 12px !important;
+        min-height: 44px;
+    }
+
+    textarea.form-control {
+        min-height: 120px;
+    }
+
+    select.form-control {
+        min-height: 44px;
+    }
+
+    /* Star Rating - Touch Friendly */
+    .star-rating {
+        font-size: 36px;
+    }
+
+    .star-rating label {
+        padding: 0 8px;
+    }
+
+    /* Footer */
+    .ftco-footer-widget {
+        margin-bottom: 30px;
+    }
+
+    .ftco-footer .ftco-heading-2 {
+        font-size: 18px;
+    }
+
+    /* Spacing */
+    .ftco-section {
+        padding: 4em 0 !important;
+    }
+
+    /* Testimonials */
+    .testimony-wrap {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .user-img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Tablets (577px to 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+    .hero-wrap h1 {
+        font-size: 36px !important;
+    }
+
+    .heading-section h2 {
+        font-size: 30px !important;
+    }
+
+    .package-img {
+        height: 240px;
+    }
+
+    .destination-detail-img {
+        height: 300px;
+    }
+
+    .gallery-item img {
+        height: 280px;
+    }
+
+    .request-form {
+        padding: 25px;
+    }
+}
+
+/* Medium Devices (769px to 991px) */
+@media (min-width: 769px) and (max-width: 991px) {
+    .hero-wrap h1 {
+        font-size: 42px;
+    }
+
+    .heading-section h2 {
+        font-size: 34px;
+    }
+
+    .package-img {
+        height: 230px;
+    }
+
+    .destination-detail-img {
+        height: 350px;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Increase tap targets for touch devices */
+    .btn,
+    .nav-link,
+    .form-control,
+    select,
+    input[type="submit"],
+    button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Remove hover effects on touch devices */
+    .package-card:hover,
+    .gallery-item:hover img {
+        transform: none;
+    }
+
+    /* Show overlays by default on touch */
+    .gallery-overlay {
+        opacity: 0.8;
+    }
+}
+
+/* Landscape Mobile Devices */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero-wrap {
+        min-height: 400px !important;
+    }
+
+    .hero-wrap h1 {
+        font-size: 30px !important;
+    }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+
+    /* Optimize images for retina displays */
+    .package-img,
+    .destination-detail-img,
+    .gallery-item img {
+        image-rendering: -webkit-optimize-contrast;
     }
 }
