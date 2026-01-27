@@ -1,0 +1,397 @@
+/* Ceylon Sang Custom Styles - Ocean Blue & Sunset Orange Theme */
+
+:root {
+    --ocean-blue: #006994;
+    --ocean-blue-dark: #004d6d;
+    --ocean-blue-light: #0088c2;
+    --sunset-orange: #FF6B35;
+    --sunset-orange-dark: #e55a2b;
+    --sunset-orange-light: #ff8555;
+}
+
+/* Override primary colors */
+.btn-primary {
+    background: var(--sunset-orange) !important;
+    border-color: var(--sunset-orange) !important;
+}
+
+.btn-primary:hover {
+    background: var(--sunset-orange-dark) !important;
+    border-color: var(--sunset-orange-dark) !important;
+}
+
+.ftco_navbar {
+    background: var(--ocean-blue) !important;
+}
+
+.navbar-brand span {
+    color: var(--sunset-orange);
+}
+
+.nav-link:hover {
+    color: var(--sunset-orange) !important;
+}
+
+.nav-item.active .nav-link {
+    color: var(--sunset-orange) !important;
+}
+
+/* Hero Section */
+.hero-wrap .subheading {
+    color: var(--sunset-orange);
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.hero-wrap h1 {
+    font-size: 50px;
+    color: #fff;
+    font-weight: 700;
+}
+
+.hero-wrap .caps {
+    font-size: 18px;
+    color: #fff;
+}
+
+/* Request Form */
+.request-form {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.request-form h2 {
+    color: var(--ocean-blue);
+    margin-bottom: 20px;
+}
+
+/* Services Section */
+.services-section .subheading {
+    color: var(--sunset-orange);
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.services-1.color-1 {
+    background: linear-gradient(135deg, var(--ocean-blue) 0%, var(--ocean-blue-dark) 100%);
+}
+
+.services-1.color-2 {
+    background: linear-gradient(135deg, var(--sunset-orange) 0%, var(--sunset-orange-dark) 100%);
+}
+
+.services-1.color-3 {
+    background: linear-gradient(135deg, var(--ocean-blue-light) 0%, var(--ocean-blue) 100%);
+}
+
+.services-1.color-4 {
+    background: linear-gradient(135deg, var(--sunset-orange-light) 0%, var(--sunset-orange) 100%);
+}
+
+/* Destinations */
+.project-wrap .price {
+    background: var(--sunset-orange);
+}
+
+.project-wrap h3 a:hover {
+    color: var(--ocean-blue);
+}
+
+.project-wrap .location {
+    color: var(--ocean-blue);
+}
+
+/* Package Cards */
+.package-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 30px;
+}
+
+.package-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.package-img {
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+}
+
+.package-content {
+    padding: 25px;
+}
+
+.package-duration {
+    display: inline-block;
+    background: var(--ocean-blue);
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.package-card h3 {
+    color: var(--ocean-blue);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.package-card p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.package-price {
+    color: var(--sunset-orange);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+/* Testimonials */
+.testimony-wrap {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.testimony-wrap .name {
+    color: var(--ocean-blue);
+    font-weight: 700;
+    margin: 0;
+}
+
+.testimony-wrap .position {
+    color: var(--sunset-orange);
+    font-size: 14px;
+}
+
+.user-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid var(--sunset-orange);
+}
+
+/* Headings */
+.heading-section .subheading {
+    color: var(--sunset-orange);
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.heading-section h2 {
+    color: var(--ocean-blue);
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.heading-section-white h2 {
+    color: #fff !important;
+}
+
+/* Footer */
+.ftco-footer {
+    background: var(--ocean-blue-dark);
+}
+
+.ftco-footer .ftco-heading-2 {
+    color: #fff;
+}
+
+.ftco-footer a:hover {
+    color: var(--sunset-orange) !important;
+}
+
+.ftco-footer-social li a {
+    background: var(--sunset-orange);
+}
+
+.ftco-footer-social li a:hover {
+    background: var(--sunset-orange-dark);
+}
+
+/* Gallery Styles */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 105, 148, 0.9) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-caption {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Contact Form */
+.contact-form .form-control:focus {
+    border-color: var(--ocean-blue);
+    box-shadow: 0 0 0 0.2rem rgba(0, 105, 148, 0.25);
+}
+
+.contact-info-item {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--sunset-orange);
+}
+
+.contact-info-item .icon {
+    color: var(--ocean-blue);
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.contact-info-item h3 {
+    color: var(--ocean-blue);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* Review Section */
+.review-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.review-rating {
+    color: var(--sunset-orange);
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.review-author {
+    color: var(--ocean-blue);
+    font-weight: 700;
+    margin-top: 15px;
+}
+
+/* Destination Details */
+.destination-detail {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+.destination-detail-img {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+}
+
+.destination-detail-content {
+    padding: 40px;
+}
+
+.destination-detail h2 {
+    color: var(--ocean-blue);
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.destination-highlight {
+    background: var(--ocean-blue);
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* Star Rating */
+.star-rating {
+    direction: rtl;
+    display: inline-block;
+    font-size: 30px;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    color: #ddd;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: color 0.2s;
+}
+
+.star-rating label:hover,
+.star-rating label:hover~label,
+.star-rating input[type="radio"]:checked~label {
+    color: var(--sunset-orange);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-wrap h1 {
+        font-size: 32px;
+    }
+
+    .heading-section h2 {
+        font-size: 28px;
+    }
+
+    .package-img {
+        height: 200px;
+    }
+}
