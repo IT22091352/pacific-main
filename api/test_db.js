@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             status: "Error",
-            message: "Connection Failed",
+            message: "Connection Failed (V 1.1 Trigger Redeploy)",
             error_code: error.code,
             error_name: error.name,
             // This tells us EXACLTY who Vercel is trying to login as
