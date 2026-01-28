@@ -10,7 +10,7 @@ html {
 }
 
 body {
-    font-family: 'Source Sans 3', sans-serif !important;
+    font-family: 'Inter', sans-serif !important;
 }
 
 h1,
@@ -20,7 +20,7 @@ h4,
 h5,
 h6,
 .navbar-brand {
-    font-family: 'Libre Baskerville', serif !important;
+    font-family: 'Poppins', sans-serif !important;
 }
 
 /* Smooth scrolling for mobile */
