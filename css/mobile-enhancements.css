@@ -3,10 +3,24 @@
    Additional CSS for optimal mobile experience
    ======================================== */
 
-/* Prevent text size adjustment on mobile */
+/* Prevent text size adjustment on mobile & Enforce Fonts */
 html {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
+}
+
+body {
+    font-family: 'Source Sans 3', sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar-brand {
+    font-family: 'Libre Baskerville', serif !important;
 }
 
 /* Smooth scrolling for mobile */
