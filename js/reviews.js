@@ -1,6 +1,6 @@
 // Ceylon Sang - Reviews Management
 // Re-using the same API base URL
-const REVIEW_API_URL = 'http://localhost:5000/api';
+const REVIEW_API_URL = '/api';
 
 document.addEventListener('DOMContentLoaded', function () {
     initReviews();
