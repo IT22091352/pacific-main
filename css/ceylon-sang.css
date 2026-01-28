@@ -82,6 +82,17 @@ h6,
     color: var(--sunset-orange) !important;
 }
 
+/* Fix Login Button Visibility on Scroll */
+.ftco-navbar-light.scrolled .btn-outline-light {
+    color: var(--sunset-orange) !important;
+    border-color: var(--sunset-orange) !important;
+}
+
+.ftco-navbar-light.scrolled .btn-outline-light:hover {
+    background: var(--sunset-orange) !important;
+    color: #fff !important;
+}
+
 /* Hero Section */
 .hero-wrap {
     position: relative;
