@@ -37,7 +37,7 @@ I have already made the necessary code changes for Vercel compatibility:
 3.  **Environment Variables**:
     *   Expand the **"Environment Variables"** section.
     *   Add the following variables (copy values from your `backend/.env` file):
-        *   `MONGODB_URI`: `mongodb+srv://ceylonsang:ceylonsang@cluster0.uaa4e5k.mongodb.net/ceylon_sang_db`
+        *   `MONGODB_URI`: `mongodb+srv://ceylon_sang:VMBj9oSPVHHHDm3j@cluster0.uaa4e5k.mongodb.net/ceylon_sang_db`
         *   `JWT_SECRET`: `ceylon_sang_super_secret_jwt_key_2026_change_in_production`
         *   `NODE_ENV`: `production`
 

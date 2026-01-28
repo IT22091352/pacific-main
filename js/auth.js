@@ -1,6 +1,9 @@
 // Ceylon Sang - Authentication JavaScript
 // API Base URL
-const API_URL = '/api';
+// Determine API URL based on environment
+const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:5000/api'
+    : '/api';
 
 // DOM Elements
 let loginModal, signupModal, loginForm, signupForm, authButton, userNameDisplay;
