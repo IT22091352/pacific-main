@@ -81,16 +81,19 @@ async function loadReviews() {
             // Add styling class back
             container.addClass('carousel-testimony');
 
+            // Only loop if we have more items than the max displayed (3)
+            const shouldLoop = result.data.length > 3;
+
             // Re-initialize Owl Carousel with Autoplay
             container.owlCarousel({
                 center: true,
-                loop: true,
+                loop: shouldLoop,
                 items: 1,
                 margin: 30,
                 stagePadding: 0,
                 nav: false,
                 navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
-                autoplay: true,
+                autoplay: shouldLoop, // Only autoplay if looping/enough items
                 autoplayTimeout: 2000,
                 autoplayHoverPause: true,
                 responsive: {
