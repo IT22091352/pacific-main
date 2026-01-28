@@ -4,37 +4,41 @@ module.exports = async (req, res) => {
     const uri = process.env.MONGODB_URI;
 
     if (!uri) {
-        return res.status(500).json({ error: "MONGODB_URI is undefined in Vercel Environment Variables" });
+        return res.status(500).json({ error: "MONGODB_URI is undefined" });
+    }
+
+    // Debug: Extract Username to verify what Vercel is seeing
+    let debug_user = "Unknown";
+    try {
+        // uri format: mongodb+srv://USER:PASS@...
+        const parts = uri.split('//');
+        if (parts.length > 1) {
+            const credentials = parts[1].split('@')[0];
+            debug_user = credentials.split(':')[0]; // Get the username part
+        }
+    } catch (e) {
+        debug_user = "Parse Error";
     }
 
     try {
-        // If already connected
         if (mongoose.connection.readyState === 1) {
-            return res.status(200).json({
-                status: "Success",
-                message: "Already Connected to MongoDB",
-                host: mongoose.connection.host
-            });
+            return res.status(200).json({ status: "Success", message: "Already Connected" });
         }
-
-        // Attempt connection
         await mongoose.connect(uri);
-
         res.status(200).json({
             status: "Success",
-            message: "New Connection Established",
-            host: mongoose.connection.host
+            message: "Connected Successfully!",
+            connected_as: debug_user
         });
-
     } catch (error) {
-        console.error("DB Connection Error:", error);
         res.status(500).json({
             status: "Error",
-            message: "Failed to connect to MongoDB",
+            message: "Connection Failed",
+            error_code: error.code,
             error_name: error.name,
-            error_details: error.message,
-            // Common codes: 8000 (Auth), MongooseServerSelectionError (Network/IP)
-            suggestion: error.name === 'MongooseServerSelectionError' ? 'Check IP Whitelist (0.0.0.0/0)' : 'Check Password/URI'
+            // This tells us EXACLTY who Vercel is trying to login as
+            VERCEL_IS_USING_USERNAME: debug_user,
+            suggestion: "If the username above is wrong, redeploy. If right, check password."
         });
     }
 };
