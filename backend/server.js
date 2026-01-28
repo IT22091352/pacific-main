@@ -25,20 +25,8 @@ app.use(helmet());
 // Enable CORS
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps, curl, or file://)
-        if (!origin) return callback(null, true);
-
-        // Allow localhost and 127.0.0.1 with any port
-        if (origin.match(/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/)) {
-            return callback(null, true);
-        }
-
-        // Allow the configured frontend URL
-        if (origin === process.env.FRONTEND_URL) {
-            return callback(null, true);
-        }
-
-        callback(new Error('Not allowed by CORS'));
+        console.log('Request Origin:', origin); // Debug log
+        return callback(null, true); // Allow all for debugging
     },
     credentials: true
 }));
