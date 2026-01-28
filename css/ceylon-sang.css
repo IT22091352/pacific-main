@@ -6,7 +6,7 @@ html {
 }
 
 body {
-    font-family: 'Poppins', sans-serif !important;
+    font-family: 'Source Sans 3', sans-serif !important;
     overflow-x: hidden;
     /* Prevent horizontal scroll */
     -webkit-overflow-scrolling: touch;
@@ -22,7 +22,7 @@ h6,
 .heading-section h2,
 .ftco-heading-2,
 .navbar-brand {
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Libre Baskerville', serif !important;
     font-weight: 700;
 }
 
