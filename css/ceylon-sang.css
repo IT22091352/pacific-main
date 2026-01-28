@@ -1,8 +1,16 @@
 /* Ceylon Sang Custom Styles - Ocean Blue & Sunset Orange Theme */
 
 /* Premium Typography */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Poppins', sans-serif !important;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+    -webkit-overflow-scrolling: touch;
+    /* Momentum scrolling for iOS */
 }
 
 h1,
