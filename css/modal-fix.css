@@ -351,6 +351,15 @@
 
     .tab-link {
         font-size: 13px;
-        padding: 8px 16px;
+        padding: 6px 14px;
+        /* Reduced padding for better fit */
+    }
+
+    .popup-tabs {
+        overflow-x: visible;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        /* Reduced gap */
     }
 }
