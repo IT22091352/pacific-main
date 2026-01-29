@@ -40,7 +40,7 @@ $(document).ready(function () {
     // Ensure all items are visible on load
     $('.destination-detail').css('display', 'flex');
 
-    // 2. Destination Modal Logic
+    // 2. Destination Modal Logic (Premium Tabbed Version)
 
     // Open Modal
     $(document).on('click', '.destination-detail', function (e) {
@@ -52,18 +52,17 @@ $(document).ready(function () {
         if (popupData.length > 0) {
             // Get content from hidden divs
             var overview = popupData.find('.popup-overview').html();
-            var attractions = popupData.find('.popup-attractions').html(); // Expects <li> items
-            var activities = popupData.find('.popup-activities').html(); // Expects <li> items
-            var info = popupData.find('.popup-info').html(); // Expects formatted rows
+            var attractions = popupData.find('.popup-attractions').html();
+            var activities = popupData.find('.popup-activities').html();
+            var info = popupData.find('.popup-info').html();
 
             // Get Card Data for Header
             var title = $(this).find('h2').text();
             var category = $(this).attr('data-category');
             var bgImage = $(this).find('.destination-detail-img').css('background-image');
-            // Clean up url("...") to just path
             bgImage = bgImage.replace(/^url\(['"](.+)['"]\)/, '$1');
 
-            // Construct Modal Body HTML
+            // Construct Modal Body HTML with Tabs
             var modalHtml = `
                 <div class="popup-header">
                     <img src="${bgImage}" class="popup-header-img" alt="${title}">
@@ -73,36 +72,57 @@ $(document).ready(function () {
                     </div>
                 </div>
                 
+                <div class="popup-nav-container">
+                    <ul class="popup-tabs">
+                        <li class="tab-link active" data-tab="overview">Overview</li>
+                        <li class="tab-link" data-tab="attractions">Attractions</li>
+                        <li class="tab-link" data-tab="activities">Activities</li>
+                        <li class="tab-link" data-tab="info">Practical Info</li>
+                    </ul>
+                </div>
+                
                 <div class="popup-content-grid">
-                    <div class="popup-main-col">
-                        <div class="popup-section">
-                            <h3>Overview</h3>
-                            ${overview ? overview : '<p>Experience the beauty of this amazing destination.</p>'}
-                        </div>
+                    <div class="tab-content" style="width: 100%;">
                         
-                        <div class="popup-section">
-                            <h3>Attractions</h3>
-                            <ul class="attraction-list">
-                                ${attractions ? attractions : '<li class="attraction-item">Scenic Views</li><li class="attraction-item">Historical Sites</li>'}
-                            </ul>
+                        <!-- Overview Tab -->
+                        <div id="overview" class="tab-pane active">
+                            <div class="popup-section">
+                                <h3>Overview</h3>
+                                ${overview ? overview : '<p>Experience the beauty of this amazing destination.</p>'}
+                            </div>
                         </div>
-                        
-                        <div class="popup-section">
-                            <h3>Activities</h3>
-                            <ul class="activity-list">
-                                ${activities ? activities : '<li class="activity-item">Photography</li><li class="activity-item">Sightseeing</li>'}
-                            </ul>
+
+                        <!-- Attractions Tab -->
+                        <div id="attractions" class="tab-pane">
+                            <div class="popup-section">
+                                <h3>Attractions</h3>
+                                <ul class="attraction-list">
+                                    ${attractions ? attractions : '<li class="attraction-item">Scenic Views</li><li class="attraction-item">Historical Sites</li>'}
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="popup-side-col">
-                        <div class="popup-info-box">
-                            <h3>Practical Info</h3>
-                            ${info ? info : `
-                                <div class="info-row"><i class="fa fa-clock-o"></i><div><strong>Duration</strong><span>1 Day</span></div></div>
-                                <div class="info-row"><i class="fa fa-sun-o"></i><div><strong>Best Time</strong><span>Year Round</span></div></div>
-                            `}
+
+                        <!-- Activities Tab -->
+                        <div id="activities" class="tab-pane">
+                            <div class="popup-section">
+                                <h3>Activities</h3>
+                                <ul class="activity-list">
+                                    ${activities ? activities : '<li class="activity-item">Photography</li><li class="activity-item">Sightseeing</li>'}
+                                </ul>
+                            </div>
                         </div>
+
+                        <!-- Practical Info Tab -->
+                        <div id="info" class="tab-pane">
+                            <div class="popup-info-box">
+                                <h3>Practical Info</h3>
+                                ${info ? info : `
+                                    <div class="info-row"><i class="fa fa-clock-o"></i><div><strong>Duration</strong><span>1 Day</span></div></div>
+                                    <div class="info-row"><i class="fa fa-sun-o"></i><div><strong>Best Time</strong><span>Year Round</span></div></div>
+                                `}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             `;
@@ -112,10 +132,26 @@ $(document).ready(function () {
 
             // Show Modal
             $('#destinationModal').addClass('show').css('display', 'block');
-            $('body').css('overflow', 'hidden'); // Prevent scrolling
+            $('body').css('overflow', 'hidden');
         } else {
             console.log('No detailed data found for this destination.');
         }
+    });
+
+    // Tab Switching Logic (Delegate event for dynamic content)
+    $(document).on('click', '.tab-link', function () {
+        var tabId = $(this).attr('data-tab');
+
+        // Update Tabs
+        $('.tab-link').removeClass('active');
+        $(this).addClass('active');
+
+        // Update Content
+        $('.tab-pane').removeClass('active');
+        $('#' + tabId).addClass('active');
+
+        // Optional: Smooth scroll to top of content if needed on mobile
+        // $('.modal-content').animate({ scrollTop: 0 }, 300);
     });
 
     // Close Modal
@@ -123,7 +159,7 @@ $(document).ready(function () {
         $('#destinationModal').removeClass('show');
         setTimeout(function () {
             $('#destinationModal').css('display', 'none');
-            $('body').css('overflow', 'auto'); // Enable scrolling
+            $('body').css('overflow', 'auto');
         }, 300);
     });
 
