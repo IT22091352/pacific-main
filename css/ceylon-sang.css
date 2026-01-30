@@ -53,103 +53,112 @@ h6,
     --font-body-scale: 1.0;
 }
 
-/* Navbar Container - User's Code */
+/* Navbar Container - Restructured for Flat Luxury Design */
 .navbar {
-    /* Premium Navbar Refinement */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.6rem 2rem;
-    /* Reduced height, sleeker profile */
+    padding: 0px 4%;
+    /* Full width with comfortable side padding */
+    height: 90px;
+    /* Taller, more commanding height */
 
     position: fixed;
-    width: 92%;
-    /* Slightly wider for modern feel */
-    top: 15px;
-    /* Minimal top offset */
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 12px;
-    /* Softer radius */
+    width: 100%;
+    /* Full width */
+    top: 0;
+    left: 0;
+    transform: none;
+    border-radius: 0;
+    /* Remove rounded corners */
 
-    /* Premium Glass/Shadow */
-    /* Premium Glass/Shadow */
-    background: rgba(255, 255, 255, 0.95);
-    /* White glass */
-    /* High opacity for contrast with blur */
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-
-    /* Soft, diffused shadow for depth */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--sunset-orange);
+    /* Flat Professional Design */
+    background: #ffffff;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+    /* Subtle, premium shadow */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
 
     z-index: 1000;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    /* Premium easing */
+}
+
+/* Scrolled State (Sticky) - slightly compressed */
+.navbar.scrolled {
+    height: 70px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Full Width Container override */
+.navbar .container-fluid {
+    width: 100%;
+    padding: 0;
+    max-width: 1400px;
+    /* Max constraint for ultra-wide screens */
+    margin: 0 auto;
 }
 
 /* Destination Filter Bar - Sticky */
 .sticky-filter-bar {
     position: sticky;
     z-index: 900;
-    /* Top set dynamically via JS */
-    background: rgba(255, 255, 255, 0.9);
-    /* Lighter/Cleaner */
+    top: 90px;
+    /* Matches navbar height */
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    padding: 8px 0;
-    /* Reduced vertical padding */
+    padding: 10px 0;
     margin-left: -15px;
     margin-right: -15px;
     width: calc(100% + 30px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
-    /* Softer border */
-    transition: box-shadow 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: top 0.4s ease;
+}
+
+.navbar.scrolled~.container .sticky-filter-bar,
+.navbar.scrolled~.premium-experience-grid .sticky-filter-bar {
+    top: 70px;
+    /* Matches scrolled navbar height */
 }
 
 /* Premium Pill Filters */
 .filter-btn {
     border-radius: 50px !important;
     padding: 8px 24px !important;
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
-    letter-spacing: 0.3px;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
     margin: 0 5px;
-    border: 1px solid #eee;
+    border: 1px solid #e2e8f0;
     background: transparent;
-    color: #555;
+    color: #4a5568;
     transition: all 0.3s ease;
 }
 
 .filter-btn:hover {
     background: #f8f9fa;
+    border-color: #cbd5e0;
+    color: #2d3748;
     transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .filter-btn.active {
     background: var(--ocean-blue) !important;
     color: white !important;
     border-color: var(--ocean-blue) !important;
-    box-shadow: 0 4px 12px rgba(0, 105, 148, 0.3);
-    /* Blue shadow */
+    box-shadow: 0 4px 12px rgba(0, 105, 148, 0.2);
 }
 
-.sticky-filter-bar.is-pinned {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-/* Scrollable container for mobile - UPDATED to Single Row Ultra-Compact */
+/* Scrollable container for mobile */
 @media (max-width: 768px) {
     .sticky-filter-bar {
         overflow-x: auto;
         white-space: nowrap;
-        padding: 5px 0;
-        display: flex;
-        justify-content: center;
-        /* Center the group */
-        scrollbar-width: none;
-        -ms-overflow-style: none;
+        padding: 10px 15px;
+        /* Add horizontal padding */
+        display: block;
+        /* Default block for scroll */
+        -webkit-overflow-scrolling: touch;
     }
 
     .sticky-filter-bar::-webkit-scrollbar {
@@ -157,162 +166,157 @@ h6,
     }
 
     .sticky-filter-bar .col-md-12 {
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: center;
-        /* Pack them together */
-        gap: 2px;
-        /* Tiny gap */
-        padding: 0 2px;
+        display: inline-flex;
+        /* Inline flex for row behavior */
+        padding: 0;
         width: auto;
-        /* Let it fit content */
-        min-width: auto;
     }
 
     /* Ultra-Compact buttons for mobile */
     .filter-btn {
-        padding: 5px 8px !important;
-        /* Even smaller padding */
-        font-size: 0.7rem;
-        /* Smaller font */
-        margin: 0 !important;
-        flex: 0 1 auto;
-        /* Allow shrinking if needed */
-        border-width: 1px;
-        /* Ensure border doesn't take too much space */
+        padding: 6px 16px !important;
+        font-size: 0.8rem;
+        margin-right: 8px !important;
+        margin-left: 0 !important;
+        white-space: nowrap;
     }
 }
-
-/* Scrolled state override if needed, or user's code handles it via fixed pos */
 
 /* Logo Section */
 .logo-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .logo {
-    font-size: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
     font-weight: 700;
-    color: var(--ocean-blue-dark) !important;
+    color: #1a202c !important;
+    /* Deep Charcol/Navy */
     line-height: 1;
-    margin-bottom: 0;
-    /* Reset */
+    margin-bottom: 2px;
+    letter-spacing: -0.02em;
 }
 
 .tagline {
-    font-size: 0.6rem;
-    letter-spacing: 1px;
-    color: var(--ocean-blue-dark) !important;
-    opacity: 0.9;
-    font-weight: 600;
-    margin-top: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 2.5px;
+    color: #718096 !important;
+    /* Muted Slate */
+    font-weight: 500;
+    text-transform: uppercase;
 }
 
 /* Navigation Links */
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 20px;
+    gap: 32px;
+    /* Generous spacing */
     margin-bottom: 0;
-    /* Reset */
+    padding: 0;
 }
 
 .nav-links li a {
     text-decoration: none;
-    color: var(--ocean-blue-dark) !important;
-    font-size: 0.9rem;
-    /* Slightly smaller, more elegant */
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    /* Premium spacing */
+    font-family: 'Inter', sans-serif;
+    color: #2d3748 !important;
+    /* Dark Slate */
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
     position: relative;
-    padding: 8px 0;
-    transition: all 0.3s ease;
-    opacity: 1;
+    padding: 30px 0;
+    /* Increase clickable area vertically */
+    transition: color 0.3s ease;
 }
 
 .nav-links li a:hover {
     color: var(--ocean-blue) !important;
-    transform: translateY(-1px);
 }
 
-/* Specific Highlight */
-.nav-links li a.highlight,
-.nav-links li a.active {
-    color: var(--primary-orange) !important;
-}
-
-/* The "Sliding Underline" Hover Effect */
+/* Subtle Underline Animation */
 .nav-links li a::after {
     content: '';
     position: absolute;
     width: 0;
     height: 2px;
-    bottom: 0;
+    bottom: 25px;
+    /* Positioned correctly within padding */
     left: 0;
-    background-color: var(--primary-orange);
-    transition: width 0.3s ease;
+    background-color: var(--sunset-orange);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.nav-links li a:hover::after {
+.nav-links li a:hover::after,
+.nav-links li a.active::after {
     width: 100%;
+}
+
+.nav-links li a.active {
+    color: #1a202c !important;
+    font-weight: 600;
 }
 
 /* User Actions */
 .user-actions {
     display: flex;
     align-items: center;
+    gap: 20px;
+    min-width: 180px;
+    /* Ensure space */
+    justify-content: flex-end;
+}
+
+.login-link,
+.logout-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #4a5568 !important;
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+.login-link:hover,
+.logout-link:hover {
+    color: var(--ocean-blue) !important;
+}
+
+.user-profile-minimal {
+    display: flex;
+    align-items: center;
     gap: 15px;
 }
 
-.user-greeting {
-    font-size: 0.8rem;
-    text-align: right;
-    line-height: 1.2;
-    color: var(--ocean-blue-dark) !important;
-    display: block;
-    /* Ensure visibility */
+.welcome-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: #718096;
 }
 
-.user-greeting strong {
-    color: var(--ocean-blue-dark) !important;
-}
-
-.btn-logout,
-.btn-login-nav {
-    padding: 8px 20px;
-    background: transparent;
-    border: 2px solid var(--primary-orange);
-    color: var(--primary-orange);
-    border-radius: 50px;
-    /* Pill shape */
+.welcome-text strong {
+    color: #2d3748;
     font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    /* Consistency */
-}
-
-.btn-logout:hover,
-.btn-login-nav:hover {
-    background: var(--primary-orange);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
 }
 
 /* Burger Menu */
 .burger {
     display: none;
     cursor: pointer;
+    z-index: 1100;
 }
 
 .burger div {
-    width: 25px;
-    height: 3px;
-    background-color: var(--ocean-blue-dark);
-    /* Dark for visibility */
+    width: 24px;
+    height: 2px;
+    background-color: #2d3748;
     margin: 5px;
     transition: all 0.3s ease;
 }
@@ -320,109 +324,209 @@ h6,
 /* Mobile Responsive Adjustments */
 @media screen and (max-width: 1024px) {
     .nav-links {
-        width: 60%;
+        gap: 20px;
     }
 }
 
-@media screen and (max-width: 768px) {
-    body {
-        overflow-x: hidden;
-    }
-
+@media screen and (max-width: 991px) {
     .navbar {
-        width: 95%;
-        /* Wider on mobile */
-        padding: 1rem 1.5rem;
+        height: 70px;
+        padding: 0 20px;
     }
 
+    .filter-btn {
+        padding: 6px 16px !important;
+    }
+
+    /* Floating Card Mobile Menu - Editorial Style */
     .nav-links {
         position: absolute;
-        right: 0px;
-        height: 92vh;
-        top: 8vh;
-        background-color: rgba(0, 105, 148, 0.9);
-        /* Semi-transparent Ocean Blue */
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
+        top: 80px;
+        /* Below navbar with slight gap */
+        right: 16px;
+        /* Inset from right */
+        left: 16px;
+        /* Inset from left */
+        width: auto;
+        /* Fluid width within insights */
+        height: auto;
+        /* Fit content */
+        background-color: #ffffff;
+
         display: flex;
         flex-direction: column;
-        align-items: center;
-        width: 75%;
-        /* Wider menu for better UX */
-        transform: translateX(100%);
-        transition: transform 0.5s ease-in;
-        padding-top: 50px;
-        box-shadow: -2px 0 20px rgba(0, 0, 0, 0.2);
-        border-left: 1px solid var(--glass-border);
+        align-items: flex-start;
+        /* Left align for editorial feel */
+        justify-content: flex-start;
+
+        padding: 20px 0;
+        border-radius: 12px;
+        /* Soft rounding */
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        /* Soft premium shadow */
+        border: 1px solid rgba(0, 0, 0, 0.04);
+
+        transform: translateY(-20px);
+        /* Start slightly up */
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        /* Smooth easing */
+
+        z-index: 1050;
     }
 
     .nav-links li {
-        opacity: 0;
-        margin-bottom: 25px;
-        /* More vertical space */
+        width: 100%;
+        margin: 0;
+        opacity: 1;
+        /* Always visible inside container */
+        transform: none;
+        /* No individual staggering needed for simple card */
     }
 
     .nav-links li a {
-        font-size: 1.2rem !important;
-        /* Larger text */
-        width: 100%;
-        text-align: center;
+        font-family: 'Inter', sans-serif !important;
+        /* Clean sans-serif */
+        font-size: 1.1rem !important;
+        /* Readable but not huge */
+        color: #1a202c !important;
+        /* Dark Navy */
+        padding: 12px 24px;
+        /* Comfortable touch target */
         display: block;
+        font-weight: 500;
+        text-align: left;
+        border-radius: 8px;
+        margin: 0 8px;
+        /* Inset hover effect */
+        transition: background 0.2s ease, color 0.2s ease;
     }
 
-    .nav-links li {
-        opacity: 0;
+    .nav-links li a:active,
+    .nav-links li a:hover {
+        background-color: #f7fafc;
+        /* Subtle grey hover */
+        color: var(--ocean-blue) !important;
+    }
+
+    .nav-links li a::after {
+        display: none;
+    }
+
+    /* Active State for Menu */
+    .nav-active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .user-actions {
+        display: none;
     }
 
     .burger {
         display: block;
     }
-
-    .user-greeting {
-        display: none !important;
-    }
 }
 
+/* Nav Active - Floating Menu */
 .nav-active {
-    transform: translateX(0%);
+    transform: translateY(0);
 }
 
-/* Mobile Menu Overlay */
+.nav-active li {
+    /* No stagger needed for simple list, handled by parent reveal */
+}
+
+/* Overlay - still needed for click-out logic but visually subtle/invisible if desired. 
+   User asked primarily for floating card feel. We can make overlay transparent or subtle.
+*/
+/* Mobile Menu Overlay - Invisible but captures clicks */
 .nav-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    /* Below navbar (1000) */
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    z-index: 1040;
+    /* Below menu (1050) but above content */
+    display: none;
 }
 
 .overlay-active {
-    opacity: 1;
-    visibility: visible;
+    display: block;
 }
 
-/* Ensure Nav Links are above overlay */
-@media screen and (max-width: 768px) {
-    .nav-links {
-        z-index: 1002;
-        /* Above overlay */
-    }
-
-    .burger {
-        z-index: 1002;
-        /* Ensure burger is clickable */
-        position: relative;
-    }
+/* Burger Animation Toggles */
+.toggle .line1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+    background-color: #1a202c;
 }
 
-.no-scroll {
-    overflow: hidden;
+.toggle .line2 {
+    opacity: 0;
+}
+
+.toggle .line3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+    background-color: #1a202c;
+}
+
+/* Mobile User Info */
+/* Mobile User Info */
+.mobile-user-info {
+    display: none;
+    /* Hidden by default (Desktop) */
+}
+
+@media screen and (max-width: 991px) {
+
+    /* Hide Desktop User Actions strictly */
+    .user-actions {
+        display: none !important;
+    }
+
+    .mobile-user-info {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 20px 24px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        background-color: #f8fafc;
+        /* Slight bg distinction */
+        border-radius: 12px 12px 0 0;
+    }
+
+    .mobile-user-icon {
+        font-size: 2.5rem;
+        color: var(--ocean-blue);
+        margin-right: 15px;
+    }
+
+    .mobile-user-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mobile-user-info .greeting {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.85rem;
+        color: #718096;
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .mobile-user-info .username {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.25rem;
+        color: var(--ocean-blue-dark);
+        font-weight: 700;
+        display: block;
+        line-height: 1.2;
+    }
 }
 
 @keyframes navLinkFade {

@@ -173,22 +173,70 @@ function handleLogout() {
 }
 
 // Update UI for logged in user
-// Update UI for logged in user
 function updateUIForLoggedInUser(userName) {
     if (authButton) {
+        // Desktop Navbar: Minimal Icons Only
         authButton.innerHTML = `
-            <span class="user-greeting">Welcome, <br><strong>${userName}</strong></span>
-            <button onclick="handleLogout()" class="btn-logout">Logout</button>
+            <div class="user-profile-minimal">
+                <a href="#" class="login-link" title="Profile (Coming Soon)">
+                    <span class="fa fa-user-circle-o" style="font-size: 1.2rem;"></span>
+                </a>
+                <a onclick="handleLogout()" class="logout-link ml-3" title="Logout">
+                    <span class="fa fa-sign-out" style="font-size: 1.2rem;"></span>
+                </a>
+            </div>
         `;
     }
+
+    // Inject into Mobile Menu
+    addMobileUserInfo(userName);
 }
 
 // Update UI for logged out user
 function updateUIForLoggedOutUser() {
     if (authButton) {
         authButton.innerHTML = `
-            <button onclick="openModal('loginModal')" class="btn-login-nav">Login</button>
+            <a onclick="openModal('loginModal')" class="login-link">
+                <span class="fa fa-user-circle-o mr-1"></span> Login
+            </a>
         `;
+    }
+
+    // Remove Mobile User Info if exists
+    removeMobileUserInfo();
+}
+
+// Helper: Add User Info to Mobile Menu
+function addMobileUserInfo(userName) {
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks) {
+        // Check if already exists
+        let userInfo = document.querySelector('.mobile-user-info-item');
+        if (!userInfo) {
+            userInfo = document.createElement('li');
+            userInfo.className = 'mobile-user-info-item';
+
+            // Insert at the TOP
+            navLinks.insertBefore(userInfo, navLinks.firstChild);
+        }
+
+        userInfo.innerHTML = `
+            <div class="mobile-user-info">
+                <span class="fa fa-user-circle mobile-user-icon"></span>
+                <div class="mobile-user-details">
+                    <span class="greeting">Welcome back,</span>
+                    <span class="username">${userName}</span>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// Helper: Remove User Info from Mobile Menu
+function removeMobileUserInfo() {
+    const userInfo = document.querySelector('.mobile-user-info-item');
+    if (userInfo) {
+        userInfo.remove();
     }
 }
 

@@ -140,8 +140,10 @@
 		$(window).scroll(function () {
 			var $w = $(this),
 				st = $w.scrollTop(),
-				navbar = $('.ceylon-premium-navbar'),
+				st = $w.scrollTop(),
+				navbar = $('#navbar'),
 				sd = $('.js-scroll-wrap');
+			sd = $('.js-scroll-wrap');
 
 			if (st > 150) {
 				if (!navbar.hasClass('scrolled')) {
@@ -299,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		// Toggle Nav
 		nav.classList.toggle('nav-active');
 		overlay.classList.toggle('overlay-active');
-		body.classList.toggle('no-scroll'); // Prevent background scrolling
+		// Scroll lock removed for lightweight feel
 
 		// Animate Links
 		navLinks.forEach((link, index) => {
