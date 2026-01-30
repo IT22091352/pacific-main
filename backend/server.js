@@ -15,6 +15,9 @@ connectDB();
 
 const app = express();
 
+// Trust proxy (Required for Vercel/Heroku/Cloud platforms)
+app.set('trust proxy', 1);
+
 // Body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
