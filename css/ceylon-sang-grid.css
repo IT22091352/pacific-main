@@ -1,0 +1,189 @@
+/* Premium Experience Grid - Masonry Layout */
+.premium-experience-grid {
+    padding: 4rem 0;
+    background: #fff;
+}
+
+.premium-grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 350px);
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.experience-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.experience-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.experience-item.large {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.experience-item.wide {
+    grid-column: span 2;
+}
+
+.experience-item.tall {
+    grid-row: span 2;
+}
+
+.experience-bg {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s ease;
+}
+
+.experience-item:hover .experience-bg {
+    transform: scale(1.05);
+    /* Zoom effect */
+}
+
+/* Gradient Overlay */
+.experience-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.experience-item:hover .experience-overlay {
+    opacity: 1;
+}
+
+/* Typography & Badge */
+.experience-badge {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.experience-item:hover .experience-badge {
+    background: var(--sunset-orange);
+    border-color: var(--sunset-orange);
+    transform: rotate(360deg);
+}
+
+.experience-content h3 {
+    color: #fff;
+    font-family: var(--font-heading-family);
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(10px);
+    transition: transform 0.4s ease;
+}
+
+.experience-content p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-bottom: 0;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease 0.1s;
+}
+
+.experience-item:hover .experience-content h3,
+.experience-item:hover .experience-content p {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .premium-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+
+    .experience-item.large {
+        grid-column: span 2;
+        grid-row: span 1;
+        height: 350px;
+    }
+
+    .experience-item {
+        height: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    .premium-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .experience-item {
+        grid-column: span 1;
+        height: 220px;
+    }
+
+    .experience-item.large {
+        grid-column: span 2;
+        height: 300px;
+    }
+
+    /* Mobile Typography Adjustments */
+    .experience-content h3 {
+        font-size: 1.2rem;
+        transform: translateY(0);
+    }
+
+    .experience-content p {
+        font-size: 0.75rem;
+        display: none;
+        /* Hide description to save space/cleaner look */
+    }
+
+    .experience-badge {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+        top: 10px;
+        right: 10px;
+    }
+
+    .experience-overlay {
+        padding: 1rem;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0) 100%);
+        opacity: 1;
+        /* Always visible */
+    }
+}

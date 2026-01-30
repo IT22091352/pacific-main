@@ -288,23 +288,51 @@ document.addEventListener('DOMContentLoaded', () => {
 	const burger = document.querySelector('.burger');
 	const nav = document.querySelector('.nav-links');
 	const navLinks = document.querySelectorAll('.nav-links li');
+	const body = document.body;
+
+	// Create overlay element
+	const overlay = document.createElement('div');
+	overlay.classList.add('nav-overlay');
+	body.appendChild(overlay);
+
+	function toggleMenu() {
+		// Toggle Nav
+		nav.classList.toggle('nav-active');
+		overlay.classList.toggle('overlay-active');
+		body.classList.toggle('no-scroll'); // Prevent background scrolling
+
+		// Animate Links
+		navLinks.forEach((link, index) => {
+			if (link.style.animation) {
+				link.style.animation = '';
+			} else {
+				link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+			}
+		});
+
+		// Burger Animation
+		burger.classList.toggle('toggle');
+	}
 
 	if (burger) {
-		burger.addEventListener('click', () => {
-			// Toggle Nav
-			nav.classList.toggle('nav-active');
-
-			// Animate Links
-			navLinks.forEach((link, index) => {
-				if (link.style.animation) {
-					link.style.animation = '';
-				} else {
-					link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
-				}
-			});
-
-			// Burger Animation
-			burger.classList.toggle('toggle');
-		});
+		burger.addEventListener('click', toggleMenu);
 	}
+
+	// Close menu when clicking overlay
+	overlay.addEventListener('click', () => {
+		if (nav.classList.contains('nav-active')) {
+			toggleMenu();
+		}
+	});
+
+	// Close menu when clicking a link
+	navLinks.forEach(link => {
+		link.addEventListener('click', () => {
+			// Only close if it's an anchor link on the same page, or just always close for better UX?
+			// Usually mobile menus close on selection.
+			if (nav.classList.contains('nav-active')) {
+				toggleMenu();
+			}
+		});
+	});
 });

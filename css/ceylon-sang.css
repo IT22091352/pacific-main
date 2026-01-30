@@ -73,14 +73,16 @@ h6,
     /* Softer radius */
 
     /* Premium Glass/Shadow */
-    background: var(--ocean-blue);
+    /* Premium Glass/Shadow */
+    background: rgba(255, 255, 255, 0.95);
+    /* White glass */
     /* High opacity for contrast with blur */
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
 
     /* Soft, diffused shadow for depth */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--sunset-orange);
 
     z-index: 1000;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -137,19 +139,47 @@ h6,
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
-/* Scrollable container for mobile */
+/* Scrollable container for mobile - UPDATED to Single Row Ultra-Compact */
 @media (max-width: 768px) {
     .sticky-filter-bar {
         overflow-x: auto;
         white-space: nowrap;
-        padding: 10px 0;
-        -webkit-overflow-scrolling: touch;
+        padding: 5px 0;
+        display: flex;
+        justify-content: center;
+        /* Center the group */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .sticky-filter-bar::-webkit-scrollbar {
+        display: none;
     }
 
     .sticky-filter-bar .col-md-12 {
-        display: inline-block;
-        min-width: max-content;
-        padding: 0 15px;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        /* Pack them together */
+        gap: 2px;
+        /* Tiny gap */
+        padding: 0 2px;
+        width: auto;
+        /* Let it fit content */
+        min-width: auto;
+    }
+
+    /* Ultra-Compact buttons for mobile */
+    .filter-btn {
+        padding: 5px 8px !important;
+        /* Even smaller padding */
+        font-size: 0.7rem;
+        /* Smaller font */
+        margin: 0 !important;
+        flex: 0 1 auto;
+        /* Allow shrinking if needed */
+        border-width: 1px;
+        /* Ensure border doesn't take too much space */
     }
 }
 
@@ -164,7 +194,7 @@ h6,
 .logo {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--white) !important;
+    color: var(--ocean-blue-dark) !important;
     line-height: 1;
     margin-bottom: 0;
     /* Reset */
@@ -173,7 +203,7 @@ h6,
 .tagline {
     font-size: 0.6rem;
     letter-spacing: 1px;
-    color: var(--white) !important;
+    color: var(--ocean-blue-dark) !important;
     opacity: 0.9;
     font-weight: 600;
     margin-top: 4px;
@@ -190,20 +220,20 @@ h6,
 
 .nav-links li a {
     text-decoration: none;
-    color: var(--white) !important;
+    color: var(--ocean-blue-dark) !important;
     font-size: 0.9rem;
     /* Slightly smaller, more elegant */
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.5px;
     /* Premium spacing */
     position: relative;
     padding: 8px 0;
     transition: all 0.3s ease;
-    opacity: 0.9;
+    opacity: 1;
 }
 
 .nav-links li a:hover {
-    opacity: 1;
+    color: var(--ocean-blue) !important;
     transform: translateY(-1px);
 }
 
@@ -240,13 +270,13 @@ h6,
     font-size: 0.8rem;
     text-align: right;
     line-height: 1.2;
-    color: var(--white) !important;
+    color: var(--ocean-blue-dark) !important;
     display: block;
     /* Ensure visibility */
 }
 
 .user-greeting strong {
-    color: var(--white) !important;
+    color: var(--ocean-blue-dark) !important;
 }
 
 .btn-logout,
@@ -281,7 +311,8 @@ h6,
 .burger div {
     width: 25px;
     height: 3px;
-    background-color: var(--white);
+    background-color: var(--ocean-blue-dark);
+    /* Dark for visibility */
     margin: 5px;
     transition: all 0.3s ease;
 }
@@ -309,17 +340,34 @@ h6,
         right: 0px;
         height: 92vh;
         top: 8vh;
-        background-color: var(--ocean-blue);
+        background-color: rgba(0, 105, 148, 0.9);
+        /* Semi-transparent Ocean Blue */
         backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 50%;
+        width: 75%;
+        /* Wider menu for better UX */
         transform: translateX(100%);
         transition: transform 0.5s ease-in;
         padding-top: 50px;
-        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: -2px 0 20px rgba(0, 0, 0, 0.2);
         border-left: 1px solid var(--glass-border);
+    }
+
+    .nav-links li {
+        opacity: 0;
+        margin-bottom: 25px;
+        /* More vertical space */
+    }
+
+    .nav-links li a {
+        font-size: 1.2rem !important;
+        /* Larger text */
+        width: 100%;
+        text-align: center;
+        display: block;
     }
 
     .nav-links li {
@@ -337,6 +385,44 @@ h6,
 
 .nav-active {
     transform: translateX(0%);
+}
+
+/* Mobile Menu Overlay */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    /* Below navbar (1000) */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.overlay-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ensure Nav Links are above overlay */
+@media screen and (max-width: 768px) {
+    .nav-links {
+        z-index: 1002;
+        /* Above overlay */
+    }
+
+    .burger {
+        z-index: 1002;
+        /* Ensure burger is clickable */
+        position: relative;
+    }
+}
+
+.no-scroll {
+    overflow: hidden;
 }
 
 @keyframes navLinkFade {

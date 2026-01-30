@@ -8,6 +8,14 @@ $(document).ready(function () {
         $('.filter-btn').removeClass('active btn-primary').addClass('btn-outline-primary');
         $(this).removeClass('btn-outline-primary').addClass('btn-primary active');
 
+        // Scroll to top of grid nicely (Target static header instead of sticky bar)
+        var $staticTarget = $('.sticky-filter-bar').prev('.row'); // The header row
+        var targetOffset = $staticTarget.length ? $staticTarget.offset().top - 100 : 0;
+
+        $('html, body').animate({
+            scrollTop: targetOffset
+        }, 500);
+
         // Filter destination items
         if (filterValue === 'all') {
             $('.destination-detail').each(function () {
@@ -39,6 +47,22 @@ $(document).ready(function () {
 
     // Ensure all items are visible on load
     $('.destination-detail').css('display', 'flex');
+
+    // Check URL Hash for Filter on Load
+    var hash = window.location.hash.substring(1); // Remove '#'
+    if (hash) {
+        var $targetBtn = $('.filter-btn[data-filter="' + hash + '"]');
+        if ($targetBtn.length) {
+            // Slight delay to ensure DOM is ready and visual transition
+            setTimeout(function () {
+                $targetBtn.trigger('click');
+                // Optional: Scroll to filter bar
+                $('html, body').animate({
+                    scrollTop: $(".sticky-filter-bar").offset().top - 100
+                }, 800);
+            }, 500);
+        }
+    }
 
     // ---------------------------------------------------------
     // 3. Dynamic Sticky Navbar Logic
