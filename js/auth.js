@@ -178,7 +178,8 @@ function updateUIForLoggedInUser(userName) {
         // Desktop Navbar: Minimal Icons Only
         authButton.innerHTML = `
             <div class="user-profile-minimal">
-                <a href="#" class="login-link" title="Profile (Coming Soon)">
+                <span class="welcome-text mr-3">Welcome, <strong>${userName}</strong></span>
+                <a href="profile.html" onclick="window.location.href='profile.html'; return false;" class="profile-nav-link" title="My Profile">
                     <span class="fa fa-user-circle-o" style="font-size: 1.2rem;"></span>
                 </a>
                 <a onclick="handleLogout()" class="logout-link ml-3" title="Logout">
@@ -221,13 +222,15 @@ function addMobileUserInfo(userName) {
         }
 
         userInfo.innerHTML = `
-            <div class="mobile-user-info">
-                <span class="fa fa-user-circle mobile-user-icon"></span>
-                <div class="mobile-user-details">
-                    <span class="greeting">Welcome back,</span>
-                    <span class="username">${userName}</span>
+            <a href="profile.html" style="text-decoration: none; display: block;">
+                <div class="mobile-user-info">
+                    <span class="fa fa-user-circle mobile-user-icon"></span>
+                    <div class="mobile-user-details">
+                        <span class="greeting">Welcome back,</span>
+                        <span class="username">${userName}</span>
+                    </div>
                 </div>
-            </div>
+            </a>
         `;
     }
 }

@@ -272,7 +272,8 @@ h6,
 }
 
 .login-link,
-.logout-link {
+.logout-link,
+.profile-nav-link {
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     font-weight: 500;
@@ -285,7 +286,8 @@ h6,
 }
 
 .login-link:hover,
-.logout-link:hover {
+.logout-link:hover,
+.profile-nav-link:hover {
     color: var(--ocean-blue) !important;
 }
 
