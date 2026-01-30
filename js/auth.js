@@ -205,10 +205,15 @@ function updateUIForLoggedOutUser() {
 
     // Remove Mobile User Info if exists
     removeMobileUserInfo();
+
+    // Add Mobile Login Link
+    addMobileLoginLink();
 }
 
 // Helper: Add User Info to Mobile Menu
 function addMobileUserInfo(userName) {
+    removeMobileLoginLink(); // Ensure login link is gone
+
     const navLinks = document.querySelector('.nav-links');
     if (navLinks) {
         // Check if already exists
@@ -240,6 +245,42 @@ function removeMobileUserInfo() {
     const userInfo = document.querySelector('.mobile-user-info-item');
     if (userInfo) {
         userInfo.remove();
+    }
+}
+
+// Helper: Add Login Link to Mobile Menu
+function addMobileLoginLink() {
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks) {
+        // Check if already exists
+        let loginItem = document.querySelector('.mobile-login-link-item');
+        if (!loginItem) {
+            loginItem = document.createElement('li');
+            loginItem.className = 'mobile-login-link-item';
+
+            // Insert at the TOP
+            navLinks.insertBefore(loginItem, navLinks.firstChild);
+        }
+
+        loginItem.innerHTML = `
+            <a href="#" onclick="openModal('loginModal'); return false;" style="text-decoration: none; display: block;">
+                <div class="mobile-user-info">
+                    <span class="fa fa-sign-in mobile-user-icon"></span>
+                    <div class="mobile-user-details">
+                        <span class="greeting">Welcome to Ceylon Sang</span>
+                        <span class="username">Login or Sign Up</span>
+                    </div>
+                </div>
+            </a>
+        `;
+    }
+}
+
+// Helper: Remove Login Link from Mobile Menu
+function removeMobileLoginLink() {
+    const loginItem = document.querySelector('.mobile-login-link-item');
+    if (loginItem) {
+        loginItem.remove();
     }
 }
 
