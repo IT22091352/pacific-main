@@ -44,10 +44,10 @@ h6,
     --sunset-orange-light: #ff8555;
 
     /* Font Variables */
-    --font-body-family: 'Poppins', 'Assistant', sans-serif;
-    /* Added Poppins */
-    --font-heading-family: 'Poppins', 'Fraunces', serif;
-    /* Added Poppins */
+    --font-heading-family: 'Playfair Display', serif;
+    /* Premium Serif */
+    --font-body-family: 'Poppins', sans-serif;
+    /* Clean Sans-serif */
     --font-body-style: normal;
     --font-body-weight: 400;
     --font-body-scale: 1.0;
