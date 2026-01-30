@@ -363,3 +363,107 @@
         /* Reduced gap */
     }
 }
+
+/* -------------------------------- */
+/* Gallery Styles                   */
+/* -------------------------------- */
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    display: block;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-overlay i {
+    color: #fff;
+    font-size: 24px;
+    transform: translateY(10px);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay i {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+}
+
+/* -------------------------------- */
+/* Sticky Filter Bar (Destinations) */
+/* -------------------------------- */
+
+.sticky-filter-bar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 70px;
+    /* Clears fixed navbar */
+    z-index: 900;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 15px 0;
+    margin-left: -15px;
+    margin-right: -15px;
+    width: calc(100% + 30px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.sticky-filter-bar .col-md-12 {
+    padding: 0;
+}
+
+.sticky-filter-bar .filter-btn {
+    margin: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.sticky-filter-bar .filter-btn.active {
+    box-shadow: 0 4px 10px rgba(241, 93, 48, 0.2);
+}

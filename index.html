@@ -31,28 +31,32 @@
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">Ceylon Sang<span>Sri Lankan Tour Guide</span></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="oi oi-menu"></span> Menu
-            </button>
+    <!-- Premium Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="logo-container">
+            <h1 class="logo">Ceylon Sang</h1>
+            <span class="tagline">SRI LANKAN TOUR GUIDE</span>
+        </div>
 
-            <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-                    <li class="nav-item"><a href="destinations.html" class="nav-link">Destinations</a></li>
-                    <li class="nav-item"><a href="packages.html" class="nav-link">Tour Packages</a></li>
-                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
-                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-                    <li class="nav-item" id="authButton">
-                        <button onclick="openModal('loginModal')" class="btn btn-sm btn-outline-light">Login</button>
-                    </li>
-                </ul>
-            </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="packages.html">Tour Packages</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <div id="authButton" class="user-actions">
+            <!-- Auth content injected by JS -->
+            <button onclick="openModal('loginModal')" class="btn-login-nav">Login</button>
+        </div>
+
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
         </div>
     </nav>
     <!-- END nav -->

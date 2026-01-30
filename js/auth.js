@@ -173,11 +173,12 @@ function handleLogout() {
 }
 
 // Update UI for logged in user
+// Update UI for logged in user
 function updateUIForLoggedInUser(userName) {
     if (authButton) {
         authButton.innerHTML = `
-            <span class="mr-2">Welcome, ${userName}</span>
-            <button onclick="handleLogout()" class="btn btn-sm btn-outline-light">Logout</button>
+            <span class="user-greeting">Welcome, <br><strong>${userName}</strong></span>
+            <button onclick="handleLogout()" class="btn-logout">Logout</button>
         `;
     }
 }
@@ -186,7 +187,7 @@ function updateUIForLoggedInUser(userName) {
 function updateUIForLoggedOutUser() {
     if (authButton) {
         authButton.innerHTML = `
-            <button onclick="openModal('loginModal')" class="btn btn-sm btn-outline-light">Login</button>
+            <button onclick="openModal('loginModal')" class="btn-login-nav">Login</button>
         `;
     }
 }

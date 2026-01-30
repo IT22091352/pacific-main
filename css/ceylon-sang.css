@@ -27,26 +27,340 @@ h4,
 h5,
 h6,
 .heading-section h2,
-.ftco-heading-2,
-.navbar-brand {
-    font-family: 'Fraunces', serif !important;
-    font-weight: 700;
-}
-
+/* Brand Colors - Merging User's Vars */
 :root {
+    --primary-orange: #FF6600;
+    /* User's orange */
+    --text-black: #222;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.3);
+
     --ocean-blue: #006994;
     --ocean-blue-dark: #004d6d;
     --ocean-blue-light: #0088c2;
     --sunset-orange: #FF6B35;
+    /* Keep for other elements if needed, or map to primary-orange */
     --sunset-orange-dark: #e55a2b;
     --sunset-orange-light: #ff8555;
 
     /* Font Variables */
-    --font-body-family: 'Assistant', sans-serif;
-    --font-heading-family: 'Fraunces', serif;
+    --font-body-family: 'Poppins', 'Assistant', sans-serif;
+    /* Added Poppins */
+    --font-heading-family: 'Poppins', 'Fraunces', serif;
+    /* Added Poppins */
     --font-body-style: normal;
     --font-body-weight: 400;
     --font-body-scale: 1.0;
+}
+
+/* Navbar Container - User's Code */
+.navbar {
+    /* Premium Navbar Refinement */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 2rem;
+    /* Reduced height, sleeker profile */
+
+    position: fixed;
+    width: 92%;
+    /* Slightly wider for modern feel */
+    top: 15px;
+    /* Minimal top offset */
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 12px;
+    /* Softer radius */
+
+    /* Premium Glass/Shadow */
+    background: var(--ocean-blue);
+    /* High opacity for contrast with blur */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    /* Soft, diffused shadow for depth */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    z-index: 1000;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    /* Premium easing */
+}
+
+/* Destination Filter Bar - Sticky */
+.sticky-filter-bar {
+    position: sticky;
+    z-index: 900;
+    /* Top set dynamically via JS */
+    background: rgba(255, 255, 255, 0.9);
+    /* Lighter/Cleaner */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 8px 0;
+    /* Reduced vertical padding */
+    margin-left: -15px;
+    margin-right: -15px;
+    width: calc(100% + 30px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    /* Softer border */
+    transition: box-shadow 0.3s ease;
+}
+
+/* Premium Pill Filters */
+.filter-btn {
+    border-radius: 50px !important;
+    padding: 8px 24px !important;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    margin: 0 5px;
+    border: 1px solid #eee;
+    background: transparent;
+    color: #555;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: #f8f9fa;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.filter-btn.active {
+    background: var(--ocean-blue) !important;
+    color: white !important;
+    border-color: var(--ocean-blue) !important;
+    box-shadow: 0 4px 12px rgba(0, 105, 148, 0.3);
+    /* Blue shadow */
+}
+
+.sticky-filter-bar.is-pinned {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Scrollable container for mobile */
+@media (max-width: 768px) {
+    .sticky-filter-bar {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 10px 0;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .sticky-filter-bar .col-md-12 {
+        display: inline-block;
+        min-width: max-content;
+        padding: 0 15px;
+    }
+}
+
+/* Scrolled state override if needed, or user's code handles it via fixed pos */
+
+/* Logo Section */
+.logo-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white) !important;
+    line-height: 1;
+    margin-bottom: 0;
+    /* Reset */
+}
+
+.tagline {
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    color: var(--white) !important;
+    opacity: 0.9;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    margin-bottom: 0;
+    /* Reset */
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: var(--white) !important;
+    font-size: 0.9rem;
+    /* Slightly smaller, more elegant */
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    /* Premium spacing */
+    position: relative;
+    padding: 8px 0;
+    transition: all 0.3s ease;
+    opacity: 0.9;
+}
+
+.nav-links li a:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+/* Specific Highlight */
+.nav-links li a.highlight,
+.nav-links li a.active {
+    color: var(--primary-orange) !important;
+}
+
+/* The "Sliding Underline" Hover Effect */
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-orange);
+    transition: width 0.3s ease;
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
+}
+
+/* User Actions */
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-greeting {
+    font-size: 0.8rem;
+    text-align: right;
+    line-height: 1.2;
+    color: var(--white) !important;
+    display: block;
+    /* Ensure visibility */
+}
+
+.user-greeting strong {
+    color: var(--white) !important;
+}
+
+.btn-logout,
+.btn-login-nav {
+    padding: 8px 20px;
+    background: transparent;
+    border: 2px solid var(--primary-orange);
+    color: var(--primary-orange);
+    border-radius: 50px;
+    /* Pill shape */
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    /* Consistency */
+}
+
+.btn-logout:hover,
+.btn-login-nav:hover {
+    background: var(--primary-orange);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+}
+
+/* Burger Menu */
+.burger {
+    display: none;
+    cursor: pointer;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: var(--white);
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Mobile Responsive Adjustments */
+@media screen and (max-width: 1024px) {
+    .nav-links {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .navbar {
+        width: 95%;
+        /* Wider on mobile */
+        padding: 1rem 1.5rem;
+    }
+
+    .nav-links {
+        position: absolute;
+        right: 0px;
+        height: 92vh;
+        top: 8vh;
+        background-color: var(--ocean-blue);
+        backdrop-filter: blur(15px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in;
+        padding-top: 50px;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        border-left: 1px solid var(--glass-border);
+    }
+
+    .nav-links li {
+        opacity: 0;
+    }
+
+    .burger {
+        display: block;
+    }
+
+    .user-greeting {
+        display: none !important;
+    }
+}
+
+.nav-active {
+    transform: translateX(0%);
+}
+
+@keyframes navLinkFade {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.toggle .line1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.toggle .line2 {
+    opacity: 0;
+}
+
+.toggle .line3 {
+    transform: rotate(45deg) translate(-5px, -6px);
 }
 
 /* Override primary colors */
@@ -531,7 +845,7 @@ h6,
     /* Soft, premium shadow */
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     /* Smooth hover lift */
-    border: 1px solid rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     height: 100%;
     /* Equal height cards */
     display: flex;
@@ -540,86 +854,123 @@ h6,
 
 .destination-detail:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
 }
 
 .destination-detail-img {
-    height: 260px;
+    height: 220px;
+    /* Reference Image Ratio */
     background-size: cover;
     background-position: center;
     border-radius: 16px 16px 0 0;
-    /* Rounded top corners */
     position: relative;
     overflow: hidden;
 }
 
-/* Add a subtle overlay on image hover */
-.destination-detail-img::after {
-    content: '';
+/* Card Badges */
+.card-badge {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white;
+    z-index: 10;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.destination-detail:hover .destination-detail-img::after {
-    opacity: 1;
+.card-badge.category {
+    top: 15px;
+    right: 15px;
+    background: var(--sunset-orange);
+    color: #fff;
+}
+
+.card-badge.rating {
+    bottom: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.card-badge.rating i {
+    color: var(--sunset-orange);
+    font-size: 0.8rem;
 }
 
 .destination-detail-content {
-    padding: 30px;
+    padding: 20px 25px;
+    /* Clean padding */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
 .destination-detail h2 {
-    color: var(--ocean-blue);
-    font-size: 24px;
+    color: #333;
+    /* Darker title text */
+    font-size: 1.15rem;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     line-height: 1.3;
 }
 
 .destination-detail .location {
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 20px;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0;
+    /* No heavy margin */
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .destination-detail .location span {
     color: var(--sunset-orange);
-    margin-right: 5px;
+    font-size: 1rem;
 }
 
-.destination-highlight {
-    background: rgba(0, 105, 148, 0.08);
-    /* Light ocean blue bg */
-    color: var(--ocean-blue);
-    padding: 6px 14px;
-    border-radius: 20px;
-    /* Pill shape */
-    display: inline-block;
-    margin-right: 8px;
-    margin-bottom: 8px;
-    font-size: 13px;
+/* Explore Link */
+.explore-link {
+    font-size: 0.9rem;
     font-weight: 600;
+    color: var(--ocean-blue);
+    text-decoration: none;
+    align-self: flex-end;
+    /* Align right */
+    display: flex;
+    align-items: center;
+    gap: 5px;
     transition: all 0.3s ease;
+    margin-top: 20px;
+    /* Spacing from location */
 }
 
-.destination-detail:hover .destination-highlight {
-    background: var(--ocean-blue);
-    color: #fff;
+.explore-link i {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
 }
 
-.destination-detail p {
+.explore-link:hover {
+    color: var(--ocean-blue-dark);
+}
+
+.explore-link:hover i {
+    transform: translateX(4px);
+}
+
+/* Premium Card: Hide Description Text */
+.destination-detail p:not(.location) {
+    display: none;
+}
+
+.destination-detail p.location {
     color: #555;
     line-height: 1.7;
     margin-bottom: 20px;
@@ -1055,7 +1406,8 @@ h6,
         padding: 25px;
         border-radius: 16px;
         position: sticky;
-        top: 20px;
+        top: 120px;
+        /* Adjusted for new floating navbar (approx 100px total height/offset) */
     }
 
     .info-row {
@@ -1087,3 +1439,172 @@ h6,
 }
 
 ;
+
+/* -------------------------------- */
+/* PREMIUM GLASSMORPHISM NAVBAR    */
+/* -------------------------------- */
+
+.ceylon-premium-navbar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 15px 0;
+    transition: all 0.4s ease;
+    background: transparent;
+    /* Start transparent */
+}
+
+/* Scrolled State (Sticky) */
+.ceylon-premium-navbar.scrolled {
+    background: rgba(0, 0, 0, 0.8) !important;
+    /* Darker background on scroll */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 0;
+    /* Shrink slightly */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.ceylon-premium-navbar.awake {
+    margin-top: 0;
+    /* Override any template hiding */
+    transform: translateY(0);
+}
+
+/* Logo Styles */
+.navbar-brand {
+    display: flex;
+    font-family: var(--font-heading-family) !important;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1;
+}
+
+.brand-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff !important;
+    letter-spacing: 1px;
+}
+
+.brand-tagline {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--sunset-orange);
+    margin-top: 2px;
+    font-family: var(--font-body-family);
+    font-weight: 600;
+}
+
+/* Navigation Links */
+.ceylon-premium-navbar .nav-link {
+    font-family: var(--font-body-family);
+    font-weight: 600;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.9) !important;
+    padding: 8px 16px !important;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+/* Hover Effect - Sliding Underline */
+.ceylon-premium-navbar .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+    /* Match padding */
+    width: 0;
+    height: 2px;
+    background: var(--sunset-orange);
+    transition: width 0.3s ease;
+}
+
+.ceylon-premium-navbar .nav-link:hover {
+    color: #fff !important;
+}
+
+.ceylon-premium-navbar .nav-link:hover::after,
+.ceylon-premium-navbar .nav-item.active .nav-link::after {
+    width: calc(100% - 32px);
+    /* Match padding */
+}
+
+.ceylon-premium-navbar .nav-item.active .nav-link {
+    color: var(--sunset-orange) !important;
+}
+
+/* User Profile Section */
+.nav-user-profile {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    padding-left: 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.welcome-text {
+    font-size: 14px;
+    color: #fff;
+    margin-right: 15px;
+    font-weight: 500;
+}
+
+.btn-auth-nav {
+    border: 1px solid var(--sunset-orange);
+    color: var(--sunset-orange) !important;
+    background: transparent;
+    padding: 6px 18px;
+    border-radius: 50px;
+    /* Pill shape */
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-auth-nav:hover {
+    background: var(--sunset-orange);
+    color: #fff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 991.98px) {
+    .ceylon-premium-navbar {
+        background: rgba(0, 0, 0, 0.9) !important;
+        /* Solid dark for readability on mobile open */
+        padding: 10px 0;
+    }
+
+    .navbar-collapse {
+        background: #1a1a1a;
+        margin-top: 15px;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-user-profile {
+        border-left: none;
+        margin-left: 0;
+        padding-left: 0;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .welcome-text {
+        margin-bottom: 10px;
+        display: block;
+    }
+}

@@ -40,6 +40,63 @@ $(document).ready(function () {
     // Ensure all items are visible on load
     $('.destination-detail').css('display', 'flex');
 
+    // ---------------------------------------------------------
+    // 3. Dynamic Sticky Navbar Logic
+    // ---------------------------------------------------------
+
+    const mainNavbar = document.getElementById('navbar');
+    const filterBar = document.querySelector('.sticky-filter-bar');
+
+    if (mainNavbar && filterBar) {
+
+        // Function to update sticky position
+        function updateStickyPosition() {
+            // Get height of main navbar
+            const navbarHeight = mainNavbar.offsetHeight;
+            // Get current top offset (computed style to account for CSS top: 20px)
+            const navbarTop = parseInt(window.getComputedStyle(mainNavbar).top) || 0;
+
+            // Calculate total top spacing needed
+            const totalSpacing = navbarHeight + navbarTop + 10; // +10px buffer
+
+            // Apply to filter bar
+            filterBar.style.top = `${totalSpacing}px`;
+        }
+
+        // Initial Calculation
+        updateStickyPosition();
+
+        // Update on Resize
+        window.addEventListener('resize', updateStickyPosition);
+
+        // Optional: Add shadow when sticky
+        // We use IntersectionObserver to detect when it hits the "sticky" state
+        // Trick: Add a sentinel element -1px above current position
+
+        const observer = new IntersectionObserver(
+            ([e]) => e.target.classList.toggle('is-pinned', e.intersectionRatio < 1),
+            { threshold: [1] }
+        );
+
+        // Check if browser supports sticky before observing
+        if (getComputedStyle(filterBar).position === 'sticky') {
+            // To properly detect "stuck" state via Observers is complex without a sentinel
+            // Simpler approach: Check scroll position
+            window.addEventListener('scroll', () => {
+                const rect = filterBar.getBoundingClientRect();
+                // If the bar's top position matches the calculated sticky top
+                const stickyTop = parseInt(filterBar.style.top);
+
+                // Allow small tolerance (pixels)
+                if (rect.top <= stickyTop + 1) {
+                    filterBar.classList.add('is-pinned');
+                } else {
+                    filterBar.classList.remove('is-pinned');
+                }
+            });
+        }
+    }
+
     // 2. Destination Modal Logic (Premium Tabbed Version)
 
     // Open Modal
@@ -55,6 +112,8 @@ $(document).ready(function () {
             var attractions = popupData.find('.popup-attractions').html();
             var activities = popupData.find('.popup-activities').html();
             var info = popupData.find('.popup-info').html();
+            // Gallery Data
+            var gallery = popupData.find('.popup-gallery').html();
 
             // Get Card Data for Header
             var title = $(this).find('h2').text();
@@ -77,6 +136,7 @@ $(document).ready(function () {
                         <li class="tab-link active" data-tab="overview">Overview</li>
                         <li class="tab-link" data-tab="attractions">Attractions</li>
                         <li class="tab-link" data-tab="activities">Activities</li>
+                        <li class="tab-link" data-tab="gallery">Gallery</li>
                         <li class="tab-link" data-tab="info">Practical Info</li>
                     </ul>
                 </div>
@@ -112,6 +172,16 @@ $(document).ready(function () {
                             </div>
                         </div>
 
+                        <!-- Gallery Tab -->
+                        <div id="gallery" class="tab-pane">
+                            <div class="popup-section">
+                                <h3>Gallery</h3>
+                                <div class="gallery-grid">
+                                    ${gallery ? gallery : '<p>No additional images available for this destination.</p>'}
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Practical Info Tab -->
                         <div id="info" class="tab-pane">
                             <div class="popup-info-box">
@@ -129,6 +199,15 @@ $(document).ready(function () {
 
             // Inject Content
             $('#destinationModal .modal-body').html(modalHtml);
+
+            // Re-initialize Magnific Popup for new content if script exists
+            if ($.fn.magnificPopup) {
+                $('.gallery-grid').magnificPopup({
+                    delegate: 'a', // child items selector, by clicking on it popup will open
+                    type: 'image',
+                    gallery: { enabled: true }
+                });
+            }
 
             // Show Modal
             $('#destinationModal').addClass('show').css('display', 'block');

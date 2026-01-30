@@ -25,27 +25,31 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">Ceylon Sang<span>Sri Lankan Tour Guide</span></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="oi oi-menu"></span> Menu
-            </button>
-            <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-                    <li class="nav-item active"><a href="destinations.html" class="nav-link">Destinations</a></li>
-                    <li class="nav-item"><a href="packages.html" class="nav-link">Tour Packages</a></li>
-                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
-                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-                    <li class="nav-item" id="authButton">
-                        <button onclick="openModal('loginModal')" class="btn btn-sm btn-outline-light">Login</button>
-                    </li>
-                </ul>
-            </div>
+    <nav class="navbar" id="navbar">
+        <div class="logo-container">
+            <h1 class="logo">Ceylon Sang</h1>
+            <span class="tagline">SRI LANKAN TOUR GUIDE</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="destinations.html" class="active">Destinations</a></li>
+            <li><a href="packages.html">Tour Packages</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <div id="authButton" class="user-actions">
+            <!-- Auth content injected by JS -->
+            <button onclick="openModal('loginModal')" class="btn-login-nav">Login</button>
+        </div>
+
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
         </div>
     </nav>
 
@@ -74,7 +78,7 @@
             </div>
 
             <!-- Filter Buttons -->
-            <div class="row mb-5">
+            <div class="row mb-5 sticky-filter-bar">
                 <div class="col-md-12 text-center">
                     <button type="button" class="btn btn-primary filter-btn active" data-filter="all">All</button>
                     <button type="button" class="btn btn-outline-primary filter-btn"
@@ -92,20 +96,19 @@
             <div class="destination-grid">
 
                 <!-- Central Province -->
-                <!-- Sigiriya (Restored) -->
+
+
+                <!-- Sigiriya -->
                 <div class="destination-detail" id="sigiriya" data-category="heritage">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-sigiriya.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-sigiriya.jpg);">
+                        <div class="card-badge category">HERITAGE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Sigiriya Lion Rock Fortress</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Central Province, Sri Lanka</p>
+                        <p class="location"><span class="fa fa-map-marker"></span> Central Province</p>
 
-                        <!-- Simplified Visual Content -->
-                        <p>Ancient palace complex and UNESCO World Heritage Site known for its massive column of rock.
-                        </p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
-
-                        <!-- Hidden Data for Modal Popup -->
+                        <!-- Hidden Data -->
                         <div class="destination-popup-data" style="display: none;">
                             <div class="popup-overview">
                                 <p>Sigiriya, also known as the Lion Rock, is an ancient rock fortress located in the
@@ -155,23 +158,20 @@
                                 </div>
                             </div>
                         </div>
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
-                <!-- Kandy (Restored) -->
+                <!-- Kandy -->
                 <div class="destination-detail" id="kandy" data-category="cultural">
                     <div class="destination-detail-img"
-                        style="background-image: url(images/destinations/kandy/temple-of-tooth.jpg);"></div>
+                        style="background-image: url(images/destinations/kandy/temple-of-tooth.jpg);">
+                        <div class="card-badge category">CULTURAL</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.9</div>
+                    </div>
                     <div class="destination-detail-content">
-                        <h2>Kandy - Temple of the Tooth</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Central Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>The spiritual heart of Sri Lanka, home to the sacred Temple of the Tooth Relic and UNESCO
-                            World
-                            Heritage Site.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <h2>Temple of the Tooth</h2>
+                        <p class="location"><span class="fa fa-map-marker"></span> Kandy</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -212,23 +212,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
-                <!-- Nuwara Eliya (Restored) -->
+                <!-- Nuwara Eliya -->
                 <div class="destination-detail" id="nuwara-eliya" data-category="adventure">
                     <div class="destination-detail-img" style="background-image: url(images/dest-nuwara-eliya.jpg);">
+                        <div class="card-badge category">HILL COUNTRY</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
                     <div class="destination-detail-content">
-                        <h2>Nuwara Eliya - Little England</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Central Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>"Little England" of Sri Lanka, famous for its cool climate, colonial architecture, and
-                            endless
-                            tea plantations.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <h2>Nuwara Eliya</h2>
+                        <p class="location"><span class="fa fa-map-marker"></span> Central Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -268,22 +265,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
-                <!-- Dambulla (Detailed) -->
+                <!-- Dambulla -->
                 <div class="destination-detail" data-category="cultural">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-dambulla.jpg);"></div>
+                    <div class="destination-detail-img"
+                        style="background-image: url(images/destinations/dambullacave/DambullaCaveTemple.jpg);">
+                        <div class="card-badge category">CULTURAL</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.7</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Dambulla Cave Temple</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Central Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Largest and best-preserved cave temple complex in Sri Lanka, featuring over 150 Buddha
-                            statues.
-                        </p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Central Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -309,24 +305,25 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
-                <!-- Horton Plains (Detailed) -->
+                <!-- Horton Plains -->
                 <div class="destination-detail" data-category="adventure">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-horton-plains.jpg);">
+                    <div class="destination-detail-img"
+                        style="background-image: url(images/destinations/hortonplains/hortonplains.jpg);">
+                        <div class="card-badge category">ADVENTURE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.9</div>
                     </div>
                     <div class="destination-detail-content">
-                        <h2>Horton Plains National Park</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Central Province, Sri Lanka</p>
+                        <h2>Horton Plains</h2>
+                        <p class="location"><span class="fa fa-map-marker"></span> Central Province</p>
 
-                        <!-- Simplified Visual Content -->
-                        <p>A protected area in the central highlands covered by montane grassland and cloud forest.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
-
-                        <!-- Hidden Data for Modal Popup -->
+                        <!-- Hidden Data -->
                         <div class="destination-popup-data" style="display: none;">
+
                             <div class="popup-overview">
                                 <p>A protected area in the central highlands of Sri Lanka and is covered by montane
                                     grassland
@@ -353,21 +350,19 @@
                     </div>
                 </div>
 
-                <!-- Adam's Peak (Detailed) -->
+                <!-- Adam's Peak -->
                 <div class="destination-detail" data-category="cultural">
                     <div class="destination-detail-img" style="background-image: url(images/dest-adams-peak.jpg);">
+                        <div class="card-badge category">PILGRIMAGE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
                     <div class="destination-detail-content">
                         <h2>Adam's Peak (Sri Pada)</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Central Province, Sri Lanka</p>
+                        <p class="location"><span class="fa fa-map-marker"></span> Central Province</p>
 
-                        <!-- Simplified Visual Content -->
-                        <p>Sacred mountain famous for the 'sacred footprint' and spectacular sunrise views.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
-
-                        <!-- Hidden Data for Modal Popup -->
+                        <!-- Hidden Data -->
                         <div class="destination-popup-data" style="display: none;">
+
                             <div class="popup-overview">
                                 <p>A 2,243m tall conical mountain famous for the 'sacred footprint', a 1.8m rock
                                     formation
@@ -395,18 +390,15 @@
                     </div>
                 </div>
 
-                <!-- Knuckles (Detailed) -->
+                <!-- Knuckles -->
                 <div class="destination-detail" data-category="adventure">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-knuckles.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-knuckles.jpg);">
+                        <div class="card-badge category">ADVENTURE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Knuckles Mountain Range</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Central Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>UNESCO World Heritage Site known for its scenic trails, waterfalls, and mist-covered peaks.
-                        </p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Central Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -432,20 +424,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
-                <!-- Matale (Detailed) -->
+                <!-- Matale -->
                 <div class="destination-detail" data-category="cultural">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-matale.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-matale.jpg);">
+                        <div class="card-badge category">CULTURAL</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Matale Spice Gardens</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Central Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Explore the rich history of Sri Lankan spices and see how they are grown and processed.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Central Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -469,21 +461,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
-                <!-- Royal Botanical Gardens (Detailed) -->
+                <!-- Royal Botanical Gardens -->
                 <div class="destination-detail" data-category="wildlife">
                     <div class="destination-detail-img" style="background-image: url(images/dest-royal-botanical.jpg);">
+                        <div class="card-badge category">NATURE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.7</div>
                     </div>
                     <div class="destination-detail-content">
                         <h2>Royal Botanical Gardens</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Central Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Renowned for its vast collection of orchids, spices, medicinal plants, and palm trees.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Central Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -507,21 +498,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Western Province -->
-                <!-- Colombo (Simplified) -->
+                <!-- Colombo -->
                 <div class="destination-detail" data-category="cultural">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-colombo.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-colombo.jpg);">
+                        <div class="card-badge category">CITY</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Colombo</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Western Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>The commercial capital blending colonial architecture with modern skyscrapers.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Western Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -541,20 +532,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
-                <!-- Negombo (Simplified) -->
+                <!-- Negombo -->
                 <div class="destination-detail" data-category="beach">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-negombo.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-negombo.jpg);">
+                        <div class="card-badge category">BEACH</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.4</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Negombo</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Western Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Major coastal city known for its sandy beaches and historic fishing industry.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Western Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -574,20 +565,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
-                <!-- Mount Lavinia (Simplified) -->
+                <!-- Mount Lavinia -->
                 <div class="destination-detail" data-category="beach">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-9.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-9.jpg);">
+                        <div class="card-badge category">BEACH</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.3</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Mount Lavinia</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Western Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Famous for its "Golden Mile" of beaches and the colonial Mount Lavinia Hotel.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Western Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -607,20 +598,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Kalutara (Simplified) -->
                 <div class="destination-detail" data-category="cultural">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-2.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-2.jpg);">
+                        <div class="card-badge category">RELIGIOUS</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.6</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Kalutara Bodhiya</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Western Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Sacred Buddhist site famous for its magnificent hollow Stupa.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Western Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -639,20 +630,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
-                <!-- Kelaniya (Simplified) -->
+                <!-- Kelaniya -->
                 <div class="destination-detail" data-category="cultural">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-3.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-3.jpg);">
+                        <div class="card-badge category">RELIGIOUS</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Kelaniya Raja Maha Vihara</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Western Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Ancient temple hallowed by the third visit of Lord Buddha to Sri Lanka.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Western Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -673,24 +664,22 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Southern Province -->
                 <!-- Galle (Restored) -->
-                <!-- Galle (Simplified) -->
+                <!-- Galle -->
                 <div class="destination-detail" id="galle" data-category="heritage">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-galle.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-galle.jpg);">
+                        <div class="card-badge category">HERITAGE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.9</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Galle Fort</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Stunning UNESCO World Heritage Site featuring European colonial architecture and
-                            fortifications.
-                        </p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -719,22 +708,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Yala (Restored) -->
-                <!-- Yala (Simplified) -->
+                <!-- Yala -->
                 <div class="destination-detail" id="yala" data-category="wildlife">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-yala.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-yala.jpg);">
+                        <div class="card-badge category">WILDLIFE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.9</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Yala National Park</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Sri Lanka's most famous national park, boasting one of the world's highest leopard densities.
-                        </p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -761,21 +749,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Mirissa (Restored) -->
-                <!-- Mirissa (Simplified) -->
+                <!-- Mirissa -->
                 <div class="destination-detail" id="mirissa" data-category="beach">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-6.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-6.jpg);">
+                        <div class="card-badge category">BEACH</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Mirissa Beach</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Pristine golden beach famous for whale watching, surfing, and vibrant nightlife.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -801,21 +789,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Unawatuna (Detailed) -->
-                <!-- Pasikudah (Simplified) -->
+                <!-- Unawatuna -->
                 <div class="destination-detail" data-category="beach">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-pasikudah.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-6.jpg);">
+                        <div class="card-badge category">BEACH</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.7</div>
+                    </div>
                     <div class="destination-detail-content">
-                        <h2>Pasikudah</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Charming coastal town featuring a beautiful horseshoe-shaped beach and coral reefs.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <h2>Unawatuna</h2>
+                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -835,21 +823,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Hikkaduwa (Detailed) -->
-                <!-- Hikkaduwa (Simplified) -->
+                <!-- Hikkaduwa -->
                 <div class="destination-detail" data-category="beach">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-hikkaduwa.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-hikkaduwa.jpg);">
+                        <div class="card-badge category">BEACH</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.6</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Hikkaduwa</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Vibrant coastal hub famous for its surfing waves, coral sanctuary, and nightlife.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -868,21 +856,22 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Bentota (Detailed) -->
                 <!-- Mirissa (Simplified) -->
+                <!-- Bentota -->
                 <div class="destination-detail" data-category="beach">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-mirissa.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-bentota.jpg);">
+                        <div class="card-badge category">BEACH</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
+                    </div>
                     <div class="destination-detail-content">
-                        <h2>Mirissa</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Premium resort town renowned for water sports and its tranquil lagoon.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <h2>Bentota</h2>
+                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -902,21 +891,22 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Udawalawe (Detailed) -->
                 <!-- Udawalawe (Simplified) -->
+                <!-- Udawalawe -->
                 <div class="destination-detail" data-category="wildlife">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-udawalawe.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-udawalawe.jpg);">
+                        <div class="card-badge category">WILDLIFE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Udawalawe National Park</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Premier destination for spotting wild elephants in their natural habitat.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -937,21 +927,22 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Tangalle (Detailed) -->
                 <!-- Tangalle (Simplified) -->
+                <!-- Tangalle -->
                 <div class="destination-detail" data-category="beach">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-tangalle.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-tangalle.jpg);">
+                        <div class="card-badge category">BEACH</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Tangalle Beach</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Peaceful paradise with wide beaches and mangrove lagoons, perfect for solitude.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Southern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -970,21 +961,22 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Northern Province -->
                 <!-- Nallur (Detailed) -->
+                <!-- Nallur -->
                 <div class="destination-detail" data-category="cultural">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-1.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-1.jpg);">
+                        <div class="card-badge category">CULTURAL</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Nallur Kandaswamy Kovil</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Northern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>One of the most significant Hindu temples in Sri Lanka, dedicated to Lord Murugan.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Northern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1004,20 +996,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Jaffna Fort (Detailed) -->
+                <!-- Jaffna Fort -->
                 <div class="destination-detail" data-category="heritage">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-2.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-jaffna.jpg);">
+                        <div class="card-badge category">HERITAGE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.6</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Jaffna Fort</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Northern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>The second largest existing fort in the island, featuring star-shaped ramparts.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Northern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1037,20 +1030,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Nagadeepa (Detailed) -->
+                <!-- Nagadeepa -->
                 <div class="destination-detail" data-category="cultural">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-3.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-3.jpg);">
+                        <div class="card-badge category">RELIGIOUS</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.7</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Nagadeepa Purana Vihara</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Northern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>An ancient Buddhist temple located on Nainativu Island, visited by Lord Buddha.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Northern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1070,20 +1064,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Delft (Detailed) -->
+                <!-- Delft Island -->
                 <div class="destination-detail" data-category="adventure">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-4.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-4.jpg);">
+                        <div class="card-badge category">ADVENTURE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Delft Island (Neduntheevu)</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Northern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Remote coral island known for its wild horses and baobab trees.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Northern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1102,20 +1097,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Casuarina (Detailed) -->
+                <!-- Casuarina Beach -->
                 <div class="destination-detail" data-category="beach">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-5.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-5.jpg);">
+                        <div class="card-badge category">BEACH</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.4</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Casuarina Beach</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Northern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Best beach in the Jaffna Peninsula, famous for its shallow, calm waters.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Northern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1136,20 +1132,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Eastern Province -->
+                <!-- Trincomalee -->
                 <div class="destination-detail" data-category="beach">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-6.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-trincomalee.jpg);">
+                        <div class="card-badge category">HERITAGE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.7</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Trincomalee Harbour</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Eastern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>One of the world's finest natural deep-water harbours, rich in naval history.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Eastern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1170,18 +1167,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Nilaveli -->
                 <div class="destination-detail" data-category="beach">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-8.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-8.jpg);">
+                        <div class="card-badge category">BEACH</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Nilaveli Beach</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Eastern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Pristine white sandy beach known for clear waters and Pigeon Island snorkeling.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Eastern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1202,18 +1200,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Arugam Bay -->
                 <div class="destination-detail" data-category="beach">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-7.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-arugambay.jpg);">
+                        <div class="card-badge category">SURFING</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.9</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Arugam Bay</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Eastern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>World-renowned surfing point with a laid-back vibe and moon-shaped bay.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Eastern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1238,18 +1237,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Pasikudah -->
                 <div class="destination-detail" data-category="adventure">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-9.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-pasikudah.jpg);">
+                        <div class="card-badge category">LUXURY</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.6</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Pasikudah</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Eastern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Known for its luxury resorts and long stretch of shallow, drivable coastline.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Eastern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1269,18 +1269,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Koneswaram Temple -->
                 <div class="destination-detail" data-category="cultural">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-1.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-1.jpg);">
+                        <div class="card-badge category">RELIGIOUS</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Koneswaram Temple</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Eastern Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Classical-medieval Hindu temple situated atop Swami Rock with stunning ocean views.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Eastern Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1300,24 +1301,23 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- North Central Province -->
                 <!-- Anuradhapura (Restored) -->
                 <!-- Anuradhapura (Simplified) -->
+                <!-- Anuradhapura -->
                 <div class="destination-detail" id="anuradhapura" data-category="heritage">
                     <div class="destination-detail-img" style="background-image: url(images/dest-anuradhapura.jpg);">
+                        <div class="card-badge category">HERITAGE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.9</div>
                     </div>
                     <div class="destination-detail-content">
                         <h2>Anuradhapura</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> North Central Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>First ancient capital of Sri Lanka, famous for its well-preserved ruins and sacred Buddhist
-                            sites.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> North Central Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1346,22 +1346,22 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Polonnaruwa (Restored) -->
                 <!-- Polonnaruwa (Simplified) -->
+                <!-- Polonnaruwa -->
                 <div class="destination-detail" id="polonnaruwa" data-category="heritage">
                     <div class="destination-detail-img" style="background-image: url(images/dest-polonnaruwa.jpg);">
+                        <div class="card-badge category">HERITAGE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
                     <div class="destination-detail-content">
                         <h2>Polonnaruwa</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> North Central Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>The second ancient kingdom feature spectacular ruins of the Garden City and rock temples.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> North Central Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1384,19 +1384,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
+                <!-- Minneriya -->
                 <div class="destination-detail" data-category="wildlife">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-2.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-2.jpg);">
+                        <div class="card-badge category">WILDLIFE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Minneriya National Park</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> North Central Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Famous for 'The Gathering', the largest meeting of Asian elephants in the world.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> North Central Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1419,18 +1420,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Mihintale -->
                 <div class="destination-detail" data-category="cultural">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-4.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-mihintale.jpg);">
+                        <div class="card-badge category">RELIGIOUS</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.6</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Mihintale</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> North Central Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Mountain peak known as the cradle of Buddhism in Sri Lanka.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> North Central Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1450,18 +1452,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Ritigala -->
                 <div class="destination-detail" data-category="adventure">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-5.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-5.jpg);">
+                        <div class="card-badge category">ADVENTURE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Ritigala</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> North Central Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Ancient Buddhist monastery and strict nature reserve with a mystical atmosphere.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> North Central Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1480,20 +1483,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- North Western Province -->
+                <!-- Kalpitiya -->
                 <div class="destination-detail" data-category="adventure">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-3.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-kalpitiya.jpg);">
+                        <div class="card-badge category">ADVENTURE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.7</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Kalpitiya</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> North Western Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Peninsula famous for kite surfing, dolphin watching, and the Bar Reef.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> North Western Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1513,18 +1517,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Yapahuwa -->
                 <div class="destination-detail" data-category="heritage">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-6.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-yapahuwa.jpg);">
+                        <div class="card-badge category">HERITAGE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.4</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Yapahuwa</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> North Western Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Ancient rock fortress and capital with a stunning ornamental staircase.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> North Western Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1544,18 +1549,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Wilpattu -->
                 <div class="destination-detail" data-category="wildlife">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-7.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-wilpattu.jpg);">
+                        <div class="card-badge category">WILDLIFE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Wilpattu National Park</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> North Western Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Largest national park in Sri Lanka, unique for its natural "Willu" lakes.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> North Western Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1575,18 +1581,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Munneswaram -->
                 <div class="destination-detail" data-category="cultural">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-2.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-2.jpg);">
+                        <div class="card-badge category">RELIGIOUS</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Munneswaram Temple</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> North Western Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Ancient Hindu temple complex associated with the Ramayana legend.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> North Western Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1606,22 +1613,23 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Uva Province -->
                 <!-- Ella (Restored) -->
                 <!-- Ella (Simplified) -->
+                <!-- Ella -->
                 <div class="destination-detail" id="ella" data-category="adventure">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-ella.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-ella.jpg);">
+                        <div class="card-badge category">ADVENTURE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.9</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Ella</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Uva Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Misty village with stunning views, famous for Nine Arch Bridge and hiking.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Uva Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1644,19 +1652,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
+                <!-- Ravana Falls -->
                 <div class="destination-detail" data-category="adventure">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-4.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-ravana-falls.jpg);">
+                        <div class="card-badge category">NATURE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Ravana Falls</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Uva Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>One of the widest waterfalls in Sri Lanka, linked to the legend of Ravana.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Uva Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1675,18 +1684,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Lipton's Seat -->
                 <div class="destination-detail" data-category="adventure">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-5.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-liptons-seat.jpg);">
+                        <div class="card-badge category">NATURE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.6</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Lipton's Seat</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Uva Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>High observation point offering panoramic views of tea plantations.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Uva Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1705,18 +1715,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Kataragama -->
                 <div class="destination-detail" data-category="cultural">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-8.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-kataragama.jpg);">
+                        <div class="card-badge category">RELIGIOUS</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Kataragama Temple</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Uva Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Multi-religious sacred city and pilgrimage site for Buddhists and Hindus.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Uva Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1737,18 +1748,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Dunhinda Falls -->
                 <div class="destination-detail" data-category="adventure">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-1.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-dunhinda.jpg);">
+                        <div class="card-badge category">NATURE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.4</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Dunhinda Falls</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Uva Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Known as "Smoky Water" for its spray, one of Sri Lanka's most beautiful waterfalls.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Uva Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1767,21 +1779,22 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Sabaragamuwa Province -->
                 <!-- Sinharaja (Simplified) -->
+                <!-- Sinharaja -->
                 <div class="destination-detail" data-category="wildlife">
-                    <div class="destination-detail-img" style="background-image: url(images/dest-sinharaja.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-sinharaja.jpg);">
+                        <div class="card-badge category">NATURE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.9</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Sinharaja Forest Reserve</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Sabaragamuwa Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>A biodiversity hotspot and Sri Lanka's last viable area of primary tropical rainforest.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Sabaragamuwa Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1801,18 +1814,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Pinnawala -->
                 <div class="destination-detail" data-category="wildlife">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-3.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-udawalawe.jpg);">
+                        <div class="card-badge category">WILDLIFE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.6</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Pinnawala Elephant Orphanage</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Sabaragamuwa Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>World-famous orphanage and nursery for wild Asian elephants.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Sabaragamuwa Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1832,18 +1846,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Udawalawe (Side) -->
                 <div class="destination-detail" data-category="wildlife">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-5.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-udawalawe.jpg);">
+                        <div class="card-badge category">WILDLIFE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
+                    </div>
                     <div class="destination-detail-content">
-                        <h2>Udawalawe (Sabaragamuwa side)</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Sabaragamuwa Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Access to the famous National Park known for its large elephant population.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <h2>Udawalawe (Sabaragamuwa)</h2>
+                        <p class="location"><span class="fa fa-map-marker"></span> Sabaragamuwa Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1861,18 +1876,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Kitulgala -->
                 <div class="destination-detail" data-category="adventure">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-7.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/dest-kitulgala.jpg);">
+                        <div class="card-badge category">ADVENTURE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.7</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Kitulgala</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Sabaragamuwa Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Rainforest area famous for white water rafting on the Kelani River.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Sabaragamuwa Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1891,18 +1907,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
+                <!-- Bopath Ella -->
                 <div class="destination-detail" data-category="adventure">
-                    <div class="destination-detail-img" style="background-image: url(images/destination-6.jpg);"></div>
+                    <div class="destination-detail-img" style="background-image: url(images/destination-6.jpg);">
+                        <div class="card-badge category">NATURE</div>
+                        <div class="card-badge rating"><i class="fa fa-star"></i> 4.3</div>
+                    </div>
                     <div class="destination-detail-content">
                         <h2>Bopath Ella</h2>
-                        <p class="location"><span class="fa fa-map-marker"></span> Sabaragamuwa Province, Sri Lanka</p>
-
-                        <!-- Simplified Visual Content -->
-                        <p>Stunning waterfall named for its resemblance to a sacred Bo leaf.</p>
-
-                        <button class="btn btn-primary mt-auto">View Details</button>
+                        <p class="location"><span class="fa fa-map-marker"></span> Sabaragamuwa Province</p>
 
                         <!-- Hidden Data for Modal Popup -->
                         <div class="destination-popup-data" style="display: none;">
@@ -1921,6 +1938,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <a href="#" class="explore-link mt-auto">Explore <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
