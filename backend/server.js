@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
+const path = require('path'); // Added for static serving
 
 // Load env vars
 dotenv.config();
@@ -21,6 +22,17 @@ app.set('trust proxy', 1);
 // Body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from the root directory with Caching (1 day)
+app.use(express.static(path.join(__dirname, '../'), {
+    maxAge: '1d', // Cache 1 day
+    setHeaders: (res, path) => {
+        if (path.endsWith('.html')) {
+            // HTML files should not be cached (or short cache) to ensure updates are seen
+            res.setHeader('Cache-Control', 'no-cache');
+        }
+    }
+}));
 
 // Security headers
 app.use(helmet());
