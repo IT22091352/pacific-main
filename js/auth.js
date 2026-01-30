@@ -170,6 +170,12 @@ function handleLogout() {
 
     // Show message
     showMessage('Logged out successfully', 'success');
+
+    // Force Redirect to Home to prevent "auth-only" pages from breaking
+    // and to reset the navbar state cleanly.
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 500);
 }
 
 // Update UI for logged in user

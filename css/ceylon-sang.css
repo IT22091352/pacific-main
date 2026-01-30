@@ -78,7 +78,8 @@ h6,
     /* Subtle, premium shadow */
     border-bottom: 1px solid rgba(0, 0, 0, 0.03);
 
-    z-index: 1000;
+    z-index: 1051;
+    /* Must be higher than overlay (1040) */
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
@@ -313,6 +314,8 @@ h6,
     display: none;
     cursor: pointer;
     z-index: 1100;
+    position: relative;
+    /* Crucial for z-index to work */
 }
 
 .burger div {

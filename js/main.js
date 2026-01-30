@@ -289,7 +289,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 	const burger = document.querySelector('.burger');
 	const nav = document.querySelector('.nav-links');
-	const navLinks = document.querySelectorAll('.nav-links li');
+	const navLinks = document.querySelectorAll('.nav-links a');
 	const body = document.body;
 
 	// Create overlay element
@@ -327,14 +327,34 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
-	// Close menu when clicking a link
-	navLinks.forEach(link => {
-		link.addEventListener('click', () => {
-			// Only close if it's an anchor link on the same page, or just always close for better UX?
-			// Usually mobile menus close on selection.
-			if (nav.classList.contains('nav-active')) {
+	// Close menu when clicking a link (Global Event Delegation)
+	document.addEventListener('click', (e) => {
+		// Check if the clicked element is inside a nav link in the mobile menu
+		const link = e.target.closest('.nav-links a');
+		const navContainer = document.querySelector('.nav-links'); // Re-select to be safe
+
+		// Only proceed if link exists AND we are potentially in mobile mode (or check nav-active)
+		if (link && navContainer && navContainer.classList.contains('nav-active')) {
+			const href = link.getAttribute('href');
+
+			// Check if it's a real navigation link
+			if (href && href !== '#' && !href.startsWith('javascript:')) {
+				e.preventDefault(); // Stop default instant nav
+
+				console.log('Mobile Nav Clicked (Global):', href);
+
+				// Close menu
+				toggleMenu();
+
+				// Force navigation after small delay
+				setTimeout(() => {
+					window.location.href = href;
+				}, 100);
+			} else {
+				// It's a # link (like Login) or internal.
+				console.log('Mobile Action Clicked (Internal)');
 				toggleMenu();
 			}
-		});
+		}
 	});
 });
