@@ -1804,3 +1804,38 @@ h6,
         display: block;
     }
 }
+
+/* WhatsApp Button Style */
+.btn-whatsapp {
+    background: #25D366 !important;
+    border-color: #25D366 !important;
+    color: #fff !important;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4) !important;
+    font-weight: 600 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-whatsapp:hover {
+    background: #128C7E !important;
+    border-color: #128C7E !important;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6) !important;
+    color: #fff !important;
+    transform: translateY(-2px);
+}
+
+/* Package Duration Style */
+.package-duration {
+    display: inline-block;
+    padding: 5px 15px;
+    background: var(--sunset-orange) !important;
+    color: #fff;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
