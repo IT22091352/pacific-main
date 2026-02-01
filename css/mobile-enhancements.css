@@ -286,3 +286,27 @@ body {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* Welcome Section Mobile Optimization */
+@media (max-width: 768px) {
+    .services-section {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+
+    .services-section .heading-section h2 {
+        font-size: 26px !important;
+        margin-bottom: 1.5rem;
+    }
+
+    .services-section .heading-section p {
+        font-size: 16px;
+        line-height: 1.6;
+        padding: 0 10px;
+    }
+
+    .services-section .btn {
+        width: 100%;
+        margin-top: 1rem;
+    }
+}
