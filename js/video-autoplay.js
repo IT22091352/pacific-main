@@ -1,42 +1,55 @@
-// Mobile Video Autoplay Fix
+// Mobile Video Autoplay Fix - Robust Version
 document.addEventListener('DOMContentLoaded', function () {
     const heroVideo = document.getElementById('hero-video');
 
     if (heroVideo) {
-        // Function to play video
-        function playVideo() {
-            heroVideo.play().catch(function (error) {
-                console.log('Video autoplay failed:', error);
-                // If autoplay fails, try again on user interaction
-                document.addEventListener('touchstart', function () {
-                    heroVideo.play();
-                }, { once: true });
-            });
-        }
+        // 1. Enforce critical mobile attributes immediately
+        console.log('Initializing hero video...');
+        heroVideo.muted = true;
+        heroVideo.setAttribute('muted', '');
+        heroVideo.setAttribute('playsinline', '');
+        heroVideo.setAttribute('webkit-playsinline', '');
+        
+        // 2. Define Play Function
+        const attemptPlay = async () => {
+            try {
+                await heroVideo.play();
+                console.log('Video playing successfully');
+                heroVideo.classList.add('video-playing');
+            } catch (error) {
+                console.log('Autoplay prevented. Waiting for interaction.', error);
+            }
+        };
 
-        // Try to play immediately
-        playVideo();
+        // 3. Try immediately
+        attemptPlay();
 
-        // Also try when page is fully loaded
-        window.addEventListener('load', function () {
-            playVideo();
-        });
+        // 4. Fallback: Unlock on any interaction (common mobile pattern)
+        const onInteraction = () => {
+            attemptPlay();
+            // Clean up listeners if playing
+            if (!heroVideo.paused) {
+                ['touchstart', 'click', 'scroll'].forEach(evt => 
+                    document.removeEventListener(evt, onInteraction)
+                );
+            }
+        };
 
-        // For iOS devices - ensure video plays when visible
+        // Add passive listeners for better performance
+        document.addEventListener('touchstart', onInteraction, { passive: true });
+        document.addEventListener('click', onInteraction, { passive: true });
+        document.addEventListener('scroll', onInteraction, { passive: true, once: true });
+        
+        // 5. Visibility Check (Re-play if tab becomes active/visible)
         if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        playVideo();
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && heroVideo.paused) {
+                        attemptPlay();
                     }
                 });
-            }, { threshold: 0.5 });
-
+            }, { threshold: 0.1 }); // Low threshold for early triggering
             observer.observe(heroVideo);
         }
-
-        // Ensure video is muted (required for autoplay on mobile)
-        heroVideo.muted = true;
-        heroVideo.playsInline = true;
     }
 });
