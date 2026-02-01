@@ -1839,3 +1839,144 @@ h6,
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+
+/* -------------------------------- */
+/* PREMIUM CONTACT FORM ACTIONS    */
+/* -------------------------------- */
+
+.action-area-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Primary "Send Message" Button */
+.btn-premium-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 56px;
+    /* Mobile friendly height */
+    background: linear-gradient(135deg, var(--sunset-orange) 0%, var(--sunset-orange-dark) 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 12px;
+    font-family: var(--font-body-family);
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.25);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-premium-primary i {
+    margin-right: 12px;
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.btn-premium-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    background: linear-gradient(135deg, var(--sunset-orange-light) 0%, var(--sunset-orange) 100%) !important;
+}
+
+.btn-premium-primary:hover i {
+    transform: translateX(-3px) scale(1.1);
+}
+
+.btn-premium-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(255, 107, 53, 0.2);
+}
+
+/* Divider */
+.action-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.divider-line {
+    height: 1px;
+    width: 30px;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: block;
+}
+
+.divider-text {
+    padding: 0 10px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #999;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* Secondary "WhatsApp" Button */
+.btn-premium-secondary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
+    background: #fff !important;
+    color: #25D366 !important;
+    border: 2px solid rgba(37, 211, 102, 0.15) !important;
+    border-radius: 12px;
+    font-family: var(--font-body-family);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none !important;
+}
+
+.btn-premium-secondary .btn-label {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.btn-premium-secondary .btn-label i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.btn-premium-secondary .btn-subtext {
+    font-size: 11px;
+    color: #888;
+    font-weight: 500;
+}
+
+.btn-premium-secondary:hover {
+    background: #f0fdf4 !important;
+    /* Very light green hint */
+    border-color: #25D366 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.1);
+}
+
+.btn-premium-secondary:hover .btn-label {
+    color: #128C7E !important;
+}
+
+/* Mobile Adjustments for Action Area */
+@media (max-width: 576px) {
+    .btn-premium-primary {
+        font-size: 15px;
+    }
+
+    .btn-premium-secondary .btn-label {
+        font-size: 14px;
+    }
+}
