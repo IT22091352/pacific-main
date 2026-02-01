@@ -310,3 +310,31 @@ body {
         margin-top: 1rem;
     }
 }
+
+/* Hero Section Mobile Optimization (Subpages) */
+@media (max-width: 768px) {
+    /* Reduce Hero Height for Subpages */
+    .hero-wrap.hero-wrap-2,
+    .hero-wrap.hero-wrap-2 .slider-text {
+        height: 450px !important; /* Fixed height for consistency */
+        min-height: 450px;
+    }
+
+    /* Typography adjustments */
+    .hero-wrap.hero-wrap-2 h1 {
+        font-size: 32px !important;
+        line-height: 1.2;
+    }
+
+    .hero-wrap.hero-wrap-2 .breadcrumbs {
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+
+    /* Ensure content is vertically centered properly */
+    .hero-wrap.hero-wrap-2 .slider-text {
+        align-items: center !important; /* Center content */
+        justify-content: center !important;
+        padding-bottom: 0 !important;
+    }
+}
