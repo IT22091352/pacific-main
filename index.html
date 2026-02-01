@@ -321,8 +321,8 @@
                             <span class="package-duration">7 Days / 6 Nights</span>
                             <h3>Cultural Triangle Tour</h3>
                             <p>Explore ancient kingdoms, temples, and UNESCO World Heritage Sites</p>
-                            <div class="package-price">From $850/person</div>
-                            <a href="packages.html" class="btn btn-primary btn-sm">View Details</a>
+                            <a href="javascript:void(0);" class="btn btn-whatsapp btn-block send-inquiry-btn"><i
+                                    class="fa fa-whatsapp"></i> Book via WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -333,8 +333,8 @@
                             <span class="package-duration">5 Days / 4 Nights</span>
                             <h3>Beach & Wildlife Safari</h3>
                             <p>Perfect blend of relaxation and adventure with wildlife encounters</p>
-                            <div class="package-price">From $650/person</div>
-                            <a href="packages.html" class="btn btn-primary btn-sm">View Details</a>
+                            <a href="javascript:void(0);" class="btn btn-whatsapp btn-block send-inquiry-btn"><i
+                                    class="fa fa-whatsapp"></i> Book via WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -345,8 +345,8 @@
                             <span class="package-duration">10 Days / 9 Nights</span>
                             <h3>Complete Sri Lanka</h3>
                             <p>Comprehensive tour covering culture, nature, beaches, and wildlife</p>
-                            <div class="package-price">From $1,200/person</div>
-                            <a href="packages.html" class="btn btn-primary btn-sm">View Details</a>
+                            <a href="javascript:void(0);" class="btn btn-whatsapp btn-block send-inquiry-btn"><i
+                                    class="fa fa-whatsapp"></i> Book via WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -548,7 +548,35 @@
     <!-- Authentication Script -->
     <script src="js/auth.js" defer></script>
     <!-- Reviews Script -->
+    <!-- Reviews Script -->
     <script src="js/reviews.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sendButtons = document.querySelectorAll('.send-inquiry-btn');
+
+            sendButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const card = this.closest('.package-card package-content') || this.closest('.package-content');
+                    if (!card) return;
+
+                    const title = card.querySelector('h3').textContent.trim();
+                    const duration = card.querySelector('.package-duration').textContent.trim();
+
+                    // Format message
+                    const message = `Hi, I'm interested in the *${title}* package.\n\nDetails:\n- ${duration}\n\nCould you please send me more information?`;
+
+                    // WhatsApp API URL (using number from footer)
+                    const phoneNumber = "94771234567";
+                    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+                    // Open in new tab
+                    window.open(whatsappUrl, '_blank');
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
