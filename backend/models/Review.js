@@ -4,7 +4,20 @@ const reviewSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
-        required: true
+        required: false // Changed from true to false to support guests
+    },
+    // Guest details for non-active users
+    feedbackToken: {
+        type: String,
+        select: false // Don't return this in normal queries for security
+    },
+    guestName: {
+        type: String,
+        trim: true
+    },
+    guestEmail: {
+        type: String,
+        trim: true
     },
     // Adding fields to match the frontend form
     country: {

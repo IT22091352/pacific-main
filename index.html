@@ -365,8 +365,26 @@
             </div>
             <div class="row ftco-animate">
                 <div class="col-md-12">
-                    <div class="owl-carousel" id="reviews-carousel">
-                        <!-- Reviews will be loaded dynamically via js/reviews.js -->
+                    <!-- Custom Premium Carousel -->
+                    <div class="premium-testimonial-carousel">
+                        <div class="testimonial-viewport">
+                            <div class="testimonial-track" id="reviews-track">
+                                <!-- Reviews will be loaded dynamically via js/reviews.js -->
+                            </div>
+                        </div>
+
+                        <!-- Navigation Controls -->
+                        <div class="carousel-controls">
+                            <button class="nav-btn prev-btn" aria-label="Previous Testimonial">
+                                <i class="fa fa-angle-left"></i>
+                            </button>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="carousel-progress"></div>
+                            </div>
+                            <button class="nav-btn next-btn" aria-label="Next Testimonial">
+                                <i class="fa fa-angle-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

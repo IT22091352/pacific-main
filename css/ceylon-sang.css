@@ -1980,3 +1980,1021 @@ h6,
         font-size: 14px;
     }
 }
+
+/* -------------------------------- */
+/* TESTIMONIALS EDIT/DELETE UI      */
+/* -------------------------------- */
+
+.review-card {
+    position: relative;
+    /* Context for absolute positioning of menu */
+}
+
+.review-actions-menu {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+}
+
+.btn-icon-menu {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    font-size: 18px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.btn-icon-menu:hover,
+.btn-icon-menu:focus {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #333;
+    outline: none;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 35px;
+    background-color: #fff;
+    min-width: 140px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.15);
+    z-index: 20;
+    /* Higher than menu button */
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.2s;
+}
+
+/* Show the dropdown menu (use JS to add this class) */
+.show {
+    display: block;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 13px;
+    transition: background 0.2s;
+    font-family: var(--font-body-family);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropdown-content a i {
+    width: 16px;
+    text-align: center;
+    color: #777;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: var(--sea-blue);
+}
+
+.dropdown-content a:hover i {
+    color: var(--sea-blue);
+}
+
+.dropdown-content a:last-child:hover {
+    background-color: #fff5f5;
+    color: #dc3545;
+}
+
+.dropdown-content a:last-child:hover i {
+    color: #dc3545;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Custom Modal Styles */
+.custom-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+}
+
+.custom-modal-content {
+    background-color: #ffffff;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close-modal {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #333;
+    text-decoration: none;
+}
+
+.custom-modal h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-family: var(--font-heading-family);
+    color: var(--sea-blue);
+    font-size: 24px;
+}
+
+.custom-modal .form-group label {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.custom-modal .form-control {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    width: 100%;
+    font-family: inherit;
+}
+
+.custom-modal .form-control:focus {
+    border-color: var(--sea-blue);
+    outline: none;
+}
+
+.custom-modal .btn-primary {
+    background: var(--sea-blue) !important;
+    border: none !important;
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+.custom-modal .btn-primary:hover {
+    background: var(--sea-blue-dark) !important;
+}
+
+/* ------------------------------------------- */
+/* PREMIUM TESTIMONIAL CAROUSEL - BRAND COLORS */
+/* Color Distribution: White 70-75%, Ocean Blue 18-22%, Sunset Orange 3-5% */
+/* ------------------------------------------- */
+
+/* Carousel Container */
+.premium-testimonial-carousel {
+    position: relative;
+    padding: 20px 0 60px 0;
+    overflow: hidden;
+    perspective: 1000px;
+}
+
+.testimonial-viewport {
+    width: 100%;
+    margin: 0 auto;
+    overflow: visible;
+    padding: 40px 0;
+}
+
+.testimonial-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    gap: 30px;
+    width: max-content;
+    cursor: grab;
+    will-change: transform;
+}
+
+.testimonial-track:active {
+    cursor: grabbing;
+}
+
+/* Glassmorphism Card - DARK OCEAN BACKGROUND */
+.testimonial-card-premium {
+    flex: 0 0 350px;
+    background: linear-gradient(135deg, #2c5f6f, #1e4450);
+    /* Dark ocean gradient */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px 35px;
+    position: relative;
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    opacity: 0.75;
+    /* Inactive state */
+    transform: scale(0.92);
+    user-select: none;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Active Slide - Enhanced */
+.testimonial-card-premium.active {
+    background: linear-gradient(135deg, #2c5f6f, #1e4450);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    opacity: 1;
+    transform: scale(1);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    z-index: 2;
+}
+
+/* Hover Effect */
+.testimonial-card-premium.active:hover {
+    transform: scale(1) translateY(-8px);
+    box-shadow:
+        0 16px 50px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Gradient Border Effect - Subtle */
+.testimonial-card-premium::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.testimonial-card-premium.active::before {
+    opacity: 1;
+}
+
+/* Quote Icon - GOLD COLOR */
+.testimonial-card-premium .quote-icon {
+    font-size: 48px;
+    color: #d4a574;
+    /* Gold/tan color like in image */
+    margin-bottom: 25px;
+    opacity: 0.9;
+    line-height: 1;
+}
+
+/* Review Text - WHITE */
+.testimonial-card-premium .review-text {
+    font-size: 16px;
+    font-style: normal;
+    color: #ffffff;
+    /* White text */
+    line-height: 1.7;
+    margin-bottom: auto;
+    /* Push user info to bottom */
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex-grow: 1;
+}
+
+/* User Section - At Bottom */
+.testimonial-card-premium .user-info {
+    display: flex;
+    align-items: center;
+    border-top: none;
+    padding-top: 25px;
+    margin-top: 20px;
+}
+
+/* Avatar - Circular Photo */
+.testimonial-card-premium .avatar {
+    width: 56px;
+    height: 56px;
+    background: #ffffff;
+    border-radius: 50%;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--ocean-blue);
+    font-family: var(--font-heading-family);
+    font-size: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+/* User Details - WHITE TEXT */
+.testimonial-card-premium .details {
+    flex: 1;
+}
+
+.testimonial-card-premium .details h4 {
+    font-family: var(--font-heading-family);
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    color: #ffffff;
+    /* White name */
+    line-height: 1.2;
+}
+
+.testimonial-card-premium .details span {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    /* Light gray/white */
+    display: block;
+    line-height: 1.5;
+}
+
+.testimonial-card-premium .details .country {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85);
+    /* Slightly brighter for country */
+    display: block;
+    margin-top: 2px;
+}
+
+.testimonial-card-premium .details .country i {
+    margin-right: 4px;
+    font-size: 12px;
+}
+
+.testimonial-card-premium .details .tour-package {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    display: block;
+    margin-top: 2px;
+}
+
+/* Stars - SUNSET ORANGE - Top Right */
+.testimonial-card-premium .rating-stars {
+    position: absolute;
+    top: 40px;
+    right: 35px;
+    color: var(--sunset-orange);
+    /* Sunset Orange */
+    font-size: 16px;
+}
+
+.testimonial-card-premium .rating-stars i {
+    margin-left: 2px;
+    filter: drop-shadow(0 2px 4px rgba(255, 107, 53, 0.3));
+}
+
+/* Navigation Controls - Ocean Blue Primary */
+.carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Arrow Buttons - Ocean Blue with Sunset Orange Hover */
+.nav-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--ocean-blue);
+    /* Ocean Blue (18-22%) */
+    background: #ffffff;
+    /* White background */
+    color: var(--ocean-blue);
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 105, 148, 0.1);
+}
+
+.nav-btn:hover {
+    background: var(--sunset-orange);
+    /* Sunset Orange hover (3-5%) */
+    color: #ffffff;
+    border-color: var(--sunset-orange);
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.25);
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+/* Progress Bar - Ocean Blue → Sunset Orange Gradient */
+.progress-container {
+    width: 220px;
+    height: 5px;
+    background: rgba(0, 105, 148, 0.1);
+    /* Light Ocean Blue background */
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(to right, var(--ocean-blue), var(--sunset-orange));
+    /* Ocean Blue → Sunset Orange */
+    width: 0%;
+    transition: width 0.3s ease-out;
+    border-radius: 3px;
+    box-shadow: 0 0 8px rgba(255, 107, 53, 0.4);
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .testimonial-card-premium {
+        flex: 0 0 85vw;
+        opacity: 1;
+        transform: scale(1) !important;
+        padding: 30px 25px;
+    }
+
+    .testimonial-card-premium.active {
+        border: 2px solid var(--ocean-blue);
+        box-shadow: 0 6px 25px rgba(0, 105, 148, 0.15);
+    }
+
+    .testimonial-viewport {
+        padding: 20px 0;
+    }
+
+    .testimonial-track {
+        gap: 20px;
+    }
+
+    .progress-container {
+        width: 140px;
+    }
+
+    .nav-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
+}
+
+/* Three-dot Action Menu - WHITE FOR DARK BACKGROUND */
+.testimonial-card-premium .review-actions-menu {
+    top: 20px;
+    right: 20px;
+}
+
+.testimonial-card-premium .btn-icon-menu {
+    color: rgba(255, 255, 255, 0.7);
+    /* White for dark background */
+    opacity: 0.7;
+    transition: all 0.2s;
+}
+
+.testimonial-card-premium .btn-icon-menu:hover {
+    opacity: 1;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.testimonial-card-premium .dropdown-content {
+    top: 40px;
+    right: 0;
+    background: #ffffff;
+    /* White dropdown */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-card-premium .dropdown-content a {
+    color: #333;
+    /* Dark text on white dropdown */
+}
+
+.testimonial-card-premium .dropdown-content a:hover {
+    background-color: rgba(0, 105, 148, 0.05);
+    color: var(--ocean-blue);
+}
+
+.testimonial-card-premium .dropdown-content a:hover i {
+    color: var(--ocean-blue);
+}
+
+/* Section Heading - Ocean Blue */
+.testimony-section .heading-section h2 {
+    color: var(--ocean-blue);
+}
+
+.testimony-section .heading-section .subheading {
+    color: var(--sunset-orange);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* ========================================= */
+/* PREMIUM CARD STYLING - SYSTEM PAGES */
+/* Brand Colors: White 70-75%, Ocean Blue 18-22%, Sunset Orange 3-5% */
+/* ========================================= */
+
+/* Service Info Cards - Services Page */
+.contact-info-item {
+    background: #ffffff;
+    /* White background (70-75%) */
+    border: 1px solid rgba(0, 105, 148, 0.1);
+    /* Subtle Ocean Blue border */
+    border-radius: 16px;
+    padding: 40px 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    height: 100%;
+}
+
+.contact-info-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 30px rgba(0, 105, 148, 0.12);
+    /* Ocean Blue shadow */
+    border-color: var(--ocean-blue);
+}
+
+.contact-info-item .icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--ocean-blue-light), var(--ocean-blue));
+    /* Ocean Blue (18-22%) */
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 105, 148, 0.2);
+    transition: all 0.3s ease;
+}
+
+.contact-info-item:hover .icon {
+    background: linear-gradient(135deg, var(--sunset-orange), var(--sunset-orange-dark));
+    /* Sunset Orange hover (3-5%) */
+    transform: scale(1.08);
+}
+
+.contact-info-item .icon span {
+    font-size: 28px;
+    color: #ffffff;
+    /* White icon */
+}
+
+.contact-info-item h3 {
+    font-family: var(--font-heading-family);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ocean-blue);
+    /* Ocean Blue heading (18-22%) */
+    margin-bottom: 12px;
+}
+
+.contact-info-item p,
+.contact-info-item a {
+    color: #666;
+    /* Muted gray text */
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.contact-info-item a:hover {
+    color: var(--sunset-orange);
+    /* Sunset Orange link hover (3-5%) */
+}
+
+/* Destination Cards - Destinations Page */
+.destination-card,
+.ftco-destination {
+    background: #ffffff;
+    border: 1px solid rgba(0, 105, 148, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.destination-card:hover,
+.ftco-destination:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 30px rgba(0, 105, 148, 0.12);
+    border-color: var(--ocean-blue);
+}
+
+.destination-card .text,
+.ftco-destination .text {
+    padding: 25px;
+    background: #ffffff;
+}
+
+.destination-card h3,
+.ftco-destination h3 {
+    font-family: var(--font-heading-family);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ocean-blue);
+    /* Ocean Blue (18-22%) */
+    margin-bottom: 10px;
+}
+
+.destination-card .price,
+.ftco-destination .price {
+    color: var(--sunset-orange);
+    /* Sunset Orange (3-5%) */
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.destination-card .rating,
+.ftco-destination .rating {
+    color: var(--sunset-orange);
+}
+
+/* Package Cards - Packages Page */
+.package-card,
+.ftco-tour-item {
+    background: #ffffff;
+    border: 1px solid rgba(0, 105, 148, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.package-card:hover,
+.ftco-tour-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 30px rgba(0, 105, 148, 0.12);
+    border-color: var(--ocean-blue);
+}
+
+.package-card .text,
+.ftco-tour-item .text {
+    padding: 25px;
+}
+
+.package-card h3,
+.ftco-tour-item h3 {
+    font-family: var(--font-heading-family);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ocean-blue);
+    /* Ocean Blue (18-22%) */
+    margin-bottom: 15px;
+}
+
+.package-card .price,
+.ftco-tour-item .price {
+    color: var(--ocean-blue);
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.package-card .btn,
+.ftco-tour-item .btn {
+    background: var(--ocean-blue);
+    border-color: var(--ocean-blue);
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.package-card .btn:hover,
+.ftco-tour-item .btn:hover {
+    background: var(--sunset-orange);
+    /* Sunset Orange hover (3-5%) */
+    border-color: var(--sunset-orange);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+/* Service Feature Lists */
+.list-unstyled li i.fa-check {
+    color: var(--sunset-orange) !important;
+    /* Sunset Orange checkmarks (3-5%) */
+    margin-right: 10px;
+}
+
+/* Section Headings - Universal */
+.heading-section h2 {
+    color: var(--ocean-blue);
+    /* Ocean Blue (18-22%) */
+    font-family: var(--font-heading-family);
+}
+
+.heading-section .subheading {
+    color: var(--sunset-orange);
+    /* Sunset Orange (3-5%) */
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Image Overlays */
+.ftco-destination .overlay,
+.ftco-tour-item .overlay,
+.destination-card .overlay,
+.package-card .overlay {
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 105, 148, 0.7) 100%);
+    /* Ocean Blue gradient */
+}
+
+/* Buttons - Universal Premium Style */
+.btn-primary {
+    background: var(--ocean-blue);
+    border-color: var(--ocean-blue);
+    color: #ffffff;
+    font-weight: 500;
+    padding: 12px 30px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: var(--sunset-orange);
+    /* Sunset Orange hover (3-5%) */
+    border-color: var(--sunset-orange);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+/* Gallery Items */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 30px rgba(0, 105, 148, 0.15);
+}
+
+.gallery-item .overlay {
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 105, 148, 0.8) 100%);
+}
+
+.gallery-item h3 {
+    color: #ffffff;
+    font-family: var(--font-heading-family);
+}
+
+/* About Page - Team Cards */
+.team-card,
+.ftco-team {
+    background: #ffffff;
+    border: 1px solid rgba(0, 105, 148, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.team-card:hover,
+.ftco-team:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 30px rgba(0, 105, 148, 0.12);
+    border-color: var(--ocean-blue);
+}
+
+.team-card .text,
+.ftco-team .text {
+    padding: 20px;
+    background: #ffffff;
+}
+
+.team-card h3,
+.ftco-team h3 {
+    color: var(--ocean-blue);
+    font-family: var(--font-heading-family);
+    font-weight: 600;
+}
+
+.team-card .position,
+.ftco-team .position {
+    color: var(--sunset-orange);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Stats/Counter Sections */
+.ftco-counter {
+    background: #ffffff;
+    border: 1px solid rgba(0, 105, 148, 0.1);
+    border-radius: 16px;
+    padding: 40px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.ftco-counter:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 30px rgba(0, 105, 148, 0.12);
+    border-color: var(--ocean-blue);
+}
+
+.ftco-counter .number {
+    color: var(--ocean-blue);
+    font-weight: 700;
+    font-size: 48px;
+}
+
+.ftco-counter span {
+    color: #666;
+    font-size: 16px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+
+    .contact-info-item,
+    .destination-card,
+    .package-card,
+    .team-card,
+    .ftco-counter {
+        margin-bottom: 20px;
+    }
+
+    .contact-info-item .icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .contact-info-item .icon span {
+        font-size: 24px;
+    }
+}
+
+/* ========================================= */
+/* EDIT REVIEW MODAL STYLING */
+/* ========================================= */
+
+.custom-modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.custom-modal-content {
+    background-color: #ffffff;
+    margin: 10% auto;
+    padding: 30px;
+    border: 1px solid rgba(0, 105, 148, 0.1);
+    width: 90%;
+    max-width: 500px;
+    border-radius: 16px;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.custom-modal-content h3 {
+    color: var(--ocean-blue);
+    font-family: var(--font-heading-family);
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.custom-modal-content .close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.custom-modal-content .close-modal:hover {
+    color: var(--sunset-orange);
+}
+
+.custom-modal-content .form-group {
+    margin-bottom: 20px;
+}
+
+.custom-modal-content .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.custom-modal-content .form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(0, 105, 148, 0.2);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: var(--font-body-family);
+    transition: border-color 0.3s;
+}
+
+.custom-modal-content .form-control:focus {
+    outline: none;
+    border-color: var(--ocean-blue);
+    box-shadow: 0 0 0 3px rgba(0, 105, 148, 0.1);
+}
+
+.custom-modal-content textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Edit Modal Button - Ocean Blue */
+.custom-modal-content .btn {
+    width: 100%;
+    padding: 14px 20px;
+    background: var(--ocean-blue) !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.custom-modal-content .btn:hover {
+    background: var(--sunset-orange) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.custom-modal-content .btn:active {
+    transform: translateY(0);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .custom-modal-content {
+        margin: 20% auto;
+        padding: 25px;
+        width: 95%;
+    }
+
+    .custom-modal-content h3 {
+        font-size: 20px;
+    }
+}

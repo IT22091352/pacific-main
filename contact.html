@@ -179,14 +179,36 @@
     <section class="ftco-section testimony-section bg-light">
         <div class="container">
             <div class="row justify-content-center pb-4">
-                <div class="col-md-12 heading-section text-center ftco-animate">
+                <div class="col-md-7 text-center heading-section ftco-animate">
                     <span class="subheading">Testimonials</span>
                     <h2 class="mb-4">What Our Travelers Say</h2>
                     <p>Read reviews from tourists who have experienced Sri Lanka with Ceylon Sang</p>
                 </div>
             </div>
-            <div class="owl-carousel" id="reviews-carousel">
-                <!-- Reviews will be loaded dynamically here -->
+            <div class="row ftco-animate">
+                <div class="col-md-12">
+                    <!-- Custom Premium Carousel -->
+                    <div class="premium-testimonial-carousel">
+                        <div class="testimonial-viewport">
+                            <div class="testimonial-track" id="reviews-track">
+                                <!-- Reviews will be loaded dynamically via js/reviews.js -->
+                            </div>
+                        </div>
+
+                        <!-- Navigation Controls -->
+                        <div class="carousel-controls">
+                            <button class="nav-btn prev-btn" aria-label="Previous Testimonial">
+                                <i class="fa fa-angle-left"></i>
+                            </button>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="carousel-progress"></div>
+                            </div>
+                            <button class="nav-btn next-btn" aria-label="Next Testimonial">
+                                <i class="fa fa-angle-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -196,14 +218,19 @@
         <div class="container">
             <div class="row justify-content-center pb-4">
                 <div class="col-md-12 heading-section text-center ftco-animate">
-                    <span class="subheading">Share Your Experience</span>
-                    <h2 class="mb-4">Leave a Review</h2>
-                    <p>Traveled with us? We'd love to hear about your experience!</p>
+                    <span class="subheading" id="review-form-subtitle">Share Your Experience</span>
+                    <h2 class="mb-4" id="review-form-title">Leave a Review</h2>
+                    <p id="review-form-description">Traveled with us? We'd love to hear about your experience!</p>
+                    <div id="edit-mode-indicator" class="alert alert-info"
+                        style="display:none; max-width: 600px; margin: 15px auto 0;">
+                        <i class="fa fa-edit"></i> You are editing your existing review
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <form id="reviewForm" class="contact-form bg-light p-5">
+                        <input type="hidden" id="edit-review-id" value="">
                         <div id="reviewMessage" class="alert" style="display:none;"></div>
                         <div class="form-group">
                             <label for="review-name">Your Name *</label>
@@ -461,6 +488,7 @@
     </div>
 
     <script src="js/auth.js" defer></script>
+    <script src="js/edit-flow.js" defer></script>
     <script src="js/reviews.js" defer></script>
 </body>
 
