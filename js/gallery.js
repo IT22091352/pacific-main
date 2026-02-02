@@ -23,6 +23,7 @@ $(document).ready(function () {
     });
 
     // Initialize Magnific Popup for gallery images
+    // Initialize Magnific Popup for gallery images
     $('.gallery-item').magnificPopup({
         delegate: 'img',
         type: 'image',
@@ -31,9 +32,15 @@ $(document).ready(function () {
             navigateByImgClick: true,
             preload: [0, 1]
         },
+        callbacks: {
+            elementParse: function (item) {
+                // Use the src of the image element as the popup source
+                item.src = item.el.attr('src');
+            }
+        },
         image: {
             titleSrc: function (item) {
-                return item.el.next('.gallery-overlay').find('.gallery-caption').text();
+                return item.el.next('.experience-overlay').find('.gallery-caption').text();
             }
         }
     });

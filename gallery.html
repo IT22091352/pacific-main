@@ -20,37 +20,61 @@
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/ceylon-sang.css">
+    <link rel="stylesheet" href="css/ceylon-sang-grid.css">
     <link rel="stylesheet" href="css/mobile-enhancements.css">
     <link rel="stylesheet" href="css/auth-modal.css">
+    <style>
+        .experience-item:hover .experience-img {
+            transform: scale(1.05);
+        }
+
+        /* Mobile adjustment for grid */
+        @media (max-width: 768px) {
+            .premium-grid-container {
+                grid-template-columns: repeat(2, 1fr) !important;
+                grid-auto-rows: 250px !important;
+            }
+
+            .experience-item.large,
+            .experience-item.wide {
+                grid-column: span 2;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <!-- Premium Navigation -->
+    <!-- Premium Navigation -->
     <nav class="navbar" id="navbar">
-        <div class="logo-container">
-            <h1 class="logo">Ceylon Sang</h1>
-            <span class="tagline">SRI LANKAN TOUR GUIDE</span>
-        </div>
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <div class="logo-container">
+                <h1 class="logo">Ceylon Sang</h1>
+                <span class="tagline">SRI LANKAN TOUR GUIDE</span>
+            </div>
 
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="destinations.html">Destinations</a></li>
-            <li><a href="packages.html">Tour Packages</a></li>
-            <li><a href="gallery.html" class="active">Gallery</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="destinations.html">Destinations</a></li>
+                <li><a href="packages.html">Tour Packages</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
 
-        <div id="authButton" class="user-actions">
-            <!-- Auth content injected by JS -->
-            <button onclick="openModal('loginModal')" class="btn-login-nav">Login</button>
-        </div>
+            <div id="authButton" class="user-actions">
+                <!-- Auth content injected by JS -->
+                <a href="#" onclick="openModal('loginModal')" class="login-link">
+                    <span class="fa fa-user-circle-o mr-1"></span> Login
+                </a>
+            </div>
 
-        <div class="burger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
         </div>
     </nav>
 
@@ -103,154 +127,174 @@
             </div>
 
             <!-- Gallery Grid -->
-            <div class="row gallery-container">
-                <!-- Cultural Sites -->
-                <div class="col-md-4 gallery-item ftco-animate" data-category="cultural">
-                    <div class="gallery-item">
-                        <img src="images/destination-1.jpg" alt="Sigiriya Rock Fortress">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Sigiriya Rock Fortress - Ancient Wonder</p>
+            <div class="premium-grid-container gallery-container"
+                style="grid-template-rows: repeat(auto-fit, 300px); grid-auto-rows: 300px; grid-auto-flow: dense;">
+                <!-- Sigiriya (Large) -->
+                <div class="experience-item large gallery-item" data-category="cultural">
+                    <img src="images/dest-sigiriya.jpg" alt="Sigiriya Rock Fortress" class="experience-img"
+                        style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                    <div class="experience-overlay" style="pointer-events: none;">
+                        <div class="experience-content">
+                            <h3>Sigiriya</h3>
+                            <p>Ancient Wonder</p>
+                            <span class="d-none gallery-caption">Sigiriya Rock Fortress - Ancient Wonder</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4 gallery-item ftco-animate" data-category="cultural">
-                    <div class="gallery-item">
-                        <img src="images/destination-5.jpg" alt="Temple of Tooth">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Temple of the Sacred Tooth Relic, Kandy</p>
+                <!-- Kandy (Wide) -->
+                <div class="experience-item wide gallery-item" data-category="cultural">
+                    <img src="images/destinations/kandy/temple-of-tooth.jpg" alt="Temple of Tooth"
+                        class="experience-img"
+                        style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                    <div class="experience-overlay" style="pointer-events: none;">
+                        <div class="experience-content">
+                            <h3>Kandy</h3>
+                            <p>Temple of the Tooth Relic</p>
+                            <span class="d-none gallery-caption">Temple of the Sacred Tooth Relic, Kandy</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4 gallery-item ftco-animate" data-category="cultural">
-                    <div class="gallery-item">
-                        <img src="images/destination-3.jpg" alt="Galle Fort">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Historic Galle Fort</p>
+                <!-- Galle -->
+                <div class="experience-item gallery-item" data-category="cultural">
+                    <img src="images/dest-galle.jpg" alt="Galle Fort" class="experience-img"
+                        style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                    <div class="experience-overlay" style="pointer-events: none;">
+                        <div class="experience-content">
+                            <h3>Galle</h3>
+                            <p>Historic Fort</p>
+                            <span class="d-none gallery-caption">Historic Galle Fort</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Wildlife -->
-                <div class="col-md-4 gallery-item ftco-animate" data-category="wildlife">
-                    <div class="gallery-item">
-                        <img src="images/destination-4.jpg" alt="Yala Safari">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Leopard Spotting at Yala National Park</p>
+                <!-- Yala (Large) -->
+                <div class="experience-item large gallery-item" data-category="wildlife">
+                    <img src="images/dest-yala.jpg" alt="Yala Safari" class="experience-img"
+                        style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                    <div class="experience-overlay" style="pointer-events: none;">
+                        <div class="experience-content">
+                            <h3>Yala Park</h3>
+                            <p>Leopard Safari</p>
+                            <span class="d-none gallery-caption">Leopard Spotting at Yala National Park</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4 gallery-item ftco-animate" data-category="wildlife">
-                    <div class="gallery-item">
-                        <img src="images/destination-7.jpg" alt="Elephant Safari">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Elephant Herd at Udawalawe</p>
+                <!-- Udawalawe -->
+                <div class="experience-item gallery-item" data-category="wildlife">
+                    <img src="images/dest-udawalawe.jpg" alt="Elephant Safari" class="experience-img"
+                        style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                    <div class="experience-overlay" style="pointer-events: none;">
+                        <div class="experience-content">
+                            <h3>Udawalawe</h3>
+                            <p>Elephant Herds</p>
+                            <span class="d-none gallery-caption">Elephant Herd at Udawalawe</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4 gallery-item ftco-animate" data-category="wildlife">
-                    <div class="gallery-item">
-                        <img src="images/destination-8.jpg" alt="Bird Watching">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Exotic Birds of Sri Lanka</p>
+                <!-- Sinharaja -->
+                <div class="experience-item gallery-item" data-category="wildlife">
+                    <img src="images/dest-sinharaja.jpg" alt="Bird Watching" class="experience-img"
+                        style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                    <div class="experience-overlay" style="pointer-events: none;">
+                        <div class="experience-content">
+                            <h3>Sinharaja</h3>
+                            <p>Rainforest Birds</p>
+                            <span class="d-none gallery-caption">Exotic Birds of Sri Lanka</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Beaches -->
-                <div class="col-md-4 gallery-item ftco-animate" data-category="beaches">
-                    <div class="gallery-item">
-                        <img src="images/destination-6.jpg" alt="Mirissa Beach">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Sunset at Mirissa Beach</p>
+                <!-- Mirissa (Wide) -->
+                <div class="experience-item wide gallery-item" data-category="beaches">
+                    <img src="images/destinations/mirissa/mirissa.jpg" alt="Mirissa Beach" class="experience-img"
+                        style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                    <div class="experience-overlay" style="pointer-events: none;">
+                        <div class="experience-content">
+                            <h3>Mirissa</h3>
+                            <p>Sunset Beach</p>
+                            <span class="d-none gallery-caption">Sunset at Mirissa Beach</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4 gallery-item ftco-animate" data-category="beaches">
-                    <div class="gallery-item">
-                        <img src="images/destination-2.jpg" alt="Coastal Beauty">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Southern Coast Paradise</p>
+                <!-- Arugam Bay -->
+                <div class="experience-item gallery-item" data-category="beaches">
+                    <img src="images/dest-arugambay.jpg" alt="Coastal Beauty" class="experience-img"
+                        style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                    <div class="experience-overlay" style="pointer-events: none;">
+                        <div class="experience-content">
+                            <h3>Arugam Bay</h3>
+                            <p>Surf Paradise</p>
+                            <span class="d-none gallery-caption">Arugam Bay Surf Paradise</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4 gallery-item ftco-animate" data-category="beaches">
-                    <div class="gallery-item">
-                        <img src="images/destination-9.jpg" alt="Beach Activities">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Beach Adventures</p>
+                <!-- Tangalle -->
+                <div class="experience-item gallery-item" data-category="beaches">
+                    <img src="images/dest-tangalle.jpg" alt="Beach Activities" class="experience-img"
+                        style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                    <div class="experience-overlay" style="pointer-events: none;">
+                        <div class="experience-content">
+                            <h3>Tangalle</h3>
+                            <p>Secluded Shores</p>
+                            <span class="d-none gallery-caption">Tangalle Secluded Beaches</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Nature -->
-                <div class="col-md-4 gallery-item ftco-animate" data-category="nature">
-                    <div class="gallery-item">
-                        <img src="images/destination-2.jpg" alt="Ella">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Nine Arch Bridge, Ella</p>
+                <!-- Ella -->
+                <div class="experience-item gallery-item" data-category="nature">
+                    <img src="images/dest-ella.jpg" alt="Ella" class="experience-img"
+                        style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                    <div class="experience-overlay" style="pointer-events: none;">
+                        <div class="experience-content">
+                            <h3>Ella</h3>
+                            <p>Nine Arch Bridge</p>
+                            <span class="d-none gallery-caption">Nine Arch Bridge, Ella</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4 gallery-item ftco-animate" data-category="nature">
-                    <div class="gallery-item">
-                        <img src="images/destination-7.jpg" alt="Tea Plantations">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Tea Plantations in Nuwara Eliya</p>
+                <!-- Nuwara Eliya -->
+                <div class="experience-item gallery-item" data-category="nature">
+                    <img src="images/dest-nuwara-eliya.jpg" alt="Tea Plantations" class="experience-img"
+                        style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                    <div class="experience-overlay" style="pointer-events: none;">
+                        <div class="experience-content">
+                            <h3>Nuwara Eliya</h3>
+                            <p>Tea Country</p>
+                            <span class="d-none gallery-caption">Tea Plantations in Nuwara Eliya</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4 gallery-item ftco-animate" data-category="nature">
-                    <div class="gallery-item">
-                        <img src="images/destination-1.jpg" alt="Mountain Views">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Breathtaking Mountain Landscapes</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- With Tourists -->
-                <div class="col-md-4 gallery-item ftco-animate" data-category="tourists">
-                    <div class="gallery-item">
-                        <img src="images/person_1.jpg" alt="Happy Tourists">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Creating Memories with Our Guests</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 gallery-item ftco-animate" data-category="tourists">
-                    <div class="gallery-item">
-                        <img src="images/person_2.jpg" alt="Group Tour">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Group Adventure in Sri Lanka</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 gallery-item ftco-animate" data-category="tourists">
-                    <div class="gallery-item">
-                        <img src="images/person_3.jpg" alt="Tourist Experience">
-                        <div class="gallery-overlay">
-                            <p class="gallery-caption">Unforgettable Experiences</p>
+                <!-- Horton Plains -->
+                <div class="experience-item gallery-item" data-category="nature">
+                    <img src="images/destinations/hortonplains/hortonplains.jpg" alt="Mountain Views"
+                        class="experience-img"
+                        style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                    <div class="experience-overlay" style="pointer-events: none;">
+                        <div class="experience-content">
+                            <h3>Horton Plains</h3>
+                            <p>Scenic Trek</p>
+                            <span class="d-none gallery-caption">Horton Plains Landscapes</span>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Load More Button -->
-            <div class="row mt-5">
-                <div class="col text-center">
-                    <p><button class="btn btn-primary px-4 py-3">Load More Photos</button></p>
-                </div>
+        <!-- Load More Button -->
+        <div class="row mt-5">
+            <div class="col text-center">
+                <p><button class="btn btn-primary px-4 py-3">Load More Photos</button></p>
             </div>
+        </div>
         </div>
     </section>
 
