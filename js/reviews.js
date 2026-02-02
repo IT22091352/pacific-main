@@ -1,7 +1,6 @@
 // Ceylon Sang - Reviews Management
 // Re-using the same API base URL
-// Determine API URL based on environment
-const REVIEW_API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+const REVIEW_API_URL = (!window.location.hostname || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     ? 'http://localhost:5000/api'
     : '/api';
 
@@ -10,20 +9,23 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function initReviews() {
-    // Check auth state for form
     checkReviewFormAuth();
-
-    // Load existing reviews
     loadReviews();
 
-    // Handle form submission
     const reviewForm = document.getElementById('reviewForm');
     if (reviewForm) {
         reviewForm.addEventListener('submit', handleReviewSubmit);
     }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const editId = urlParams.get('editReviewId');
+    if (editId) {
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+        setTimeout(() => editReview(editId), 500);
+    }
 }
 
-// Helper: Get or create Feedback Token
 function getFeedbackToken() {
     let token = localStorage.getItem('feedbackToken');
     if (!token) {
@@ -36,22 +38,18 @@ function getFeedbackToken() {
     return token;
 }
 
-// Check auth state for form
 function checkReviewFormAuth() {
     const token = localStorage.getItem('token');
     const userName = localStorage.getItem('userName');
     const userEmail = localStorage.getItem('userEmail');
-
     const submitBtn = document.getElementById('reviewSubmitBtn');
     const nameInput = document.getElementById('review-name');
     const emailInput = document.getElementById('review-email');
     const messageDiv = document.getElementById('reviewMessage');
 
-    // Always enable for guests too
     if (submitBtn) submitBtn.disabled = false;
 
     if (!token) {
-        // User not logged in - Guest Mode
         if (nameInput) {
             nameInput.disabled = false;
             nameInput.placeholder = "Enter your name (Guest)";
@@ -62,9 +60,8 @@ function checkReviewFormAuth() {
             emailInput.placeholder = "Enter your email (Guest)";
             emailInput.value = localStorage.getItem('guestEmail') || '';
         }
-        if (messageDiv) messageDiv.style.display = 'none'; // Hide generic "please login"
+        if (messageDiv) messageDiv.style.display = 'none';
     } else {
-        // User logged in
         if (nameInput) {
             nameInput.value = userName || '';
             nameInput.disabled = true;
@@ -77,143 +74,143 @@ function checkReviewFormAuth() {
     }
 }
 
-// Check if current user owns the review
 function isReviewOwner(review) {
-    const userId = localStorage.getItem('userId'); // Assuming login stores userId
-    const currentToken = localStorage.getItem('feedbackToken');
-
+    const userId = localStorage.getItem('userId');
     if (userId && review.user && review.user._id === userId) return true;
-    // Check token ownership (requires backend to return feedbackToken or we infer it blindly? 
-    // Ideally backend shouldn't return token. We can't check 'review.feedbackToken' if it's select:false.
-    // However, if we just rely on delete/edit failing, that's secure but bad UX.
-    // For guests, we can check if they created it in this session history?
-    // OR: for now, assume ownership if we created it locally (better would be if API returned 'isOwner' boolean)
-    // To keep it simple: We will try to delete/edit. if backend says 401, we know.
-    // But to SHOW buttons: we need a hint.
-    // Let's rely on local storage of "myReviewIds" or similiar? No, too complex.
-    // Let's Assume the feedbackToken matches. Wait, we can't see the token.
-    // Solution: Backend should return `isOwner` virtual field or we check `review.user` vs `userId`.
-    // For Guest: we only know if we have the token that matches.
-    // We'll proceed by trying. We'll show buttons for ALL potentially (or hide all). 
-    // BETTER: Backend returns a flag `isOwner: true` if the request header token matches user OR guest token matches.
-    // Since we don't send guest token on GET /reviews, we can't know. 
-    // REVISED PLAN: We will store 'myReviews' in localStorage as [id1, id2].
-
-    // For now, let's implement the 'try and fail' approach or local ID storage.
-    // We'll use LocalStorage for Guest IDs.
     const myGuestReviews = JSON.parse(localStorage.getItem('myGuestReviews') || '[]');
     if (!userId && myGuestReviews.includes(review._id)) return true;
-
     return false;
 }
 
-
-// Custom Carousel State
-const carouselState = {
-    currentIndex: 0,
-    totalSlides: 0,
-    autoplayInterval: null,
-    isDragging: false,
-    startPos: 0,
-    currentTranslate: 0,
-    prevTranslate: 0,
-    animationID: 0,
-    track: null,
-    cards: []
-};
-
-// Load reviews from API
+// Load reviews for Dual-Row Marquee
 async function loadReviews() {
-    const track = document.getElementById('reviews-track');
-    if (!track) return;
+    const row1 = document.getElementById('marquee-row-1');
+    const row2 = document.getElementById('marquee-row-2');
+    const container = document.querySelector('.marquee-section');
 
-    // Store track reference
-    carouselState.track = track;
+    if (!row1 || !row2) return;
 
     try {
         const response = await fetch(`${REVIEW_API_URL}/reviews`);
         const result = await response.json();
 
         if (result.success && result.data.length > 0) {
-
-            // Clear track
-            track.innerHTML = '';
-
-            // Store total
-            carouselState.totalSlides = result.data.length;
-
-            // Render Cards
-            result.data.forEach((review, index) => {
-                const reviewHTML = createPremiumReviewCard(review, index);
-                track.insertAdjacentHTML('beforeend', reviewHTML);
+            // 1. Deduplicate by ID
+            const seen = new Set();
+            const uniqueReviews = result.data.filter(r => {
+                if (seen.has(r._id)) return false;
+                seen.add(r._id);
+                return true;
             });
 
-            // Get cards ref
-            carouselState.cards = Array.from(document.querySelectorAll('.testimonial-card-premium'));
+            // Clear rows
+            row1.innerHTML = '<div class="marquee-track animate-left"></div>';
+            row2.innerHTML = '<div class="marquee-track animate-right"></div>';
+            
+            const track1 = row1.querySelector('.marquee-track');
+            const track2 = row2.querySelector('.marquee-track');
 
-            // Initialize Carousel
-            initCustomCarousel();
+            // --- SMART LOGIC ---
+            // If reviews are few (< 5), disable marquee and show static grid
+            if (uniqueReviews.length < 5) {
+                if (container) container.classList.add('path-static-view');
+                
+                // Put all in Row 1, Center them, NO CLONES
+                const generateHTML = (list) => {
+                     return list.map(review => createPremiumReviewCard(review)).join('');
+                };
+
+                track1.innerHTML = generateHTML(uniqueReviews);
+                
+                // Hide Row 2
+                row2.style.display = 'none';
+
+            } else {
+                // Enough reviews for Marquee
+                if (container) container.classList.remove('path-static-view');
+                row2.style.display = 'block';
+
+                const mid = Math.ceil(uniqueReviews.length / 2);
+                const dataRow1 = uniqueReviews.slice(0, mid);
+                const dataRow2 = uniqueReviews.slice(mid);
+
+                const fillTrack = (track, items) => {
+                    if (!items.length) {
+                        track.innerHTML = ''; 
+                        return;
+                    }
+
+                    const generateHTML = (list, suffix) => {
+                        return list.map((review, i) => {
+                            const domId = suffix ? `review-${suffix}-${review._id}` : `review-${review._id}`;
+                            let html = createPremiumReviewCard(review);
+                            return html.replace(/id="review-[^"]+"/, `id="${domId}"`);
+                        }).join('');
+                    };
+
+                    let contentHTML = generateHTML(items, '');
+                    contentHTML += generateHTML(items, 'clone1');
+                    
+                    if (items.length < 4) {
+                         contentHTML += generateHTML(items, 'clone2');
+                    }
+
+                    track.innerHTML = contentHTML;
+                };
+
+                fillTrack(track1, dataRow1);
+                fillTrack(track2, dataRow2);
+            }
 
         } else {
-            track.innerHTML = '<p class="text-center w-100">No reviews yet. Be the first!</p>';
+             row1.innerHTML = '<p class="text-center w-100">No reviews yet.</p>';
         }
     } catch (error) {
         console.error('Error loading reviews:', error);
-        track.innerHTML = '<p class="text-center w-100 text-danger">Failed to load reviews.</p>';
+        row1.innerHTML = `
+            <div class="text-center w-100 text-danger">
+                <p>Failed to load reviews.</p>
+                <small>${error.message}</small>
+            </div>`;
     }
 }
 
-// Create Premium Review Card HTML
-function createPremiumReviewCard(review, index) {
-    const stars = generateStars(review.rating);
+function generateStars(rating) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+            stars += '<i class="fa fa-star text-warning"></i>';
+        } else {
+            stars += '<i class="fa fa-star-o text-muted"></i>';
+        }
+    }
+    return stars;
+}
 
-    // Get country and tour info
+function createPremiumReviewCard(review) {
+    const stars = generateStars(review.rating);
     const country = review.country || '';
     const tourPackage = review.tourPackage ? getTourLabel(review.tourPackage) : '';
-
-    // Build the position/company line (like "VP of Product, Zapay")
-    let positionLine = '';
-    if (country && tourPackage) {
-        positionLine = `${country} - ${tourPackage}`;
-    } else if (country) {
-        positionLine = country;
-    } else if (tourPackage) {
-        positionLine = tourPackage;
-    } else {
-        positionLine = 'International Traveler';
-    }
-
     const initials = (review.user ? review.user.name : (review.guestName || 'G')).charAt(0).toUpperCase();
     const name = escapeHtml(review.user ? review.user.name : review.guestName);
 
-    // Action Menu (if owner)
     let actions = '';
     if (isReviewOwner(review)) {
         actions = `
             <div class="review-actions-menu">
-                <button class="btn-icon-menu" onclick="toggleReviewMenu(event, '${review._id}')">
+                <button class="btn-icon-menu" onclick="openGlobalMenu(event, '${review._id}')">
                     <i class="fa fa-ellipsis-v"></i>
                 </button>
-                <div id="menu-${review._id}" class="dropdown-content">
-                    <a href="javascript:void(0)" onclick="editReview('${review._id}')">
-                        <i class="fa fa-pencil"></i> Edit
-                    </a>
-                    <a href="javascript:void(0)" onclick="deleteReview('${review._id}')">
-                        <i class="fa fa-trash"></i> Delete
-                    </a>
-                </div>
             </div>
         `;
     }
 
     return `
-        <div class="testimonial-card-premium ${index === 0 ? 'active' : ''}" id="review-${review._id}">
+        <div class="testimonial-card-premium" id="review-${review._id}">
             ${actions}
             <div class="quote-icon"><i class="fa fa-quote-left"></i></div>
             <div class="rating-stars">${stars}</div>
-            
             <p class="review-text">${escapeHtml(review.comment)}</p>
-            
             <div class="user-info">
                 <div class="avatar">${initials}</div>
                 <div class="details">
@@ -227,539 +224,214 @@ function createPremiumReviewCard(review, index) {
     `;
 }
 
-// Initialize Custom Carousel
-function initCustomCarousel() {
-    setupCarouselEvents();
-    updateCarouselPosition();
-    startAutoplay();
-}
-
-function setupCarouselEvents() {
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-    const track = carouselState.track;
-
-    // Buttons
-    if (prevBtn) prevBtn.addEventListener('click', () => {
-        stopAutoplay();
-        prevSlide();
-    });
-
-    if (nextBtn) nextBtn.addEventListener('click', () => {
-        stopAutoplay();
-        nextSlide();
-    });
-
-    // Touch / Swipe
-    track.addEventListener('touchstart', touchStart);
-    track.addEventListener('touchend', touchEnd);
-    track.addEventListener('touchmove', touchMove);
-
-    // Mouse Drag (Optional, good for desktop)
-    track.addEventListener('mousedown', touchStart);
-    track.addEventListener('mouseup', touchEnd);
-    track.addEventListener('mouseleave', () => {
-        if (carouselState.isDragging) touchEnd();
-    });
-    track.addEventListener('mousemove', touchMove);
-
-    // Pause on Hover
-    track.addEventListener('mouseenter', stopAutoplay);
-    track.addEventListener('mouseleave', startAutoplay);
-
-    // Keyboard
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-            stopAutoplay();
-            prevSlide();
-        }
-        if (e.key === 'ArrowRight') {
-            stopAutoplay();
-            nextSlide();
-        }
-    });
-
-    // Resize
-    window.addEventListener('resize', updateCarouselPosition);
-}
-
-function prevSlide() {
-    if (carouselState.currentIndex > 0) {
-        carouselState.currentIndex--;
-    } else {
-        carouselState.currentIndex = carouselState.totalSlides - 1; // Loop to end
-    }
-    updateCarouselPosition();
-}
-
-function nextSlide() {
-    if (carouselState.currentIndex < carouselState.totalSlides - 1) {
-        carouselState.currentIndex++;
-    } else {
-        carouselState.currentIndex = 0; // Loop to start
-    }
-    updateCarouselPosition();
-}
-
-function updateCarouselPosition() {
-    const track = carouselState.track;
-    const cards = carouselState.cards;
-    const cardWidth = cards[0].offsetWidth + 30; // Width + Gap (gap defined in CSS: 30px)
-
-    // Center logic: content is width of card. 
-    // We want current card centered.
-    // viewport center = viewportWidth / 2
-    // card center = cardWidth / 2
-    // offset = (viewportWidth / 2) - (cardWidth / 2)
-    // translateX = -(currentIndex * cardWidth) + offset
-
-    const viewportWidth = document.querySelector('.testimonial-viewport').offsetWidth;
-    const centerOffset = (viewportWidth - cards[0].offsetWidth) / 2;
-
-    let translatePos = -(carouselState.currentIndex * cardWidth) + centerOffset;
-
-    // Limit bounds (optional, but for "centering" active slide, usually we let it flow)
-    // If we want hard looping, we need to clone nodes.
-    // Basic slider: just slide.
-
-    carouselState.currentTranslate = translatePos;
-    carouselState.prevTranslate = translatePos;
-
-    track.style.transform = `translateX(${translatePos}px)`;
-
-    // Update Active Class
-    cards.forEach((card, index) => {
-        if (index === carouselState.currentIndex) {
-            card.classList.add('active');
-        } else {
-            card.classList.remove('active');
-        }
-    });
-
-    // Update Progress Bar
-    const progress = ((carouselState.currentIndex + 1) / carouselState.totalSlides) * 100;
-    const bar = document.getElementById('carousel-progress');
-    if (bar) bar.style.width = `${progress}%`;
-}
-
-// Autoplay Logic
-function startAutoplay() {
-    stopAutoplay(); // Clear existing
-    carouselState.autoplayInterval = setInterval(() => {
-        nextSlide();
-    }, 1000); // 1 second
-}
-
-function stopAutoplay() {
-    if (carouselState.autoplayInterval) {
-        clearInterval(carouselState.autoplayInterval);
-        carouselState.autoplayInterval = null;
-    }
-}
-
-// Touch/Drag Logic
-function touchStart(event) {
-    carouselState.isDragging = true;
-    carouselState.startPos = getPositionX(event);
-    carouselState.animationID = requestAnimationFrame(animation);
-    carouselState.track.style.cursor = 'grabbing';
-}
-
-function touchMove(event) {
-    if (carouselState.isDragging) {
-        const currentPosition = getPositionX(event);
-        const currentTranslate = carouselState.prevTranslate + currentPosition - carouselState.startPos;
-        carouselState.currentTranslate = currentTranslate;
-    }
-}
-
-function touchEnd() {
-    carouselState.isDragging = false;
-    cancelAnimationFrame(carouselState.animationID);
-
-    const movedBy = carouselState.currentTranslate - carouselState.prevTranslate;
-
-    // Threshold to change slide
-    if (movedBy < -100) nextSlide();
-    else if (movedBy > 100) prevSlide();
-    else updateCarouselPosition(); // Snap back
-
-    carouselState.track.style.cursor = 'grab';
-}
-
-function getPositionX(event) {
-    return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-}
-
-function animation() {
-    if (carouselState.isDragging) {
-        setSliderPosition();
-        requestAnimationFrame(animation);
-    }
-}
-
-function setSliderPosition() {
-    carouselState.track.style.transform = `translateX(${carouselState.currentTranslate}px)`;
-}
-
-
-// Create HTML for a review card
-
-
-// Helper: Toggle Menu
-function toggleReviewMenu(event, id) {
-    event.stopPropagation(); // Prevent bubbling
-
-    // Close all other menus
-    const allMenus = document.getElementsByClassName("dropdown-content");
-    for (let i = 0; i < allMenus.length; i++) {
-        if (allMenus[i].id !== `menu-${id}`) {
-            allMenus[i].classList.remove('show');
-        }
-    }
-
-    document.getElementById(`menu-${id}`).classList.toggle("show");
-}
-
-// Close menus when clicking outside
-window.onclick = function (event) {
-    if (!event.target.matches('.btn-icon-menu') && !event.target.matches('.btn-icon-menu i')) {
-        const dropdowns = document.getElementsByClassName("dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++) {
-            if (dropdowns[i].classList.contains('show')) {
-                dropdowns[i].classList.remove('show');
-            }
-        }
-    }
-}
-
-// Delete Review
-async function deleteReview(id) {
-    if (!confirm('Are you sure you want to delete this review?')) return;
-
-    const token = localStorage.getItem('token');
-    const feedbackToken = getFeedbackToken();
-
-    try {
-        const response = await fetch(`${REVIEW_API_URL}/reviews/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': token ? `Bearer ${token}` : '',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ feedbackToken }) // Send token for guest auth
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-            showMessage('Review deleted successfully', 'success');
-            // Remove from local guest list
-            let myGuestReviews = JSON.parse(localStorage.getItem('myGuestReviews') || '[]');
-            myGuestReviews = myGuestReviews.filter(reviewId => reviewId !== id);
-            localStorage.setItem('myGuestReviews', JSON.stringify(myGuestReviews));
-
-            loadReviews(); // Refresh list
-        } else {
-            showMessage(result.message || 'Error deleting review', 'danger');
-        }
-    } catch (error) {
-        console.error('Delete error:', error);
-        showMessage('Error deleting review', 'danger');
-    }
-}
-
-// Helper: Generate star icons
-function generateStars(rating) {
-    let starsHtml = '';
-    for (let i = 1; i <= 5; i++) {
-        if (i <= rating) {
-            starsHtml += '<i class="fa fa-star"></i> ';
-        } else {
-            starsHtml += '<i class="fa fa-star-o"></i> '; // Empty star if font-awesome supports it, or grey
-        }
-    }
-    return starsHtml;
-}
-
-// Helper: Get readable label for tour package
-function getTourLabel(value) {
-    const options = {
-        'cultural': 'Cultural Triangle Explorer',
-        'beach-wildlife': 'Beach & Wildlife Safari',
-        'complete': 'Complete Sri Lanka',
-        'hill-country': 'Hill Country & Tea Trails',
-        'wildlife': 'Wildlife & Nature Adventure',
-        'coastal': 'Coastal Paradise Tour',
-        'weekend': 'Weekend Getaway',
-        'grand': 'Grand Sri Lanka Tour',
-        'custom': 'Custom Tour Package'
-    };
-    return options[value] || value;
-}
-
-// Helper: Escape HTML to prevent XSS
 function escapeHtml(text) {
     if (!text) return '';
-    return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 }
 
-// Handle Form Submission (Create or Update)
+function getTourLabel(packageKey) {
+    const packages = {
+        'island-escape': 'Island Escape (10 Days)',
+        'cultural-odyssey': 'Cultural Odyssey (7 Days)',
+        'wildlife-adventure': 'Wildlife Adventure (6 Days)',
+        'luxury-honeymoon': 'Luxury Honeymoon (8 Days)'
+    };
+    return packages[packageKey] || packageKey;
+}
+
+function openGlobalMenu(event, reviewId) {
+    event.stopPropagation();
+    event.preventDefault();
+    closeGlobalMenu();
+    const btn = event.currentTarget;
+    const rect = btn.getBoundingClientRect();
+    const menu = document.createElement('div');
+    menu.id = 'global-review-menu';
+    menu.className = 'global-dropdown-menu';
+    menu.innerHTML = `
+        <a href="javascript:void(0)" onclick="editReview('${reviewId}'); closeGlobalMenu()">
+            <i class="fa fa-pencil"></i> Edit
+        </a>
+        <a href="javascript:void(0)" onclick="deleteReview('${reviewId}'); closeGlobalMenu()">
+            <i class="fa fa-trash"></i> Delete
+        </a>
+    `;
+    menu.style.position = 'fixed';
+    menu.style.top = `${rect.bottom + 5}px`;
+    menu.style.left = `${rect.left - 80}px`;
+    menu.style.zIndex = '9999';
+    menu.style.background = '#fff';
+    menu.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+    menu.style.borderRadius = '8px';
+    menu.style.padding = '8px 0';
+    menu.style.minWidth = '120px';
+    menu.style.display = 'flex';
+    menu.style.flexDirection = 'column';
+    document.body.appendChild(menu);
+    const links = menu.querySelectorAll('a');
+    links.forEach(a => {
+        a.style.display = 'block';
+        a.style.padding = '8px 15px';
+        a.style.color = '#333';
+        a.style.textDecoration = 'none';
+        a.style.fontSize = '14px';
+        a.style.transition = 'background 0.2s';
+        a.onmouseenter = () => a.style.background = '#f3f4f6';
+        a.onmouseleave = () => a.style.background = 'transparent';
+    });
+}
+
+function closeGlobalMenu() {
+    const menu = document.getElementById('global-review-menu');
+    if (menu) menu.remove();
+}
+
+window.addEventListener('click', function(event) {
+    if (!event.target.closest('#global-review-menu') && !event.target.closest('.btn-icon-menu')) {
+        closeGlobalMenu();
+    }
+});
+
+function editReview(reviewId) {
+    const reviewForm = document.getElementById('reviewForm');
+    if (!reviewForm) {
+        window.location.href = `contact.html?editReviewId=${reviewId}`;
+        return;
+    }
+    fetch(`${REVIEW_API_URL}/reviews`)
+        .then(res => res.json())
+        .then(result => {
+             const review = result.data.find(r => r._id === reviewId);
+             if (review) populateReviewForm(review);
+        })
+        .catch(err => console.error(err));
+}
+
+function populateReviewForm(review) {
+    const formTitle = document.getElementById('review-form-title');
+    const submitBtn = document.getElementById('reviewSubmitBtn');
+    const editIndicator = document.getElementById('edit-mode-indicator');
+    const reviewForm = document.getElementById('reviewForm');
+
+    if (reviewForm) reviewForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    const msgInput = document.getElementById('review-message') || document.getElementById('review-text');
+    if (msgInput) msgInput.value = review.comment;
+    const pkgInput = document.getElementById('review-package') || document.getElementById('review-tour');
+    if (pkgInput) pkgInput.value = review.tourPackage || '';
+    const countryInput = document.getElementById('review-country');
+    if (countryInput) countryInput.value = review.country || '';
+    const star = document.querySelector(`input[name="rating"][value="${review.rating}"]`);
+    if (star) star.checked = true;
+    if (review.guestName && document.getElementById('review-name')) document.getElementById('review-name').value = review.guestName;
+    if (review.guestEmail && document.getElementById('review-email')) document.getElementById('review-email').value = review.guestEmail;
+
+    if (formTitle) formTitle.innerText = 'Edit Your Review';
+    if (editIndicator) editIndicator.style.display = 'block';
+    
+    submitBtn.innerText = 'Update Review';
+    submitBtn.dataset.editingId = review._id;
+    
+    if (!document.getElementById('cancelEditBtn')) {
+        const cancelBtn = document.createElement('button');
+        cancelBtn.type = 'button';
+        cancelBtn.id = 'cancelEditBtn';
+        cancelBtn.className = 'btn-outline-cancel';
+        cancelBtn.innerHTML = '<i class="fa fa-times"></i> Cancel Edit';
+        cancelBtn.onclick = cancelEdit;
+        submitBtn.parentNode.appendChild(cancelBtn);
+    }
+}
+
+function cancelEdit() {
+    document.getElementById('reviewForm').reset();
+    document.getElementById('review-form-title').innerText = 'Leave a Review';
+    document.getElementById('edit-mode-indicator').style.display = 'none';
+    const submitBtn = document.getElementById('reviewSubmitBtn');
+    submitBtn.innerText = 'Submit Review';
+    delete submitBtn.dataset.editingId;
+    const cancelBtn = document.getElementById('cancelEditBtn');
+    if (cancelBtn) cancelBtn.remove();
+}
+
 async function handleReviewSubmit(e) {
     e.preventDefault();
+    const submitBtn = document.getElementById('reviewSubmitBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Submitting...';
 
-    // Check if we're in edit mode
-    const editIdField = document.getElementById('edit-review-id');
-    const isEditMode = editIdField && editIdField.value;
-    const reviewId = isEditMode ? editIdField.value : null;
+    const formData = {
+        rating: document.querySelector('input[name="rating"]:checked')?.value,
+        comment: document.getElementById('review-message') ? document.getElementById('review-message').value : document.getElementById('review-text').value,
+        tourPackage: document.getElementById('review-package') ? document.getElementById('review-package').value : document.getElementById('review-tour').value,
+        country: document.getElementById('review-country').value,
+        guestName: document.getElementById('review-name').value,
+        guestEmail: document.getElementById('review-email').value,
+    };
 
-    const token = localStorage.getItem('token');
-    const feedbackToken = getFeedbackToken();
-    const isGuest = !token;
-
-    const country = document.getElementById('review-country').value;
-    const tourPackage = document.getElementById('review-tour').value;
-    const comment = document.getElementById('review-text').value;
-
-    // Guest Details
-    let guestName = '';
-    let guestEmail = '';
-    if (isGuest) {
-        guestName = document.getElementById('review-name').value;
-        guestEmail = document.getElementById('review-email').value;
-        if (!guestName) {
-            showMessage('Please enter your name', 'danger');
-            return;
-        }
-        // Save guest details for future
-        localStorage.setItem('guestName', guestName);
-        localStorage.setItem('guestEmail', guestEmail);
-    }
-
-    // Get rating
-    let rating = 0;
-    const ratingInputs = document.getElementsByName('rating');
-    for (const input of ratingInputs) {
-        if (input.checked) {
-            rating = parseInt(input.value);
-            break;
-        }
-    }
-
-    if (rating === 0) {
-        showMessage('Please select a star rating', 'danger');
+    if (!formData.rating) {
+        alert('Please select a star rating.');
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Submit Review';
         return;
     }
 
-    const submitBtn = document.getElementById('reviewSubmitBtn');
-    const originalValue = submitBtn.value;
-    submitBtn.disabled = true;
-    submitBtn.value = isEditMode ? 'Updating...' : 'Submitting...';
+    const feedbackToken = getFeedbackToken();
+    const editingId = submitBtn.dataset.editingId;
+    const token = localStorage.getItem('token');
+    const headers = { 'Content-Type': 'application/json', 'x-feedback-token': feedbackToken };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const payload = {
-        country,
-        tourPackage,
-        rating,
-        comment,
-        feedbackToken: isGuest ? feedbackToken : undefined,
-        guestName: isGuest ? guestName : undefined,
-        guestEmail: isGuest ? guestEmail : undefined
-    };
+    const url = editingId ? `${REVIEW_API_URL}/reviews/${editingId}` : `${REVIEW_API_URL}/reviews`;
+    const method = editingId ? 'PUT' : 'POST';
 
     try {
-        let response;
-
-        if (isEditMode) {
-            // UPDATE existing review
-            response = await fetch(`${REVIEW_API_URL}/reviews/${reviewId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': token ? `Bearer ${token}` : ''
-                },
-                body: JSON.stringify(payload)
-            });
-        } else {
-            // CREATE new review
-            response = await fetch(`${REVIEW_API_URL}/reviews`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': token ? `Bearer ${token}` : ''
-                },
-                body: JSON.stringify(payload)
-            });
-        }
-
+        const response = await fetch(url, { method, headers, body: JSON.stringify(formData) });
         const result = await response.json();
 
-        if (result.success) {
-            showMessage(
-                isEditMode ? 'Review updated successfully!' : 'Review submitted successfully!',
-                'success'
-            );
-
-            // Reset form
+        if (response.ok) {
+            alert(editingId ? 'Review updated successfully!' : 'Review submitted successfully!');
             document.getElementById('reviewForm').reset();
-
-            // Clear edit mode
-            if (editIdField) editIdField.value = '';
-
-            // Reset UI to create mode
-            if (typeof updateFormUIForEditMode === 'function') {
-                updateFormUIForEditMode(false);
+            if (!token && result.data?._id) {
+                const myReviews = JSON.parse(localStorage.getItem('myGuestReviews') || '[]');
+                if (!myReviews.includes(result.data._id)) {
+                    myReviews.push(result.data._id);
+                    localStorage.setItem('myGuestReviews', JSON.stringify(myReviews));
+                }
+                localStorage.setItem('guestName', formData.guestName);
+                localStorage.setItem('guestEmail', formData.guestEmail);
             }
-
-            checkReviewFormAuth(); // Refill/Reset UI
-
-            // Store ID if guest for ownership check (only for new reviews)
-            if (!isEditMode && isGuest && result.data && result.data._id) {
-                let myGuestReviews = JSON.parse(localStorage.getItem('myGuestReviews') || '[]');
-                myGuestReviews.push(result.data._id);
-                localStorage.setItem('myGuestReviews', JSON.stringify(myGuestReviews));
-            }
-
-            // Reload reviews
+            cancelEdit();
             loadReviews();
-
-            // Scroll to testimonials after update
-            if (isEditMode) {
-                setTimeout(() => {
-                    const testimonialsSection = document.querySelector('.testimony-section') ||
-                        document.getElementById('reviews-track');
-                    if (testimonialsSection) {
-                        testimonialsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }, 1000);
-            }
         } else {
-            showMessage(result.message || `Error ${isEditMode ? 'updating' : 'submitting'} review`, 'danger');
+            alert(result.message || 'Failed to submit review.');
         }
     } catch (error) {
-        console.error('Submit error:', error);
-        showMessage('Network error. Please try again.', 'danger');
+        console.error(error);
+        alert('Error submitting review.');
     } finally {
         submitBtn.disabled = false;
-        submitBtn.value = originalValue;
+        submitBtn.innerText = editingId ? 'Update Review' : 'Submit Review';
     }
 }
 
-// Edit Review Helper
-let currentEditingId = null;
+async function deleteReview(reviewId) {
+    if (!confirm('Delete this review?')) return;
+    const token = localStorage.getItem('token');
+    const headers = { 'Content-Type': 'application/json', 'x-feedback-token': getFeedbackToken() };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
 
-function editReview(id) {
-    console.log('=== EDIT REVIEW CLICKED ===');
-    console.log('Review ID:', id);
-
-    // Fetch review details
-    fetch(`${REVIEW_API_URL}/reviews`)
-        .then(res => res.json())
-        .then(res => {
-            if (res.success) {
-                const review = res.data.find(r => r._id === id);
-                if (review) {
-                    console.log('Review found:', review);
-
-                    // Store review data in localStorage for contact page
-                    const editData = {
-                        id: review._id,
-                        rating: review.rating,
-                        comment: review.comment,
-                        tourPackage: review.tourPackage || '',
-                        country: review.country || ''
-                    };
-
-                    localStorage.setItem('editingReview', JSON.stringify(editData));
-                    console.log('Stored in localStorage:', editData);
-
-                    // Navigate to contact page with timestamp to force reload
-                    console.log('Navigating to contact.html with forced reload...');
-                    window.location.assign(`contact.html?t=${Date.now()}#review-form`);
-                } else {
-                    console.error('Review not found!');
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Error loading review for edit:', error);
-            alert('Failed to load review. Please try again.');
-        });
-}
-
-
-function fadeInNewElements() {
-    // Simple fade in effect class addition if needed
-    const elements = document.querySelectorAll('.ftco-animate');
-    elements.forEach(el => {
-        el.style.opacity = 1;
-        el.style.visibility = 'visible';
-    });
-}
-
-// Show Message Helper (missing from original file)
-function showMessage(msg, type) {
-    const messageDiv = document.getElementById('reviewMessage');
-    if (messageDiv) {
-        messageDiv.className = `alert alert-${type}`;
-        messageDiv.textContent = msg;
-        messageDiv.style.display = 'block';
-
-        // Scroll to message so user sees it
-        messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-        // Auto hide after 5 seconds
-        setTimeout(() => {
-            messageDiv.style.display = 'none';
-        }, 5000);
-    } else {
-        alert(msg);
-    }
-}
-
-// Check if we're in edit mode (on contact page)
-document.addEventListener('DOMContentLoaded', function () {
-    const editingReview = localStorage.getItem('editingReview');
-
-    if (editingReview && window.location.pathname.includes('contact.html')) {
-        const reviewData = JSON.parse(editingReview);
-
-        // Store the ID for the update operation
-        currentEditingId = reviewData.id;
-
-        // Pre-populate the form fields
-        const ratingSelect = document.getElementById('rating');
-        const commentTextarea = document.getElementById('comment');
-        const tourPackageSelect = document.getElementById('tourPackage');
-        const countryInput = document.getElementById('country');
-
-        if (ratingSelect) ratingSelect.value = reviewData.rating;
-        if (commentTextarea) commentTextarea.value = reviewData.comment;
-        if (tourPackageSelect && reviewData.tourPackage) tourPackageSelect.value = reviewData.tourPackage;
-        if (countryInput && reviewData.country) countryInput.value = reviewData.country;
-
-        // Scroll to the form
-        setTimeout(() => {
-            const formSection = document.querySelector('.ftco-section.contact-section') ||
-                document.querySelector('[id*="review"]') ||
-                document.querySelector('form');
-            if (formSection) {
-                formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }, 300);
-
-        // Change submit button text to indicate update mode
-        const submitBtn = document.querySelector('button[type="submit"]');
-        if (submitBtn && submitBtn.textContent.includes('Submit')) {
-            submitBtn.textContent = 'Update Review';
-            submitBtn.style.background = 'var(--sunset-orange)';
+    try {
+        const res = await fetch(`${REVIEW_API_URL}/reviews/${reviewId}`, { method: 'DELETE', headers });
+        if (res.ok) {
+            alert('Review deleted.');
+            let myReviews = JSON.parse(localStorage.getItem('myGuestReviews') || '[]');
+            myReviews = myReviews.filter(id => id !== reviewId);
+            localStorage.setItem('myGuestReviews', JSON.stringify(myReviews));
+            loadReviews();
+        } else {
+            const result = await res.json();
+            alert(result.message || 'Failed to delete.');
         }
-
-        // Clear the localStorage after loading
-        localStorage.removeItem('editingReview');
-    }
-});
+    } catch (e) { console.error(e); alert('Error deleting review.'); }
+}

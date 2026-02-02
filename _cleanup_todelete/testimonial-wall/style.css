@@ -1,0 +1,161 @@
+/* Global Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f8f9fa;
+    /* Light gray background to make white cards pop */
+    font-family: 'Outfit', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Container */
+.testimonial-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 100vh;
+    overflow: hidden;
+    padding: 20px;
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+/* Grid Layout */
+.masonry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    height: 100%;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .masonry-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .masonry-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Vertical Column Animation */
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    /* Animation logic handled in JS for dynamic height, or simplistic CSS here */
+    animation: scroll-up 60s linear infinite;
+}
+
+/* Stagger animations so they don't look uniform */
+#col-1 {
+    animation-duration: 45s;
+}
+
+#col-2 {
+    animation-duration: 50s;
+    animation-direction: reverse;
+    /* Optional for variety, or keep same */
+}
+
+/* Wait, user asked for "move upwards forever". Let's stick to upwards. */
+#col-2 {
+    animation-duration: 55s;
+}
+
+#col-3 {
+    animation-duration: 48s;
+}
+
+
+@keyframes scroll-up {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-50%);
+    }
+
+    /* -50% because we clone the list once */
+}
+
+/* Hover to Pause */
+.column:hover {
+    animation-play-state: paused;
+}
+
+/* Testimonial Card */
+.testimonial-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Content */
+.quote-icon {
+    font-size: 24px;
+    color: #e5e7eb;
+    /* Subtle gray */
+    margin-bottom: 16px;
+}
+
+.testimonial-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #374151;
+    margin-bottom: 24px;
+    font-weight: 300;
+}
+
+/* User Profile */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #e0e0e0;
+    /* Placeholder */
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #111827;
+    font-size: 16px;
+}
+
+.user-role {
+    font-size: 14px;
+    color: #6b7280;
+    font-weight: 400;
+}

@@ -40,8 +40,10 @@ app.use(helmet());
 // Enable CORS
 app.use(cors({
     origin: function (origin, callback) {
-        console.log('Request Origin:', origin); // Debug log
-        return callback(null, true); // Allow all for debugging
+        console.log('Request Origin:', origin);
+        // Allow requests with no origin (like mobile apps, curl requests, or local file://)
+        if (!origin || origin === 'null') return callback(null, true);
+        return callback(null, true);
     },
     credentials: true
 }));

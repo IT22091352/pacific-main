@@ -1,0 +1,137 @@
+/* 
+=============================================
+   Vertical Infinite Scroll (Masonry Wall)
+=============================================
+*/
+
+/* Container */
+.testimonial-container {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 800px;
+    /* Taller fixed height for the wall */
+    overflow: hidden;
+    padding: 20px;
+    /* Mask for fade effect on top/bottom */
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+/* Grid Layout */
+.masonry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    height: 100%;
+    width: 100%;
+}
+
+/* Responsive Grid */
+@media (max-width: 992px) {
+    .masonry-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .masonry-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .testimonial-container {
+        height: 600px;
+        /* Shorter on mobile */
+    }
+}
+
+/* Vertical Column Animation */
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    will-change: transform;
+    animation: scroll-up 60s linear infinite;
+}
+
+/* Stagger speeds */
+#col-1 {
+    animation-duration: 55s;
+}
+
+#col-2 {
+    animation-duration: 65s;
+}
+
+#col-3 {
+    animation-duration: 50s;
+}
+
+@keyframes scroll-up {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-50%);
+    }
+}
+
+.column:hover {
+    animation-play-state: paused;
+}
+
+/* Wall Card Style Override - targeting specific container */
+.testimonial-container .testimonial-card-premium {
+    flex: none;
+    width: 100%;
+    transform: none !important;
+    opacity: 1 !important;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    padding: 24px;
+    min-height: auto;
+    margin: 0;
+}
+
+.testimonial-container .testimonial-card-premium:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-container .testimonial-card-premium .review-text {
+    color: #374151;
+    font-size: 15px;
+    -webkit-line-clamp: unset;
+    /* Show full text */
+    margin-bottom: 20px;
+}
+
+.testimonial-container .testimonial-card-premium .details h4 {
+    color: #111827;
+}
+
+.testimonial-container .testimonial-card-premium .details span,
+.testimonial-container .testimonial-card-premium .details .country,
+.testimonial-container .testimonial-card-premium .details .tour-package {
+    color: #6b7280;
+}
+
+.testimonial-container .testimonial-card-premium .avatar {
+    background: #f3f4f6;
+    color: var(--ocean-blue);
+    box-shadow: none;
+}
+
+.testimonial-container .testimonial-card-premium .quote-icon {
+    color: #e5e7eb;
+    font-size: 24px;
+}
+
+.testimonial-container .testimonial-card-premium .rating-stars {
+    top: 24px;
+    right: 24px;
+}
