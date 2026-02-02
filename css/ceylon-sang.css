@@ -1573,48 +1573,248 @@ h6,
     transform: scale(1.05);
 }
 
-/* Mobile Responsive */
+/* Mobile Responsive - Enhanced for User-Friendliness */
 @media (max-width: 768px) {
+
+    /* Modal Container - Full screen on mobile */
     .modal-overlay .modal-content {
-        width: 95%;
-        margin: 2% auto;
-        max-height: 95vh;
+        width: 100%;
+        margin: 0;
+        max-height: 100vh;
+        border-radius: 0;
+        max-width: 100%;
     }
 
+    /* Close Button - Larger and more visible on mobile */
+    .close-modal {
+        font-size: 40px;
+        top: 10px;
+        right: 15px;
+        background: rgba(0, 0, 0, 0.5);
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+    }
+
+    /* Header - Optimized height for mobile */
     .popup-header {
-        height: 250px;
+        height: 200px;
     }
 
     .popup-header h2 {
-        font-size: 28px;
+        font-size: 24px;
+        line-height: 1.2;
     }
 
     .popup-header-overlay {
-        padding: 25px;
+        padding: 20px;
     }
 
-    .popup-content-grid {
-        padding: 25px;
+    .popup-header .popup-category {
+        font-size: 11px;
+        padding: 4px 12px;
+        margin-bottom: 10px;
+    }
+
+    /* Tab Navigation - Enhanced for mobile */
+    .popup-nav-container {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background: #fff;
     }
 
     .popup-tabs {
         justify-content: flex-start;
         overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 10px;
+        /* Hide scrollbar but keep functionality */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
     }
 
+    .popup-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Tab Links - Touch-friendly sizing */
     .tab-link {
-        padding: 12px 18px;
-        font-size: 14px;
+        padding: 16px 20px;
+        font-size: 15px;
         white-space: nowrap;
+        min-height: 56px;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        border-bottom: 4px solid transparent;
+        flex-shrink: 0;
     }
 
+    .tab-link.active {
+        color: var(--ocean-blue);
+        border-bottom-color: var(--sunset-orange);
+        background: rgba(255, 107, 53, 0.05);
+    }
+
+    .tab-link:active {
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    /* Add scroll indicator hint */
+    .popup-tabs::after {
+        content: '→';
+        position: sticky;
+        right: 0;
+        padding: 16px 10px;
+        background: linear-gradient(to right, transparent, #fff 30%);
+        color: var(--ocean-blue);
+        font-size: 20px;
+        pointer-events: none;
+        opacity: 0.7;
+    }
+
+    /* Content Grid - Single column on mobile */
+    .popup-content-grid {
+        padding: 20px 15px;
+    }
+
+    /* Section Headers - Clearer on mobile */
+    .popup-section h3 {
+        font-size: 20px;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        position: sticky;
+        top: 56px;
+        background: #fff;
+        z-index: 5;
+        margin-top: -5px;
+        padding-top: 15px;
+    }
+
+    .popup-section p {
+        font-size: 15px;
+        line-height: 1.7;
+        margin-bottom: 12px;
+    }
+
+    /* Lists - Full width on mobile */
     .attraction-list,
     .activity-list {
         grid-template-columns: 1fr;
+        gap: 12px;
     }
 
+    .attraction-item,
+    .activity-item {
+        padding: 16px;
+        font-size: 15px;
+        border-left-width: 4px;
+    }
+
+    /* Info Box - Better mobile layout */
+    .popup-info-box {
+        padding: 20px;
+        margin-top: 20px;
+        position: static;
+    }
+
+    .popup-info-box h3 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        position: static;
+    }
+
+    .info-row {
+        margin-bottom: 16px;
+        padding: 12px;
+        background: #fff;
+        border-radius: 8px;
+    }
+
+    .info-row i {
+        font-size: 20px;
+        margin-right: 12px;
+    }
+
+    .info-row strong {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .info-row span {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    /* Gallery - 2 columns on mobile */
     .gallery-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .gallery-grid img {
+        height: 150px;
+        border-radius: 8px;
+    }
+
+    /* Modal Body - Better scrolling on mobile */
+    .modal-overlay .modal-body {
+        max-height: calc(100vh - 0px);
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Add padding to bottom for better scrolling experience */
+    .popup-content-grid::after {
+        content: '';
+        display: block;
+        height: 40px;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    .popup-header {
+        height: 180px;
+    }
+
+    .popup-header h2 {
+        font-size: 20px;
+    }
+
+    .tab-link {
+        padding: 14px 16px;
+        font-size: 14px;
+        min-height: 52px;
+    }
+
+    .popup-content-grid {
+        padding: 15px 12px;
+    }
+
+    .popup-section h3 {
+        font-size: 18px;
+    }
+
+    .gallery-grid img {
+        height: 120px;
+    }
+
+    /* Single column gallery on very small screens */
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-grid img {
+        height: 200px;
     }
 }
 
