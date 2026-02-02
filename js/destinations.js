@@ -147,11 +147,20 @@ $(document).ready(function () {
 
             // Construct Modal Body HTML with Tabs
             var modalHtml = `
+                <!-- Floating Close Button -->
+                <div class="close-modal-float" onclick="$('#destinationModal').removeClass('show'); setTimeout(function(){$('#destinationModal').hide(); $('body').css('overflow','auto');}, 300);">&times;</div>
+
                 <div class="popup-header">
                     <img src="${bgImage}" class="popup-header-img" alt="${title}">
+                    
+                    <!-- Floating category badge -->
+                    <div class="popup-badge-float">
+                        <i class="fa fa-map-pin"></i> ${category}
+                    </div>
+
                     <div class="popup-header-overlay">
-                        <span class="popup-category">${category}</span>
                         <h2>${title}</h2>
+                        <div class="popup-location"><i class="fa fa-map-marker"></i> Sri Lanka</div>
                     </div>
                 </div>
                 
@@ -161,17 +170,17 @@ $(document).ready(function () {
                         <li class="tab-link" data-tab="attractions">Attractions</li>
                         <li class="tab-link" data-tab="activities">Activities</li>
                         <li class="tab-link" data-tab="gallery">Gallery</li>
-                        <li class="tab-link" data-tab="info">Practical Info</li>
+                        <li class="tab-link" data-tab="info">Info</li>
                     </ul>
                 </div>
                 
                 <div class="popup-content-grid">
-                    <div class="tab-content" style="width: 100%;">
+                    <div class="modal-body-content">
                         
                         <!-- Overview Tab -->
                         <div id="overview" class="tab-pane active">
                             <div class="popup-section">
-                                <h3>Overview</h3>
+                                <h3>About this Destination</h3>
                                 ${overview ? overview : '<p>Experience the beauty of this amazing destination.</p>'}
                             </div>
                         </div>
@@ -179,7 +188,7 @@ $(document).ready(function () {
                         <!-- Attractions Tab -->
                         <div id="attractions" class="tab-pane">
                             <div class="popup-section">
-                                <h3>Attractions</h3>
+                                <h3>Key Attractions</h3>
                                 <ul class="attraction-list">
                                     ${attractions ? attractions : '<li class="attraction-item">Scenic Views</li><li class="attraction-item">Historical Sites</li>'}
                                 </ul>
@@ -189,7 +198,7 @@ $(document).ready(function () {
                         <!-- Activities Tab -->
                         <div id="activities" class="tab-pane">
                             <div class="popup-section">
-                                <h3>Activities</h3>
+                                <h3>Things to Do</h3>
                                 <ul class="activity-list">
                                     ${activities ? activities : '<li class="activity-item">Photography</li><li class="activity-item">Sightseeing</li>'}
                                 </ul>
@@ -199,7 +208,7 @@ $(document).ready(function () {
                         <!-- Gallery Tab -->
                         <div id="gallery" class="tab-pane">
                             <div class="popup-section">
-                                <h3>Gallery</h3>
+                                <h3>Photo Gallery</h3>
                                 <div class="gallery-grid">
                                     ${gallery ? gallery : '<p>No additional images available for this destination.</p>'}
                                 </div>
@@ -209,7 +218,7 @@ $(document).ready(function () {
                         <!-- Practical Info Tab -->
                         <div id="info" class="tab-pane">
                             <div class="popup-info-box">
-                                <h3>Practical Info</h3>
+                                <h3>Practical Information</h3>
                                 ${info ? info : `
                                     <div class="info-row"><i class="fa fa-clock-o"></i><div><strong>Duration</strong><span>1 Day</span></div></div>
                                     <div class="info-row"><i class="fa fa-sun-o"></i><div><strong>Best Time</strong><span>Year Round</span></div></div>
@@ -233,8 +242,13 @@ $(document).ready(function () {
                 });
             }
 
-            // Show Modal
-            $('#destinationModal').addClass('show').css('display', 'block');
+            // Show Modal with display flex for proper centering/alignment (handled by CSS class .show primarily)
+            $('#destinationModal').css('display', 'flex');
+            // Small delay to allow display:flex to apply before adding .show for transition
+            setTimeout(function () {
+                $('#destinationModal').addClass('show');
+            }, 10);
+
             $('body').css('overflow', 'hidden');
         } else {
             console.log('No detailed data found for this destination.');
@@ -257,23 +271,24 @@ $(document).ready(function () {
         // $('.modal-content').animate({ scrollTop: 0 }, 300);
     });
 
-    // Close Modal
-    $('.close-modal').click(function () {
+    // Close Modal Function
+    function closeModal() {
         $('#destinationModal').removeClass('show');
         setTimeout(function () {
             $('#destinationModal').css('display', 'none');
             $('body').css('overflow', 'auto');
-        }, 300);
+        }, 400); // 400ms matches CSS transition
+    }
+
+    // Close Button Click (Static & Dynamic)
+    $(document).on('click', '.close-modal, .close-modal-float', function () {
+        closeModal();
     });
 
     // Close on Outside Click
     $(window).click(function (e) {
         if ($(e.target).is('#destinationModal')) {
-            $('#destinationModal').removeClass('show');
-            setTimeout(function () {
-                $('#destinationModal').css('display', 'none');
-                $('body').css('overflow', 'auto');
-            }, 300);
+            closeModal();
         }
     });
 });
