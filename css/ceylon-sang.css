@@ -1,4 +1,42 @@
-/* Ceylon Sang Custom Styles - Ocean Blue & Sunset Orange Theme */
+/* Ensure Carousel Visibility */
+#reviews-carousel {
+    display: block;
+    width: 100%;
+    min-height: 300px;
+    /* Force height */
+    opacity: 1 !important;
+    /* Force opacity */
+    /* border: 2px dashed red; DEBUG: Temporarily visible to check layout */
+}
+
+#reviews-carousel .owl-stage-outer {
+    min-height: 300px;
+    padding-bottom: 20px;
+    /* Space for shadow */
+}
+
+#reviews-carousel .owl-item {
+    min-height: 300px;
+    height: 100%;
+}
+
+/* Premium Testimonial Card (Ensure visibility) */
+.testimonial-card-premium {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonial-card-premium .review-text {
+    color: #4a5568;
+    /* Ensure dark text */
+}
+
 
 /* Premium Typography */
 html {

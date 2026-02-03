@@ -44,12 +44,9 @@ app.use(compression());
 
 // Serve static files from the root directory with Caching (1 day)
 app.use(express.static(path.join(__dirname, '../'), {
-    maxAge: '1d', // Cache 1 day
+    maxAge: '0', // Disable cache for development
     setHeaders: (res, path) => {
-        if (path.endsWith('.html')) {
-            // HTML files should not be cached (or short cache) to ensure updates are seen
-            res.setHeader('Cache-Control', 'no-cache');
-        }
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     }
 }));
 

@@ -82,19 +82,16 @@ function isReviewOwner(review) {
     return false;
 }
 
-// Load reviews for Dual-Row Marquee
+// Load reviews for Owl Carousel
 async function loadReviews() {
-    const row1 = document.getElementById('marquee-row-1');
-    const row2 = document.getElementById('marquee-row-2');
-    const container = document.querySelector('.marquee-section');
+    const carouselContainer = document.getElementById('reviews-carousel');
 
-    if (!row1 || !row2) return;
+    if (!carouselContainer) return;
 
     try {
         const response = await fetch(`${REVIEW_API_URL}/reviews`);
         const contentType = response.headers.get("content-type");
 
-        // Handle non-JSON response related to server errors (e.g., 500 HTML page)
         if (!contentType || !contentType.includes("application/json")) {
             const text = await response.text();
             throw new Error(`Server returned non-JSON response: ${text.substring(0, 100)}...`);
@@ -103,7 +100,7 @@ async function loadReviews() {
         const result = await response.json();
 
         if (result.success && result.data.length > 0) {
-            // 1. Deduplicate by ID
+            // Deduplicate by ID
             const seen = new Set();
             const uniqueReviews = result.data.filter(r => {
                 if (seen.has(r._id)) return false;
@@ -111,75 +108,44 @@ async function loadReviews() {
                 return true;
             });
 
-            // Clear rows
-            row1.innerHTML = '<div class="marquee-track animate-left"></div>';
-            row2.innerHTML = '<div class="marquee-track animate-right"></div>';
+            // Generate HTML for all reviews
+            const reviewsHTML = uniqueReviews.map(review => createPremiumReviewCard(review)).join('');
 
-            const track1 = row1.querySelector('.marquee-track');
-            const track2 = row2.querySelector('.marquee-track');
-
-            // --- SMART LOGIC ---
-            // If reviews are few (< 5), disable marquee and show static grid
-            if (uniqueReviews.length < 5) {
-                if (container) container.classList.add('path-static-view');
-
-                // Put all in Row 1, Center them, NO CLONES
-                const generateHTML = (list) => {
-                    return list.map(review => createPremiumReviewCard(review)).join('');
-                };
-
-                track1.innerHTML = generateHTML(uniqueReviews);
-
-                // Hide Row 2
-                row2.style.display = 'none';
-
-            } else {
-                // Enough reviews for Marquee
-                if (container) container.classList.remove('path-static-view');
-                row2.style.display = 'block';
-
-                const mid = Math.ceil(uniqueReviews.length / 2);
-                const dataRow1 = uniqueReviews.slice(0, mid);
-                const dataRow2 = uniqueReviews.slice(mid);
-
-                const fillTrack = (track, items) => {
-                    if (!items.length) {
-                        track.innerHTML = '';
-                        return;
-                    }
-
-                    const generateHTML = (list, suffix) => {
-                        return list.map((review, i) => {
-                            const domId = suffix ? `review-${suffix}-${review._id}` : `review-${review._id}`;
-                            let html = createPremiumReviewCard(review);
-                            return html.replace(/id="review-[^"]+"/, `id="${domId}"`);
-                        }).join('');
-                    };
-
-                    let contentHTML = generateHTML(items, '');
-                    contentHTML += generateHTML(items, 'clone1');
-
-                    if (items.length < 4) {
-                        contentHTML += generateHTML(items, 'clone2');
-                    }
-
-                    track.innerHTML = contentHTML;
-                };
-
-                fillTrack(track1, dataRow1);
-                fillTrack(track2, dataRow2);
+            // Destroy previous instance if exists (optional but good for safety)
+            if ($(carouselContainer).data('owl.carousel')) {
+                $(carouselContainer).trigger('destroy.owl.carousel');
             }
 
+            // Inject HTML
+            carouselContainer.innerHTML = reviewsHTML;
+
+            // Initialize Owl Carousel
+            $(carouselContainer).owlCarousel({
+                loop: uniqueReviews.length > 3, // Only loop if enough items
+                margin: 20,
+                nav: false,
+                dots: true,
+                autoplay: true,
+                autoplayTimeout: 2000, // 2 second interval
+                autoplayHoverPause: true,
+                smartSpeed: 800,
+                responsive: {
+                    0: { items: 1 },
+                    600: { items: 2 },
+                    1000: { items: 3 }
+                }
+            });
+
         } else {
-            row1.innerHTML = '<p class="text-center w-100">No reviews yet.</p>';
+            carouselContainer.innerHTML = '<p class="text-center w-100">No reviews yet.</p>';
         }
     } catch (error) {
         console.error('Error loading reviews:', error);
-        row1.innerHTML = `
-            <div class="text-center w-100 text-danger" style="color:red; font-weight:bold;">
-                <p>Failed to load reviews.</p>
-                <small>Please try again later.</small>
-                <!-- Debug info hidden in comment: ${error.message} -->
+        carouselContainer.innerHTML = `
+            <div class="text-center w-100 p-5">
+                 <h4 class="text-danger">Failed to load reviews</h4>
+                 <p class="text-muted">${error.message}</p>
+                 <small>Check console for details.</small>
             </div>`;
     }
 }
