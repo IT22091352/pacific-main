@@ -2,8 +2,10 @@ const errorHandler = (err, req, res, next) => {
     let error = { ...err };
     error.message = err.message;
 
-    // Log to console for dev
-    console.log(err);
+    // Log to console for dev and production debugging
+    console.error(`Error on ${req.method} ${req.path}:`);
+    console.error(err.stack);
+    console.error(`Mongoose ReadyState: ${require('mongoose').connection.readyState}`);
 
     // Mongoose bad ObjectId
     if (err.name === 'CastError') {

@@ -84,6 +84,7 @@ const limiter = rateLimit({
 app.use('/api/', limiter);
 
 // Mount routers
+app.use('/api', require('./routes/health')); // Exposes /api/health
 app.use('/', require('./routes/seo')); // Handle sitemap.xml and robots.txt at root
 app.use('/api/auth', require('./routes/auth'));
 try {
