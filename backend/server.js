@@ -15,12 +15,19 @@ const hpp = require('hpp');
 // Load env vars
 dotenv.config();
 
-// Connect to database
-connectDB().catch(err => {
-    console.error('Failed to connect to MongoDB during app startup:', err.message);
-    // In serverless, we don't necessarily want to exit the process, as valid requests might handle it?
-    // But usually better to let the function fail cold start if DB is critical.
-    // logging it prevents "Unhandled Rejection" which crashes the process in strict mode.
+// Middleware to ensure DB is connected on every request (Vercel/Serverless resilience)
+app.use(async (req, res, next) => {
+    if (require('mongoose').connection.readyState !== 1) { // 1 = Connected
+        try {
+            console.log('Re-establishing MongoDB connection in middleware...');
+            await connectDB();
+        } catch (error) {
+            console.error('Middleware DB Connection Error:', error.message);
+            // We don't block here, we let the route fail if it needs DB, 
+            // or the errorHandler catch it.
+        }
+    }
+    next();
 });
 
 const app = express();
