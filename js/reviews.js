@@ -92,6 +92,14 @@ async function loadReviews() {
 
     try {
         const response = await fetch(`${REVIEW_API_URL}/reviews`);
+        const contentType = response.headers.get("content-type");
+
+        // Handle non-JSON response related to server errors (e.g., 500 HTML page)
+        if (!contentType || !contentType.includes("application/json")) {
+            const text = await response.text();
+            throw new Error(`Server returned non-JSON response: ${text.substring(0, 100)}...`);
+        }
+
         const result = await response.json();
 
         if (result.success && result.data.length > 0) {
@@ -106,7 +114,7 @@ async function loadReviews() {
             // Clear rows
             row1.innerHTML = '<div class="marquee-track animate-left"></div>';
             row2.innerHTML = '<div class="marquee-track animate-right"></div>';
-            
+
             const track1 = row1.querySelector('.marquee-track');
             const track2 = row2.querySelector('.marquee-track');
 
@@ -114,14 +122,14 @@ async function loadReviews() {
             // If reviews are few (< 5), disable marquee and show static grid
             if (uniqueReviews.length < 5) {
                 if (container) container.classList.add('path-static-view');
-                
+
                 // Put all in Row 1, Center them, NO CLONES
                 const generateHTML = (list) => {
-                     return list.map(review => createPremiumReviewCard(review)).join('');
+                    return list.map(review => createPremiumReviewCard(review)).join('');
                 };
 
                 track1.innerHTML = generateHTML(uniqueReviews);
-                
+
                 // Hide Row 2
                 row2.style.display = 'none';
 
@@ -136,7 +144,7 @@ async function loadReviews() {
 
                 const fillTrack = (track, items) => {
                     if (!items.length) {
-                        track.innerHTML = ''; 
+                        track.innerHTML = '';
                         return;
                     }
 
@@ -150,9 +158,9 @@ async function loadReviews() {
 
                     let contentHTML = generateHTML(items, '');
                     contentHTML += generateHTML(items, 'clone1');
-                    
+
                     if (items.length < 4) {
-                         contentHTML += generateHTML(items, 'clone2');
+                        contentHTML += generateHTML(items, 'clone2');
                     }
 
                     track.innerHTML = contentHTML;
@@ -163,14 +171,15 @@ async function loadReviews() {
             }
 
         } else {
-             row1.innerHTML = '<p class="text-center w-100">No reviews yet.</p>';
+            row1.innerHTML = '<p class="text-center w-100">No reviews yet.</p>';
         }
     } catch (error) {
         console.error('Error loading reviews:', error);
         row1.innerHTML = `
-            <div class="text-center w-100 text-danger">
+            <div class="text-center w-100 text-danger" style="color:red; font-weight:bold;">
                 <p>Failed to load reviews.</p>
-                <small>${error.message}</small>
+                <small>Please try again later.</small>
+                <!-- Debug info hidden in comment: ${error.message} -->
             </div>`;
     }
 }
@@ -286,7 +295,7 @@ function closeGlobalMenu() {
     if (menu) menu.remove();
 }
 
-window.addEventListener('click', function(event) {
+window.addEventListener('click', function (event) {
     if (!event.target.closest('#global-review-menu') && !event.target.closest('.btn-icon-menu')) {
         closeGlobalMenu();
     }
@@ -301,8 +310,8 @@ function editReview(reviewId) {
     fetch(`${REVIEW_API_URL}/reviews`)
         .then(res => res.json())
         .then(result => {
-             const review = result.data.find(r => r._id === reviewId);
-             if (review) populateReviewForm(review);
+            const review = result.data.find(r => r._id === reviewId);
+            if (review) populateReviewForm(review);
         })
         .catch(err => console.error(err));
 }
@@ -328,10 +337,10 @@ function populateReviewForm(review) {
 
     if (formTitle) formTitle.innerText = 'Edit Your Review';
     if (editIndicator) editIndicator.style.display = 'block';
-    
+
     submitBtn.innerText = 'Update Review';
     submitBtn.dataset.editingId = review._id;
-    
+
     if (!document.getElementById('cancelEditBtn')) {
         const cancelBtn = document.createElement('button');
         cancelBtn.type = 'button';
