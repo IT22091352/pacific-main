@@ -16,7 +16,12 @@ const hpp = require('hpp');
 dotenv.config();
 
 // Connect to database
-connectDB();
+connectDB().catch(err => {
+    console.error('Failed to connect to MongoDB during app startup:', err.message);
+    // In serverless, we don't necessarily want to exit the process, as valid requests might handle it?
+    // But usually better to let the function fail cold start if DB is critical.
+    // logging it prevents "Unhandled Rejection" which crashes the process in strict mode.
+});
 
 const app = express();
 
