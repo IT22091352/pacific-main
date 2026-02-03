@@ -15,6 +15,11 @@ const hpp = require('hpp');
 // Load env vars
 dotenv.config();
 
+const app = express();
+
+// Trust proxy (Required for Vercel/Heroku/Cloud platforms)
+app.set('trust proxy', 1);
+
 // Middleware to ensure DB is connected on every request (Vercel/Serverless resilience)
 app.use(async (req, res, next) => {
     if (require('mongoose').connection.readyState !== 1) { // 1 = Connected
@@ -29,11 +34,6 @@ app.use(async (req, res, next) => {
     }
     next();
 });
-
-const app = express();
-
-// Trust proxy (Required for Vercel/Heroku/Cloud platforms)
-app.set('trust proxy', 1);
 
 // Body parser
 app.use(express.json());
