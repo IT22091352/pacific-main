@@ -6,7 +6,6 @@
     /* Force height */
     opacity: 1 !important;
     /* Force opacity */
-    /* border: 2px dashed red; DEBUG: Temporarily visible to check layout */
 }
 
 #reviews-carousel .owl-stage-outer {
@@ -18,23 +17,6 @@
 #reviews-carousel .owl-item {
     min-height: 300px;
     height: 100%;
-}
-
-/* Premium Testimonial Card (Ensure visibility) */
-.testimonial-card-premium {
-    background: #fff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(0, 0, 0, 0.03);
-    min-height: 250px;
-    display: flex;
-    flex-direction: column;
-}
-
-.testimonial-card-premium .review-text {
-    color: #4a5568;
-    /* Ensure dark text */
 }
 
 
@@ -106,6 +88,8 @@ h6,
     /* Full width */
     top: 0;
     left: 0;
+    z-index: 1030;
+    /* Ensure navbar stays on top */
     transform: none;
     border-radius: 0;
     /* Remove rounded corners */
@@ -402,7 +386,7 @@ h6,
         /* Left align for editorial feel */
         justify-content: flex-start;
 
-        padding: 12px 0;
+        padding: 6px 0;
         border-radius: 12px;
         /* Soft rounding */
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
@@ -418,6 +402,11 @@ h6,
 
         z-index: 1060;
         /* Increased to ensure it's above everything */
+
+        /* Fix for tall menus/small screens */
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .nav-links li {
@@ -436,13 +425,13 @@ h6,
         /* Smaller, more modern text */
         color: #1a202c !important;
         /* Dark Navy */
-        padding: 10px 20px;
+        padding: 8px 16px;
         /* Compact touch target */
         display: block;
         font-weight: 500;
         text-align: left;
-        border-radius: 8px;
-        margin: 0 8px;
+        border-radius: 6px;
+        margin: 0 4px;
         /* Inset hover effect */
         transition: background 0.2s ease, color 0.2s ease;
     }
@@ -536,8 +525,10 @@ h6,
         display: flex;
         align-items: center;
         width: 100%;
-        padding: 20px 24px;
-        margin-bottom: 10px;
+        padding: 12px 16px;
+        /* Compact padding */
+        margin-bottom: 5px;
+        /* Compact margin */
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         background-color: #f8fafc;
         /* Slight bg distinction */
@@ -545,9 +536,10 @@ h6,
     }
 
     .mobile-user-icon {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
+        /* Smaller icon */
         color: var(--ocean-blue);
-        margin-right: 15px;
+        margin-right: 12px;
     }
 
     .mobile-user-details {
@@ -565,7 +557,8 @@ h6,
 
     .mobile-user-info .username {
         font-family: 'Playfair Display', serif;
-        font-size: 1.25rem;
+        font-size: 1.1rem;
+        /* Compact font */
         color: var(--ocean-blue-dark);
         font-weight: 700;
         display: block;
@@ -3406,18 +3399,25 @@ h6,
 
 /* Card Styling for Marquee */
 .testimonial-card-premium {
-    flex: 0 0 400px;
+    /* flex: 0 0 400px; REMOVED for Carousel responsiveness */
     /* Fixed width for horizontal */
     background: #ffffff;
     border-radius: 16px;
     padding: 30px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.04);
-    min-height: auto;
+    min-height: 250px;
+    /* Enforce min-height */
+    height: 100%;
+    /* Match Owl Item height */
     margin: 0;
+    /* Margin handled by Owl Carousel */
     transform: none;
     opacity: 1;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .testimonial-card-premium:hover {
@@ -3442,6 +3442,24 @@ h6,
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+/* Read More Button */
+.btn-read-more {
+    background: none;
+    border: none;
+    color: var(--ocean-blue);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0;
+    margin-left: 5px;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.btn-read-more:hover {
+    color: var(--sunset-orange);
 }
 
 .testimonial-card-premium .user-info {

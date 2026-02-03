@@ -108,12 +108,20 @@ async function loadReviews() {
                 return true;
             });
 
+            // Store globally for modal access
+            window.loadedReviewsMap = new Map();
+            uniqueReviews.forEach(r => window.loadedReviewsMap.set(r._id, r));
+
             // Generate HTML for all reviews
             const reviewsHTML = uniqueReviews.map(review => createPremiumReviewCard(review)).join('');
 
-            // Destroy previous instance if exists (optional but good for safety)
+            // Destroy previous instance safely
             if ($(carouselContainer).data('owl.carousel')) {
-                $(carouselContainer).trigger('destroy.owl.carousel');
+                try {
+                    $(carouselContainer).trigger('destroy.owl.carousel');
+                } catch (e) {
+                    console.warn('Owl Carousel destroy failed (harmless):', e);
+                }
             }
 
             // Inject HTML
@@ -180,12 +188,31 @@ function createPremiumReviewCard(review) {
         `;
     }
 
+    // Logic for truncation and Read More
+    const maxChars = 120;
+    const fullText = escapeHtml(review.comment);
+    let displayHtml = fullText;
+    let readMoreBtn = '';
+
+    if (fullText.length > maxChars) {
+        // Truncate cleanly at word boundary if possible
+        let sub = fullText.substring(0, maxChars);
+        const lastSpace = sub.lastIndexOf(' ');
+        if (lastSpace > 0) sub = sub.substring(0, lastSpace);
+
+        displayHtml = `${sub}...`;
+        readMoreBtn = `<button class="btn-read-more" onclick="showFullReview('${review._id}')">Read More</button>`;
+    }
+
     return `
         <div class="testimonial-card-premium" id="review-${review._id}">
             ${actions}
             <div class="quote-icon"><i class="fa fa-quote-left"></i></div>
             <div class="rating-stars">${stars}</div>
-            <p class="review-text">${escapeHtml(review.comment)}</p>
+            <p class="review-text">
+                ${displayHtml}
+                ${readMoreBtn}
+            </p>
             <div class="user-info">
                 <div class="avatar">${initials}</div>
                 <div class="details">
@@ -197,6 +224,56 @@ function createPremiumReviewCard(review) {
             </div>
         </div>
     `;
+}
+
+// Function to show full review modal
+function showFullReview(reviewId) {
+    const review = window.loadedReviewsMap ? window.loadedReviewsMap.get(reviewId) : null;
+    if (!review) return;
+
+    // Remove existing modal if any
+    const existing = document.getElementById('reviewDetailModal');
+    if (existing) existing.remove();
+
+    // Create Modal HTML re-using your modal structure styles
+    const modal = document.createElement('div');
+    modal.id = 'reviewDetailModal';
+    modal.className = 'modal'; // Uses your existing modal class
+    modal.style.display = 'block'; // Make it visible immediately
+    modal.style.zIndex = '10000'; // High z-index to sit over everything
+
+    const stars = generateStars(review.rating);
+    const name = escapeHtml(review.user ? review.user.name : review.guestName);
+
+    modal.innerHTML = `
+        <div class="modal-content" style="max-width: 600px; margin: 10% auto;">
+            <div class="modal-header">
+                <h2>${name}'s Review</h2>
+                <button class="close-modal" onclick="document.getElementById('reviewDetailModal').remove()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-3">
+                    <div class="rating-stars" style="font-size: 1.2rem;">${stars}</div>
+                </div>
+                <div class="review-full-content" style="font-size: 1rem; line-height: 1.8; color: #444; max-height: 400px; overflow-y: auto;">
+                    ${escapeHtml(review.comment)}
+                </div>
+                <div class="mt-4 text-center">
+                    <span class="text-muted"><i class="fa fa-map-marker"></i> ${review.country || 'International'}</span>
+                    ${review.tourPackage ? `<br><span class="text-primary">${getTourLabel(review.tourPackage)}</span>` : ''}
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Close on outside click
+    modal.onclick = function (event) {
+        if (event.target == modal) {
+            modal.remove();
+        }
+    }
 }
 
 function escapeHtml(text) {
