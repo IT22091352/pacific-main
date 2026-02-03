@@ -12,13 +12,14 @@ const router = express.Router();
 
 const { protect, authorize } = require('../middleware/auth');
 const { identifyUserOrGuest } = require('../middleware/userOrGuest');
+const { reviewValidation } = require('../middleware/validators');
 
 router.route('/')
     .get(getReviews)
-    .post(identifyUserOrGuest, addReview);
+    .post(identifyUserOrGuest, reviewValidation, addReview);
 
 router.route('/:id')
-    .put(identifyUserOrGuest, updateReview)
+    .put(identifyUserOrGuest, reviewValidation, updateReview)
     .delete(identifyUserOrGuest, deleteReview);
 
 module.exports = router;

@@ -6,7 +6,11 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
-const path = require('path'); // Added for static serving
+const path = require('path');
+const compression = require('compression');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 
 // Load env vars
 dotenv.config();
@@ -23,6 +27,9 @@ app.set('trust proxy', 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Performance: Compression
+app.use(compression());
+
 // Serve static files from the root directory with Caching (1 day)
 app.use(express.static(path.join(__dirname, '../'), {
     maxAge: '1d', // Cache 1 day
@@ -34,18 +41,29 @@ app.use(express.static(path.join(__dirname, '../'), {
     }
 }));
 
-// Security headers
-app.use(helmet());
+// Security: Helmet
+app.use(helmet({
+    contentSecurityPolicy: false, // Disabling CSP for simplicity in this setup, can be enabled later
+}));
+
+// Security: NoSQL Injection
+app.use(mongoSanitize());
+
+// Security: XSS Protection
+app.use(xss());
+
+// Security: Prevent HTTP Parameter Pollution
+app.use(hpp());
 
 // Enable CORS
 app.use(cors({
     origin: function (origin, callback) {
-        console.log('Request Origin:', origin);
         // Allow requests with no origin (like mobile apps, curl requests, or local file://)
         if (!origin || origin === 'null') return callback(null, true);
         return callback(null, true);
     },
-    credentials: true
+    credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 }));
 
 // Dev logging middleware
@@ -61,6 +79,7 @@ const limiter = rateLimit({
 app.use('/api/', limiter);
 
 // Mount routers
+app.use('/', require('./routes/seo')); // Handle sitemap.xml and robots.txt at root
 app.use('/api/auth', require('./routes/auth'));
 try {
     console.log('Mounting review routes...'); // Debug log
