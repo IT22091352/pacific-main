@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const DOMAIN = 'https://www.ceylonsang.com'; // Replace with actual domain in production
+const DOMAIN = 'https://www.wanderlankatours.com'; // Replace with actual domain in production
 
 router.get('/sitemap.xml', (req, res) => {
     const urls = [
