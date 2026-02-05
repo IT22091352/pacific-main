@@ -349,7 +349,7 @@ h6,
 
 @media screen and (max-width: 991px) {
     .navbar {
-        height: 70px;
+        height: 85px;
         padding: 0 20px;
     }
 
@@ -360,7 +360,7 @@ h6,
     /* Floating Card Mobile Menu - Editorial Style */
     .nav-links {
         position: absolute;
-        top: 80px;
+        top: 95px;
         /* Below navbar with slight gap */
         right: 16px;
         /* Inset from right */
