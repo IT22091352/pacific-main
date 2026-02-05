@@ -158,34 +158,54 @@ async function loadReviews() {
             // Generate HTML for all reviews
             const reviewsHTML = uniqueReviews.map(review => createPremiumReviewCard(review)).join('');
 
-            // Destroy previous instance safely
-            if ($(carouselContainer).data('owl.carousel')) {
+            // Safe re-initialization logic
+            const $container = $(carouselContainer);
+
+            // 0. Hide container to prevent "row by row" flash
+            carouselContainer.style.opacity = '0';
+            carouselContainer.style.transition = 'opacity 0.2s ease-in';
+
+            // 1. Force thorough destruction of previous instance
+            if ($container.data('owl.carousel')) {
                 try {
-                    $(carouselContainer).trigger('destroy.owl.carousel');
+                    $container.trigger('destroy.owl.carousel');
                 } catch (e) {
-                    console.warn('Owl Carousel destroy failed (harmless):', e);
+                    console.warn('Silent suppress of Owl destroy error:', e);
                 }
             }
 
-            // Inject HTML
+            // 2. NUCLEAR DOM RESET: Wipe all plugin classes and data
+            carouselContainer.className = 'testimonial-carousel owl-carousel owl-theme';
+            $container.removeData();
+
+            // 3. Inject new HTML
             carouselContainer.innerHTML = reviewsHTML;
 
-            // Initialize Owl Carousel
-            $(carouselContainer).owlCarousel({
-                loop: uniqueReviews.length > 3, // Only loop if enough items
-                margin: 20,
-                nav: false,
-                dots: true,
-                autoplay: true,
-                autoplayTimeout: 2000, // 2 second interval
-                autoplayHoverPause: true,
-                smartSpeed: 800,
-                responsive: {
-                    0: { items: 1 },
-                    600: { items: 2 },
-                    1000: { items: 3 }
-                }
-            });
+            // 4. Re-initialize Owl Carousel
+            setTimeout(() => {
+                $container.owlCarousel({
+                    loop: uniqueReviews.length > 3,
+                    margin: 20,
+                    nav: false,
+                    dots: true,
+                    autoplay: true,
+                    autoplayTimeout: 3000,
+                    autoplayHoverPause: true,
+                    smartSpeed: 800,
+                    responsive: {
+                        0: { items: 1 },
+                        600: { items: 2 },
+                        1000: { items: 3 }
+                    },
+                    // Reveal only after init is done
+                    onInitialized: function () {
+                        carouselContainer.style.opacity = '1';
+                    }
+                });
+
+                // Fallback reveal in case event doesn't fire
+                setTimeout(() => carouselContainer.style.opacity = '1', 100);
+            }, 50);
 
         } else {
             carouselContainer.innerHTML = '<p class="text-center w-100">No reviews yet.</p>';
