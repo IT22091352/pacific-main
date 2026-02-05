@@ -13,7 +13,8 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 
 // Load env vars
-dotenv.config();
+// Explicitly point to .env in the same directory as server.js
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 
