@@ -7,6 +7,8 @@ const router = express.Router();
  * @access  Public
  */
 router.get('/emailjs', (req, res) => {
+    // Prevent Vercel from caching this response
+    res.setHeader('Cache-Control', 'no-store, max-age=0');
     res.json({
         serviceId: process.env.EMAILJS_SERVICE_ID,
         templateId: process.env.EMAILJS_TEMPLATE_ID,

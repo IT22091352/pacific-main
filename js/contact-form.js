@@ -24,8 +24,11 @@
             emailConfig = await response.json();
 
             // Initialize EmailJS
-            if (emailConfig && emailConfig.publicKey) {
-                emailjs.init(emailConfig.publicKey);
+            // Fallback to hardcoded key if backend fails (failsafe for Vercel propagation)
+            const publicKey = (emailConfig && emailConfig.publicKey) ? emailConfig.publicKey : 'h7w-Q5zjUS-UTyves';
+
+            if (publicKey) {
+                emailjs.init(publicKey);
             } else {
                 console.error('EmailJS Public Key not found in config');
             }
