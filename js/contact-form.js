@@ -44,16 +44,17 @@
         contactForm.addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent default form submission
 
+            // Relaxed check: We now have fallbacks, so we only block if we truly can't proceed.
+            // But since we hardcoded keys, we can almost always proceed.
             if (!emailConfig) {
-                formMessage.className = 'alert alert-danger';
-                formMessage.innerHTML = '<strong>Error!</strong> detailed configuration not loaded. Please refresh the page.';
-                formMessage.style.display = 'block';
-                return;
+                console.warn('Backend config failed, using local fallbacks.');
+                emailConfig = {}; // Initialize empty object to avoid errors below
             }
 
-            const serviceID = emailConfig.serviceId;
-            const templateID = emailConfig.templateId;
-            const autoReplyTemplateID = emailConfig.autoReplyTemplateId;
+            // Fallback to hardcoded values if config is missing (Vercel Failsafe)
+            const serviceID = (emailConfig && emailConfig.serviceId) ? emailConfig.serviceId : 'service_wqsxhgt';
+            const templateID = (emailConfig && emailConfig.templateId) ? emailConfig.templateId : 'template_w6ai859';
+            const autoReplyTemplateID = (emailConfig && emailConfig.autoReplyTemplateId) ? emailConfig.autoReplyTemplateId : 'template_omemxha';
 
             // Get the submit button to show loading state
             const searchButton = contactForm.querySelector('button[type="submit"]');
