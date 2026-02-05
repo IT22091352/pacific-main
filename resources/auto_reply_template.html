@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f6f6f6;
+            color: #333333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-image: url('https://www.ceylonsang.com/images/bg_1.jpg');
+            /* Replace with actual hosted image URL */
+            background-size: cover;
+            background-position: center;
+            height: 150px;
+            position: relative;
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .content {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .content h2 {
+            color: #F96D00;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .message-body {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555555;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #F96D00;
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #d65d00;
+        }
+
+        .social-proof {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .social-proof p {
+            font-style: italic;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .footer {
+            background-color: #333333;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: #F96D00;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header with Background Image -->
+        <div class="header">
+            <div class="header-overlay">
+                <h1>Wander Lanka Tours</h1>
+            </div>
+        </div>
+
+        <!-- Body Content -->
+        <div class="content">
+            <h2>Ayubowan, {{user_name}}!</h2>
+
+            <div class="message-body">
+                <p>Thank you for reaching out to us. We have received your inquiry regarding
+                    <strong>{{subject}}</strong>.
+                </p>
+                <p>One of our travel experts is already reviewing your request and will get back to you within 24 hours
+                    to help plan your perfect Sri Lankan adventure.</p>
+                <p>In the meantime, feel free to explore more of our tour packages and get inspired!</p>
+            </div>
+
+            <a href="https://www.ceylonsang.com/packages.html" class="cta-button">Explore Packages</a>
+
+            <div class="social-proof">
+                <p>"The journey of a thousand miles begins with a single step."</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Wander Lanka Tours</strong><br>
+                Colombo, Sri Lanka<br>
+                <a href="mailto:tourswanderlanka@gmail.com">tourswanderlanka@gmail.com</a> | +94 76 268 6428 / +94 71
+                181 8549
+            </p>
+            <p>&copy; 2026 Wander Lanka Tours. All rights reserved.</p>
+            <p><a href="https://www.ceylonsang.com">Visit our website</a></p>
+        </div>
+    </div>
+</body>
+
+</html>

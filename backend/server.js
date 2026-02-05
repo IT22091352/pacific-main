@@ -91,6 +91,7 @@ app.use('/api/', limiter);
 app.use('/api', require('./routes/health')); // Exposes /api/health
 app.use('/', require('./routes/seo')); // Handle sitemap.xml and robots.txt at root
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/config', require('./routes/config'));
 try {
     console.log('Mounting review routes...'); // Debug log
     app.use('/api/reviews', require('./routes/reviews'));

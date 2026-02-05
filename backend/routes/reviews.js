@@ -16,7 +16,7 @@ const { reviewValidation } = require('../middleware/validators');
 
 router.route('/')
     .get(getReviews)
-    .post(identifyUserOrGuest, reviewValidation, addReview);
+    .post(protect, reviewValidation, addReview);
 
 router.route('/:id')
     .put(identifyUserOrGuest, reviewValidation, updateReview)

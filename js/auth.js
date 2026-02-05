@@ -6,7 +6,7 @@ const API_URL = (window.location.hostname === 'localhost' || window.location.hos
     : '/api';
 
 // DOM Elements
-let loginModal, signupModal, loginForm, signupForm, authButton, userNameDisplay;
+let loginModal, signupModal, forgotModal, loginForm, signupForm, forgotForm, authButton, userNameDisplay;
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
@@ -19,8 +19,10 @@ function initAuth() {
     // Get DOM elements
     loginModal = document.getElementById('loginModal');
     signupModal = document.getElementById('signupModal');
+    forgotModal = document.getElementById('forgotModal');
     loginForm = document.getElementById('loginForm');
     signupForm = document.getElementById('signupForm');
+    forgotForm = document.getElementById('forgotForm');
     authButton = document.getElementById('authButton');
     userNameDisplay = document.getElementById('userNameDisplay');
 
@@ -30,6 +32,9 @@ function initAuth() {
     }
     if (signupForm) {
         signupForm.addEventListener('submit', handleSignup);
+    }
+    if (forgotForm) {
+        forgotForm.addEventListener('submit', handleForgot);
     }
 }
 
@@ -52,6 +57,10 @@ async function handleLogin(e) {
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
     const errorDiv = document.getElementById('loginError');
+    const btn = loginForm.querySelector('button');
+
+    btn.classList.add('loading');
+    btn.disabled = true;
 
     try {
         const response = await fetch(`${API_URL}/auth/login`, {
@@ -80,6 +89,9 @@ async function handleLogin(e) {
             // Show success message
             showMessage('Login successful! Welcome back, ' + data.user.name, 'success');
 
+            // Dispatch global event
+            window.dispatchEvent(new Event('auth:login'));
+
             // Reset form
             loginForm.reset();
         } else {
@@ -90,6 +102,9 @@ async function handleLogin(e) {
         errorDiv.textContent = 'Network error. Please try again.';
         errorDiv.style.display = 'block';
         console.error('Login error:', error);
+    } finally {
+        btn.classList.remove('loading');
+        btn.disabled = false;
     }
 }
 
@@ -102,6 +117,10 @@ async function handleSignup(e) {
     const password = document.getElementById('signupPassword').value;
     const confirmPassword = document.getElementById('signupConfirmPassword').value;
     const errorDiv = document.getElementById('signupError');
+    const btn = signupForm.querySelector('button');
+
+    btn.classList.add('loading');
+    btn.disabled = true;
 
     // Validate passwords match
     if (password !== confirmPassword) {
@@ -154,6 +173,54 @@ async function handleSignup(e) {
         errorDiv.textContent = 'Network error. Please try again.';
         errorDiv.style.display = 'block';
         console.error('Signup error:', error);
+    } finally {
+        btn.classList.remove('loading');
+        btn.disabled = false;
+    }
+}
+
+// Handle Forgot Password
+async function handleForgot(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('forgotEmail').value;
+    const errorDiv = document.getElementById('forgotError');
+    const successDiv = document.getElementById('forgotSuccess');
+
+
+    const btn = forgotForm.querySelector('button');
+
+    // Reset messages
+    errorDiv.style.display = 'none';
+    successDiv.style.display = 'none';
+
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    try {
+        const response = await fetch(`${API_URL}/auth/forgotpassword`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            successDiv.textContent = 'Email sent! Check your inbox for the reset link.';
+            successDiv.style.display = 'block';
+            forgotForm.reset();
+        } else {
+            errorDiv.textContent = data.message || 'Error sending email';
+            errorDiv.style.display = 'block';
+        }
+    } catch (error) {
+        errorDiv.textContent = 'Network error. Please try again.';
+        errorDiv.style.display = 'block';
+        console.error('Forgot Password error:', error);
+    } finally {
+        btn.classList.remove('loading');
+        btn.disabled = false;
     }
 }
 
@@ -170,6 +237,9 @@ function handleLogout() {
 
     // Show message
     showMessage('Logged out successfully', 'success');
+
+    // Dispatch global event
+    window.dispatchEvent(new Event('auth:logout'));
 
     // Force Redirect to Home to prevent "auth-only" pages from breaking
     // and to reset the navbar state cleanly.
@@ -294,17 +364,22 @@ function removeMobileLoginLink() {
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
+        modal.classList.add('show'); // Logic for CSS transition
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
     }
 }
 
 // Close modal
+// Close modal
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }, 300); // Wait for animation
 
         // Clear error messages
         const errorDiv = modal.querySelector('.error-message');
@@ -323,7 +398,14 @@ function switchToSignup() {
 
 function switchToLogin() {
     closeModal('signupModal');
+    closeModal('forgotModal');
     openModal('loginModal');
+}
+
+function switchToForgot(e) {
+    if (e) e.preventDefault();
+    closeModal('loginModal');
+    openModal('forgotModal');
 }
 
 // Show message
@@ -377,9 +459,23 @@ async function authenticatedFetch(url, options = {}) {
 }
 
 // Close modal when clicking outside
+// Close modal when clicking outside
 window.onclick = function (event) {
     if (event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        closeModal(event.target.id);
+    }
+};
+
+// Toggle Password Visibility
+window.togglePassword = function (inputId, icon) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
     }
 };

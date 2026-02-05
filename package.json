@@ -1,7 +1,7 @@
 {
-    "name": "ceylon-sang-root",
+    "name": "wander-lanka-root",
     "version": "1.0.0",
-    "description": "Root package for Vercel deployment of Ceylon Sang",
+    "description": "Root package for Vercel deployment of Wander Lanka Tours",
     "scripts": {
         "start": "node backend/server.js",
         "dev": "nodemon backend/server.js"

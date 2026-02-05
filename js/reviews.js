@@ -6,6 +6,10 @@ const REVIEW_API_URL = (!window.location.hostname || window.location.hostname ==
 
 document.addEventListener('DOMContentLoaded', function () {
     initReviews();
+
+    // Listen for auth changes
+    window.addEventListener('auth:login', checkReviewFormAuth);
+    window.addEventListener('auth:logout', checkReviewFormAuth);
 });
 
 function initReviews() {
@@ -45,32 +49,71 @@ function checkReviewFormAuth() {
     const submitBtn = document.getElementById('reviewSubmitBtn');
     const nameInput = document.getElementById('review-name');
     const emailInput = document.getElementById('review-email');
+    const countryInput = document.getElementById('review-country');
+    const tourInput = document.getElementById('review-tour');
+    const msgInput = document.getElementById('review-message') || document.getElementById('review-text');
     const messageDiv = document.getElementById('reviewMessage');
-
-    if (submitBtn) submitBtn.disabled = false;
+    const stars = document.querySelectorAll('input[name="rating"]');
 
     if (!token) {
+        // Not logged in: Disable form and show login prompt
+        if (messageDiv) {
+            messageDiv.style.display = 'block';
+            messageDiv.className = 'alert alert-warning text-center';
+            messageDiv.innerHTML = '<strong>Please <a href="javascript:void(0)" onclick="openModal(\'loginModal\')">login</a> to leave a review.</strong>';
+        }
+
         if (nameInput) {
-            nameInput.disabled = false;
-            nameInput.placeholder = "Enter your name (Guest)";
-            nameInput.value = localStorage.getItem('guestName') || '';
+            nameInput.value = '';
+            nameInput.disabled = true;
+            nameInput.placeholder = "Login required";
         }
         if (emailInput) {
-            emailInput.disabled = false;
-            emailInput.placeholder = "Enter your email (Guest)";
-            emailInput.value = localStorage.getItem('guestEmail') || '';
+            emailInput.value = '';
+            emailInput.disabled = true;
+            emailInput.placeholder = "Login required";
         }
-        if (messageDiv) messageDiv.style.display = 'none';
+        if (countryInput) countryInput.disabled = true;
+        if (tourInput) tourInput.disabled = true;
+        if (msgInput) msgInput.disabled = true;
+        stars.forEach(s => s.disabled = true);
+
+        if (submitBtn) {
+            submitBtn.innerHTML = 'Login to Review';
+            submitBtn.type = 'button'; // Prevent form submission
+            submitBtn.onclick = function () { openModal('loginModal'); };
+            submitBtn.classList.remove('btn-primary');
+            submitBtn.classList.add('btn-secondary');
+        }
+
     } else {
+        // Logged in: Enable form (except name/email which are fixed)
+        if (messageDiv) messageDiv.style.display = 'none';
+
         if (nameInput) {
             nameInput.value = userName || '';
-            nameInput.disabled = true;
+            nameInput.disabled = true; // Still disabled as it comes from account
+            nameInput.placeholder = "Your Name";
         }
         if (emailInput) {
             emailInput.value = userEmail || '';
-            emailInput.disabled = true;
+            emailInput.disabled = true; // Still disabled as it comes from account
+            emailInput.placeholder = "Your Email";
         }
-        if (messageDiv) messageDiv.style.display = 'none';
+
+        if (countryInput) countryInput.disabled = false;
+        if (tourInput) tourInput.disabled = false;
+        if (msgInput) msgInput.disabled = false;
+        stars.forEach(s => s.disabled = false);
+
+        if (submitBtn) {
+            submitBtn.innerText = 'Submit Review';
+            submitBtn.type = 'submit';
+            submitBtn.onclick = null; // Remove the direct onclick handler so it submits form
+            submitBtn.classList.add('btn-primary');
+            submitBtn.classList.remove('btn-secondary');
+            submitBtn.disabled = false;
+        }
     }
 }
 
@@ -201,7 +244,7 @@ function createPremiumReviewCard(review) {
         if (lastSpace > 0) sub = sub.substring(0, lastSpace);
 
         displayHtml = `${sub}...`;
-        readMoreBtn = `<button class="btn-read-more" onclick="showFullReview('${review._id}')">Read More</button>`;
+        readMoreBtn = `<button type="button" class="btn-read-more" onclick="window.showFullReview('${review._id}'); return false;">Read More</button>`;
     }
 
     return `
@@ -227,9 +270,19 @@ function createPremiumReviewCard(review) {
 }
 
 // Function to show full review modal
-function showFullReview(reviewId) {
-    const review = window.loadedReviewsMap ? window.loadedReviewsMap.get(reviewId) : null;
-    if (!review) return;
+window.showFullReview = function (reviewId) {
+    console.log('Opening review:', reviewId);
+    if (!window.loadedReviewsMap) {
+        console.error('Reviews map not loaded');
+        alert('Review data not ready. Please refresh.');
+        return;
+    }
+
+    const review = window.loadedReviewsMap.get(reviewId);
+    if (!review) {
+        console.error('Review not found in map:', reviewId);
+        return;
+    }
 
     // Remove existing modal if any
     const existing = document.getElementById('reviewDetailModal');
@@ -239,7 +292,7 @@ function showFullReview(reviewId) {
     const modal = document.createElement('div');
     modal.id = 'reviewDetailModal';
     modal.className = 'modal'; // Uses your existing modal class
-    modal.style.display = 'block'; // Make it visible immediately
+    modal.style.display = 'block'; // Make it visible in layout
     modal.style.zIndex = '10000'; // High z-index to sit over everything
 
     const stars = generateStars(review.rating);
@@ -268,10 +321,16 @@ function showFullReview(reviewId) {
 
     document.body.appendChild(modal);
 
+    // Trigger transition
+    requestAnimationFrame(() => {
+        modal.classList.add('show');
+    });
+
     // Close on outside click
     modal.onclick = function (event) {
         if (event.target == modal) {
-            modal.remove();
+            modal.classList.remove('show');
+            setTimeout(() => modal.remove(), 300);
         }
     }
 }

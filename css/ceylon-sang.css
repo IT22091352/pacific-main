@@ -64,10 +64,10 @@ h6,
     --sunset-orange-light: #ff8555;
 
     /* Font Variables */
-    --font-heading-family: 'Playfair Display', serif;
-    /* Premium Serif */
-    --font-body-family: 'Poppins', sans-serif;
-    /* Clean Sans-serif */
+    --font-heading-family: 'Montserrat', sans-serif;
+    /* Premium Sans Serif for Headings */
+    --font-body-family: 'Open Sans', sans-serif;
+    /* Clean Sans-serif for Body */
     --font-body-style: normal;
     --font-body-weight: 400;
     --font-body-scale: 1.0;
@@ -468,9 +468,7 @@ h6,
     transform: translateY(0);
 }
 
-.nav-active li {
-    /* No stagger needed for simple list, handled by parent reveal */
-}
+
 
 /* Overlay - still needed for click-out logic but visually subtle/invisible if desired. 
    User asked primarily for floating card feel. We can make overlay transparent or subtle.
@@ -1262,6 +1260,22 @@ h6,
     }
 }
 
+/* CSS for reviews */
+.btn-read-more {
+    z-index: 999;
+    /* High z-index */
+    position: relative;
+    /* Essential for z-index to work */
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-top: 5px;
+    text-decoration: underline;
+}
+
 /* Star Rating */
 .star-rating {
     display: flex;
@@ -1940,9 +1954,7 @@ h6,
     }
 }
 
-;
 
-;
 
 /* -------------------------------- */
 /* PREMIUM GLASSMORPHISM NAVBAR    */
@@ -2630,6 +2642,7 @@ h6,
     /* Push user info to bottom */
     display: -webkit-box;
     -webkit-line-clamp: 5;
+    line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
     flex-grow: 1;
@@ -3440,6 +3453,7 @@ h6,
     margin-bottom: 25px;
     display: -webkit-box;
     -webkit-line-clamp: 4;
+    line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
