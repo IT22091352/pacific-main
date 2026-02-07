@@ -28,15 +28,11 @@ exports.forgotPassword = async (req, res, next) => {
         const resetToken = user.getResetPasswordToken();
 
         // Create reset url
-        // In local/production, we need the frontend URL.
-        // Assuming client is served from same domain or configured.
-        // If separate frontend, use process.env.FRONTEND_URL.
-        // Here we'll construct it based on the request protocol/host for simplicity 
-        // OR rely on a fixed structure if we know where the frontend lives.
-        // Since we are adding reset-password.html to the public root:
-        const resetUrl = `${req.protocol}://${req.get('host')}/reset-password.html?token=${resetToken}`;
+        // Use environment variable for frontend URL, fallback to request host
+        const frontendUrl = process.env.FRONTEND_URL || `${req.protocol}://${req.get('host')}`;
+        const resetUrl = `${frontendUrl}/reset-password.html?token=${resetToken}`;
 
-        const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl}`;
+        const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please click on the following link to reset your password: \n\n ${resetUrl}\n\nIf you did not request this, please ignore this email and your password will remain unchanged.`;
 
         try {
             await user.save({ validateBeforeSave: false });

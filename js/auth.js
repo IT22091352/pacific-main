@@ -273,7 +273,7 @@ function updateUIForLoggedInUser(userName) {
 function updateUIForLoggedOutUser() {
     if (authButton) {
         authButton.innerHTML = `
-            <a onclick="openModal('loginModal')" class="login-link">
+            <a href="login.html" class="login-link">
                 <span class="fa fa-user-circle-o mr-1"></span> Login
             </a>
         `;
@@ -339,11 +339,11 @@ function addMobileLoginLink() {
         }
 
         loginItem.innerHTML = `
-            <a href="#" onclick="openModal('loginModal'); return false;" style="text-decoration: none; display: block;">
+            <a href="login.html" style="text-decoration: none; display: block;">
                 <div class="mobile-user-info">
                     <span class="fa fa-sign-in mobile-user-icon"></span>
                     <div class="mobile-user-details">
-                        <span class="greeting">Welcome to Ceylon Sang</span>
+                        <span class="greeting">Welcome to Wander Lanka Tours</span>
                         <span class="username">Login or Sign Up</span>
                     </div>
                 </div>
