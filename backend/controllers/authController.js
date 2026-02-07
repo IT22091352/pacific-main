@@ -30,6 +30,7 @@ exports.forgotPassword = async (req, res, next) => {
         // Create reset url
         // Use environment variable for frontend URL, fallback to request host
         const frontendUrl = process.env.FRONTEND_URL || `${req.protocol}://${req.get('host')}`;
+        console.log('FRONTEND_URL:', process.env.FRONTEND_URL, '| Using:', frontendUrl);
         const resetUrl = `${frontendUrl}/reset-password.html?token=${resetToken}`;
 
         const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please click on the following link to reset your password: \n\n ${resetUrl}\n\nIf you did not request this, please ignore this email and your password will remain unchanged.`;
