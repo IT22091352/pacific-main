@@ -9,10 +9,10 @@ $(document).ready(function () {
         $(this).removeClass('btn-outline-primary').addClass('btn-primary active');
 
         // Scroll to top of grid nicely (Target static header instead of sticky bar)
-        var $staticTarget = $('.sticky-filter-bar').prev('.row'); // The header row
+        var $staticTarget = $('#target-scroll-anchor'); // The header row with ID
         var targetOffset = $staticTarget.length ? $staticTarget.offset().top - 100 : 0;
 
-        $('html, body').animate({
+        $('html, body').stop().animate({
             scrollTop: targetOffset
         }, 500);
 
@@ -48,21 +48,60 @@ $(document).ready(function () {
     // Ensure all items are visible on load
     $('.destination-detail').css('display', 'flex');
 
-    // Check URL Hash for Filter on Load
-    var hash = window.location.hash.substring(1); // Remove '#'
-    if (hash) {
-        var $targetBtn = $('.filter-btn[data-filter="' + hash + '"]');
+    // Function to apply filter based on category ID
+    function applyDataFilter(category) {
+        var $targetBtn = $('.filter-btn[data-filter="' + category + '"]');
         if ($targetBtn.length) {
-            // Slight delay to ensure DOM is ready and visual transition
-            setTimeout(function () {
-                $targetBtn.trigger('click');
-                // Optional: Scroll to filter bar
-                $('html, body').animate({
-                    scrollTop: $(".sticky-filter-bar").offset().top - 100
-                }, 800);
-            }, 500);
+            console.log('Appling filter:', category);
+            // Simulate click to trigger filter logic
+            $targetBtn.trigger('click');
         }
     }
+
+    // 1. Run on Page Load if hash exists
+    var initialHash = window.location.hash.substring(1);
+    if (initialHash) {
+        applyDataFilter(initialHash);
+    }
+
+    // 2. Handle Hash Change (e.g. back/forward buttons)
+    $(window).on('hashchange', function () {
+        var hash = window.location.hash.substring(1);
+        applyDataFilter(hash);
+    });
+
+    // 3. Intercept clicks on links that point to our filters (e.g. footer links)
+    // This is crucial for when the user is ALREADY on the destinations page
+    $(document).on('click', 'a[href*="#"]', function (e) {
+        var href = $(this).attr('href');
+        // Check if href contains a relevant hash
+        if (href.indexOf('#') === -1) return;
+
+        var hash = href.split('#')[1];
+        var validFilters = ['cultural', 'wildlife', 'beach', 'adventure', 'heritage'];
+
+        if (validFilters.indexOf(hash) !== -1) {
+            // It matches one of our filters!
+
+            // If we are on the destinations page
+            if (window.location.pathname.indexOf('destinations.html') > -1 || window.location.pathname === '/' || window.location.href.indexOf('destinations.html') > -1) {
+                e.preventDefault();
+
+                // Update URL without jump
+                if (history.pushState) {
+                    history.pushState(null, null, '#' + hash);
+                } else {
+                    window.location.hash = hash;
+                }
+
+                applyDataFilter(hash);
+
+                // Note: applyDataFilter triggers a click on the filter button. 
+                // That button's click handler ALREADY contains the scroll logic.
+                // So we do not need to duplicate scrolling here.
+            }
+        }
+    });
 
     // ---------------------------------------------------------
     // 3. Dynamic Sticky Navbar Logic
