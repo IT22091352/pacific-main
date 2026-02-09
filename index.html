@@ -656,11 +656,68 @@
             });
         });
 
-        // Slow down hero video for cinematic effect
+        // Hero video autoplay and mobile optimization
         document.addEventListener('DOMContentLoaded', function () {
             const heroVideo = document.getElementById('hero-video');
             if (heroVideo) {
-                heroVideo.playbackRate = 0.75; // Slow motion for cinematic feel
+                // Set playback rate for cinematic effect
+                heroVideo.playbackRate = 0.75;
+
+                // Force autoplay on mobile devices
+                const playVideo = () => {
+                    const playPromise = heroVideo.play();
+
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            // Video is playing successfully
+                            console.log('Hero video autoplay started');
+                        }).catch(error => {
+                            // Autoplay was prevented
+                            console.log('Autoplay prevented, attempting fallback:', error);
+
+                            // Try to play muted
+                            heroVideo.muted = true;
+                            heroVideo.play().catch(e => {
+                                console.log('Muted autoplay also failed:', e);
+                            });
+                        });
+                    }
+                };
+
+                // Attempt to play immediately
+                playVideo();
+
+                // Additional attempts for stubborn mobile browsers
+                setTimeout(playVideo, 100);
+                setTimeout(playVideo, 500);
+                setTimeout(playVideo, 1000);
+
+                // Try to play on any user interaction
+                const forcePlay = () => {
+                    if (heroVideo.paused) {
+                        playVideo();
+                    }
+                };
+
+                // Listen for various events that might allow autoplay
+                document.addEventListener('touchstart', forcePlay, { once: true });
+                document.addEventListener('click', forcePlay, { once: true });
+                document.addEventListener('scroll', forcePlay, { once: true });
+                window.addEventListener('load', playVideo);
+
+                // Ensure video stays playing
+                heroVideo.addEventListener('pause', function () {
+                    if (!heroVideo.ended) {
+                        heroVideo.play();
+                    }
+                });
+
+                // Handle visibility change (when user switches tabs)
+                document.addEventListener('visibilitychange', function () {
+                    if (!document.hidden && heroVideo.paused) {
+                        playVideo();
+                    }
+                });
             }
         });
     </script>
