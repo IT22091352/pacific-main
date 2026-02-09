@@ -638,44 +638,46 @@ h6,
     color: #fff !important;
 }
 
-/* Hero Section */
+/* ========================================
+   HERO SECTION - PREMIUM REDESIGN
+   Glassmorphism | Cinematic Video | Brand Focus
+   ======================================== */
+
+/* Hero Section Base */
 .hero-wrap {
-    position: relative;
+    position: relative !important;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
 }
 
-.hero-wrap .subheading {
-    color: var(--sunset-orange);
-    font-size: 18px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-.hero-wrap h1 {
-    font-size: 50px;
-    color: #fff;
-    font-weight: 700;
-    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
-}
-
-.hero-wrap .caps {
-    font-size: 18px;
-    color: #fff;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-}
-
-/* Hero Video Background */
+/* Hero Video - Full Quality, No Effects */
 .hero-video {
-    position: absolute;
+    position: absolute !important;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100% !important;
     height: 100%;
     object-fit: cover;
-    z-index: 0;
+    z-index: 1 !important;
+    /* 100% quality - no filters or opacity reduction */
+    opacity: 1;
+    filter: none;
+    animation: slowPan 60s ease-in-out infinite alternate;
 }
 
+@keyframes slowPan {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.05);
+    }
+}
+
+/* Video Fallback */
 .hero-video-fallback {
     position: absolute;
     top: 0;
@@ -686,73 +688,444 @@ h6,
     background-position: center;
     z-index: 0;
     display: none;
+    opacity: 0.5;
+    filter: brightness(0.7);
 }
 
-/* Show fallback if video fails to load */
 .hero-wrap:not(:has(video)) .hero-video-fallback,
 .hero-video[poster]~.hero-video-fallback {
     display: block;
 }
 
-/* Ensure content is above video */
-.hero-wrap .overlay {
-    position: relative;
-    z-index: 1;
-    background: rgba(0, 0, 0, 0.65) !important;
+/* No Overlay - 100% Video Visibility */
+.hero-overlay-gradient {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 2 !important;
 }
 
+/* Content Container */
 .hero-wrap .container {
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+.hero-wrap .slider-text {
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+/* ========================================
+   GLASSMORPHISM CONTENT CONTAINER
+   ======================================== */
+
+.hero-glass-container {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-radius: 0;
+    border: none;
+    padding: 60px 50px;
+    box-shadow: none;
+    max-width: 900px;
+    margin: 0 auto;
+    animation: fadeInUp 1.2s ease-out;
     position: relative;
-    z-index: 2;
+    z-index: 10;
 }
 
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
 
-/* Hero Statistics */
-.hero-stat {
-    text-align: center;
-    padding: 20px;
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.hero-stat .icon-circle {
-    width: 80px;
-    height: 80px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid var(--sunset-orange);
-    border-radius: 50%;
+/* ========================================
+   BRAND NAME - PREMIUM TYPOGRAPHY
+   ======================================== */
+
+.hero-brand-name {
+    font-family: 'Merriweather', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 25px;
+    text-shadow:
+        0 2px 15px rgba(0, 0, 0, 0.8),
+        0 4px 25px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(255, 107, 53, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 15px;
+    gap: 15px;
+    animation: brandGlow 3s ease-in-out infinite;
+}
+
+/* Hero Brand Logo Image */
+.hero-brand-logo {
+    max-width: 450px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.8)) drop-shadow(0 2px 10px rgba(0, 0, 0, 0.9));
+    animation: logoGlow 3s ease-in-out infinite;
+}
+
+@keyframes logoGlow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.8)) drop-shadow(0 2px 10px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 20px rgba(255, 107, 53, 0.2));
+    }
+
+    50% {
+        filter: drop-shadow(0 4px 25px rgba(0, 0, 0, 0.9)) drop-shadow(0 2px 12px rgba(0, 0, 0, 1)) drop-shadow(0 0 30px rgba(255, 107, 53, 0.4));
+    }
+}
+
+.brand-icon {
+    color: var(--sunset-orange);
+    font-size: 1.2rem;
+    animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes brandGlow {
+
+    0%,
+    100% {
+        text-shadow:
+            0 2px 10px rgba(0, 0, 0, 0.5),
+            0 0 30px rgba(255, 107, 53, 0.3);
+    }
+
+    50% {
+        text-shadow:
+            0 2px 10px rgba(0, 0, 0, 0.5),
+            0 0 40px rgba(255, 107, 53, 0.5);
+    }
+}
+
+@keyframes iconPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+/* ========================================
+   HERO HEADLINE - MAXIMUM CONTRAST
+   ======================================== */
+
+.hero-headline {
+    font-family: 'Merriweather', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    text-shadow:
+        0 4px 25px rgba(0, 0, 0, 0.9),
+        0 2px 8px rgba(0, 0, 0, 1),
+        0 6px 30px rgba(0, 0, 0, 0.7);
+    letter-spacing: -0.5px;
+}
+
+/* ========================================
+   HERO SUBHEADLINE
+   ======================================== */
+
+.hero-subheadline {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.6;
+    margin-bottom: 40px;
+    text-shadow:
+        0 2px 15px rgba(0, 0, 0, 0.8),
+        0 4px 20px rgba(0, 0, 0, 0.6);
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ========================================
+   CTA BUTTONS - ENHANCED VISIBILITY
+   ======================================== */
+
+.hero-cta-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Primary CTA Button */
+.btn-hero-primary {
+    background: linear-gradient(135deg, var(--sunset-orange) 0%, var(--sunset-orange-dark) 100%);
+    color: #ffffff;
+    padding: 18px 40px;
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow:
+        0 8px 25px rgba(255, 107, 53, 0.5),
+        0 0 0 0 rgba(255, 107, 53, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-hero-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s;
+}
+
+.btn-hero-primary:hover::before {
+    left: 100%;
+}
+
+.btn-hero-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+        0 12px 35px rgba(255, 107, 53, 0.6),
+        0 0 0 8px rgba(255, 107, 53, 0.2);
+    color: #ffffff;
+}
+
+.btn-hero-primary .btn-icon {
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-hero-primary:hover .btn-icon {
+    transform: translateX(5px);
+}
+
+/* Secondary CTA Button */
+.btn-hero-secondary {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #ffffff;
+    padding: 18px 40px;
+    border-radius: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 }
 
-.hero-stat .icon-circle span {
-    font-size: 32px;
-    color: var(--sunset-orange);
+.btn-hero-secondary:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
 }
 
-.hero-stat:hover .icon-circle {
-    background: var(--sunset-orange);
-    transform: scale(1.1);
+.btn-icon-left {
+    font-size: 1.3rem;
 }
 
-.hero-stat:hover .icon-circle span {
-    color: #fff;
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 991px) {
+    .hero-glass-container {
+        padding: 50px 40px;
+        border-radius: 24px;
+    }
+
+    .hero-brand-name {
+        font-size: 1.2rem;
+        letter-spacing: 3px;
+    }
+
+    .hero-headline {
+        font-size: 2.5rem;
+    }
+
+    .hero-subheadline {
+        font-size: 1.1rem;
+    }
+
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        padding: 16px 32px;
+        font-size: 1rem;
+    }
 }
 
-.hero-stat h3 {
-    color: #fff;
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 5px;
+@media (max-width: 767px) {
+
+    /* Hero Section - Mobile Optimized */
+    .hero-wrap {
+        min-height: 100vh;
+        height: auto;
+    }
+
+    .hero-glass-container {
+        padding: 35px 25px;
+        border-radius: 0;
+        margin: 20px 15px;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .hero-brand-name {
+        font-size: 1rem;
+        letter-spacing: 2px;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .hero-brand-logo {
+        max-width: 280px;
+        width: 90%;
+    }
+
+    .brand-icon {
+        font-size: 1rem;
+    }
+
+    .hero-headline {
+        font-size: 2.2rem;
+        margin-bottom: 18px;
+        line-height: 1.3;
+        letter-spacing: -0.3px;
+    }
+
+    .hero-subheadline {
+        font-size: 1.05rem;
+        margin-bottom: 30px;
+        line-height: 1.5;
+        padding: 0 10px;
+    }
+
+    .hero-cta-group {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        width: 100%;
+        justify-content: center;
+        padding: 18px 30px;
+        font-size: 1.05rem;
+        font-weight: 600;
+    }
+
+    /* Video optimization for mobile */
+    .hero-video {
+        object-position: center center;
+    }
 }
 
-.hero-stat p {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 14px;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+@media (max-width: 480px) {
+
+    /* Small Mobile - Extra Optimized */
+    .hero-glass-container {
+        padding: 28px 18px;
+        border-radius: 0;
+        margin: 15px 10px;
+        background: transparent;
+    }
+
+    .hero-brand-logo {
+        max-width: 240px;
+        width: 85%;
+    }
+
+    .hero-headline {
+        font-size: 1.85rem;
+        margin-bottom: 15px;
+        line-height: 1.25;
+    }
+
+    .hero-subheadline {
+        font-size: 0.98rem;
+        margin-bottom: 25px;
+        line-height: 1.5;
+    }
+
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        padding: 16px 25px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 375px) {
+
+    /* Extra Small Mobile - iPhone SE, etc. */
+    .hero-glass-container {
+        padding: 25px 15px;
+        margin: 10px 8px;
+        background: transparent;
+    }
+
+    .hero-brand-logo {
+        max-width: 200px;
+        width: 80%;
+    }
+
+    .hero-headline {
+        font-size: 1.65rem;
+        margin-bottom: 12px;
+    }
+
+    .hero-subheadline {
+        font-size: 0.92rem;
+        margin-bottom: 20px;
+    }
+
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        padding: 15px 20px;
+        font-size: 0.95rem;
+    }
 }
 
 /* Request Form */
@@ -3908,7 +4281,7 @@ h6,
     border-radius: 50px;
     text-align: center;
     font-size: 30px;
-    box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
     z-index: 9999;
     display: flex;
     align-items: center;
@@ -3922,13 +4295,14 @@ h6,
     background-color: #128C7E;
     color: #FFF !important;
     transform: scale(1.1);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .whatsapp-icon {
     font-size: 35px;
     color: white;
-    margin-top: 2px; /* Visual adjustment */
+    margin-top: 2px;
+    /* Visual adjustment */
 }
 
 /* Pulse Animation */
@@ -3936,11 +4310,11 @@ h6,
     0% {
         box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
     }
-    
+
     70% {
         box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
     }
-    
+
     100% {
         box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
     }

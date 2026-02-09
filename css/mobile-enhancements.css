@@ -313,10 +313,12 @@ body {
 
 /* Hero Section Mobile Optimization (Subpages) */
 @media (max-width: 768px) {
+
     /* Reduce Hero Height for Subpages */
     .hero-wrap.hero-wrap-2,
     .hero-wrap.hero-wrap-2 .slider-text {
-        height: 450px !important; /* Fixed height for consistency */
+        height: 450px !important;
+        /* Fixed height for consistency */
         min-height: 450px;
     }
 
@@ -333,7 +335,8 @@ body {
 
     /* Ensure content is vertically centered properly */
     .hero-wrap.hero-wrap-2 .slider-text {
-        align-items: center !important; /* Center content */
+        align-items: center !important;
+        /* Center content */
         justify-content: center !important;
         padding-bottom: 0 !important;
     }

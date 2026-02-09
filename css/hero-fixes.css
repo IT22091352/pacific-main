@@ -1,0 +1,94 @@
+/* ========================================
+   GLOBAL FIX - ALL PAGES
+   Override ftco-animate visibility issue
+   ======================================== */
+
+/* Make all ftco-animate elements visible (animation library not working) */
+.ftco-animate {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Disable all animations to prevent jumping on scroll */
+.ftco-animate,
+.ftco-animated {
+    animation: none !important;
+    -webkit-animation: none !important;
+    transition: none !important;
+    -webkit-transition: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+}
+
+/* Disable AOS (Animate On Scroll) animations */
+[data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Ensure smooth scrolling without jumps */
+* {
+    scroll-behavior: smooth;
+}
+
+/* ========================================
+   HERO SECTION CRITICAL FIXES - HOME PAGE ONLY
+   Force visibility and proper display
+   ======================================== */
+
+/* CRITICAL: Override ftco-animate ONLY in hero section */
+.hero-wrap .ftco-animate {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Ensure hero section has proper height */
+.hero-wrap.js-fullheight {
+    height: 100vh !important;
+    min-height: 600px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Force row and column to display properly - HERO ONLY */
+.hero-wrap .row.js-fullheight {
+    height: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Ensure all content is visible - HERO ONLY */
+.hero-wrap .col-md-10,
+.hero-wrap .col-lg-9 {
+    z-index: 100 !important;
+    position: relative !important;
+}
+
+/* Force glassmorphism container visibility - HERO ONLY */
+.hero-wrap .hero-glass-container {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+}
+
+/* Ensure text is visible - HERO ONLY */
+.hero-wrap .hero-brand-name,
+.hero-wrap .hero-headline,
+.hero-wrap .hero-subheadline,
+.hero-wrap .hero-cta-group {
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: #ffffff !important;
+}
+
+/* Force buttons to be visible - HERO ONLY */
+.hero-wrap .btn-hero-primary,
+.hero-wrap .btn-hero-secondary {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-flex !important;
+}
