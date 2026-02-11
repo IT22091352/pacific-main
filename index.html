@@ -30,7 +30,7 @@
     <meta property="twitter:description" content="Experience the magic of Sri Lanka with expert local guidance.">
     <meta property="twitter:image" content="https://www.wanderlankatours.com/images/bg_1.jpg">
 
-    <link rel="preload" as="image" href="images/bg_1.jpg">
+    <!-- Preload removed for performance, video is primary -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -109,7 +109,7 @@
         </video>
 
         <!-- Fallback Background Image -->
-        <div class="hero-video-fallback" style="background-image: url('images/bg_1.jpg');"></div>
+        <div class="hero-video-fallback" data-bg="'images/bg_1.jpg'"></div>
 
         <!-- Dark Gradient Overlay for cinematic feel -->
         <div class="hero-overlay-gradient"></div>
@@ -161,7 +161,7 @@
             <div class="premium-grid-container">
                 <!-- Heritage (Large Item) -->
                 <div class="experience-item large" onclick="window.location.href='destinations.html#heritage'">
-                    <div class="experience-bg" style="background-image: url('images/home/heritage.jpg');"></div>
+                    <div class="experience-bg" data-bg="'images/home/heritage.jpg'"></div>
                     <div class="experience-badge"><i class="fa fa-history"></i></div>
                     <div class="experience-overlay">
                         <div class="experience-content">
@@ -173,7 +173,7 @@
 
                 <!-- Wildlife (Standard) - Replaced Pristine -->
                 <div class="experience-item" onclick="window.location.href='destinations.html#wildlife'">
-                    <div class="experience-bg" style="background-image: url('images/home/wildlife.jpg');"></div>
+                    <div class="experience-bg" data-bg="'images/home/wildlife.jpg'"></div>
                     <div class="experience-badge"><i class="fa fa-paw"></i></div>
                     <div class="experience-overlay">
                         <div class="experience-content">
@@ -185,7 +185,7 @@
 
                 <!-- Beach (Standard) - Renamed from Bliss -->
                 <div class="experience-item" onclick="window.location.href='destinations.html#beach'">
-                    <div class="experience-bg" style="background-image: url('images/home/beach.jpg');"></div>
+                    <div class="experience-bg" data-bg="'images/home/beach.jpg'"></div>
                     <div class="experience-badge"><i class="fa fa-sun-o"></i></div>
                     <div class="experience-overlay">
                         <div class="experience-content">
@@ -197,7 +197,7 @@
 
                 <!-- Adventure (Standard) - Renamed from Thrills -->
                 <div class="experience-item" onclick="window.location.href='destinations.html#adventure'">
-                    <div class="experience-bg" style="background-image: url('images/home/adventure.jpeg');"></div>
+                    <div class="experience-bg" data-bg="'images/home/adventure.jpeg'"></div>
                     <div class="experience-badge"><i class="fa fa-compass"></i></div>
                     <div class="experience-overlay">
                         <div class="experience-content">
@@ -209,7 +209,7 @@
 
                 <!-- Cultural (Standard) - Renamed from Festive -->
                 <div class="experience-item" onclick="window.location.href='destinations.html#cultural'">
-                    <div class="experience-bg" style="background-image: url('images/home/culture.jpg');"></div>
+                    <div class="experience-bg" data-bg="'images/home/culture.jpg'"></div>
                     <div class="experience-badge"><i class="fa fa-university"></i></div>
                     <div class="experience-overlay">
                         <div class="experience-content">
@@ -254,7 +254,7 @@
                 <div class="col-md-4 ftco-animate">
                     <div class="project-wrap">
                         <a href="destinations.html#sigiriya" class="img"
-                            style="background-image: url(images/home/sigiriya.jpg);">
+                            data-bg="images/home/sigiriya.jpg">
                             <!-- <span class="price">From $120/person</span> -->
                         </a>
                         <div class="text p-4">
@@ -271,7 +271,7 @@
                 <div class="col-md-4 ftco-animate">
                     <div class="project-wrap">
                         <a href="destinations.html#ella" class="img"
-                            style="background-image: url(images/home/ninearch.jpg);">
+                            data-bg="images/home/ninearch.jpg">
                             <!-- <span class="price">From $90/person</span> -->
                         </a>
                         <div class="text p-4">
@@ -288,7 +288,7 @@
                 <div class="col-md-4 ftco-animate">
                     <div class="project-wrap">
                         <a href="destinations.html#galle" class="img"
-                            style="background-image: url(images/home/galle.jpg);">
+                            data-bg="images/home/galle.jpg">
                             <!-- <span class="price">From $80/person</span> -->
                         </a>
                         <div class="text p-4">
@@ -312,7 +312,7 @@
     </section>
 
     <!-- Tour Packages Preview -->
-    <section class="ftco-section testimony-section bg-bottom" style="background-image: url(images/bg_1.jpg);">
+    <section class="ftco-section testimony-section bg-bottom" data-bg="images/bg_1.jpg">
         <div class="overlay"></div>
         <div class="container">
             <div class="row justify-content-center pb-4">
@@ -324,7 +324,7 @@
             <div class="row">
                 <div class="col-md-4 ftco-animate">
                     <div class="package-card">
-                        <div class="package-img" style="background-image: url(images/dest-sigiriya.jpg);"></div>
+                        <div class="package-img" data-bg="images/dest-sigiriya.jpg"></div>
                         <div class="package-content">
                             <span class="package-duration">7 Days / 6 Nights</span>
                             <h3>Cultural Triangle Tour</h3>
@@ -337,7 +337,7 @@
                 <div class="col-md-4 ftco-animate">
                     <div class="package-card">
                         <div class="package-img"
-                            style="background-image: url(images/destinations/mirissa/mirissa.jpg);"></div>
+                            data-bg="images/destinations/mirissa/mirissa.jpg"></div>
                         <div class="package-content">
                             <span class="package-duration">5 Days / 4 Nights</span>
                             <h3>Beach & Wildlife Safari</h3>
@@ -349,7 +349,7 @@
                 </div>
                 <div class="col-md-4 ftco-animate">
                     <div class="package-card">
-                        <div class="package-img" style="background-image: url(images/dest-ella.jpg);"></div>
+                        <div class="package-img" data-bg="images/dest-ella.jpg"></div>
                         <div class="package-content">
                             <span class="package-duration">10 Days / 9 Nights</span>
                             <h3>Complete Sri Lanka</h3>
@@ -388,7 +388,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12 text-center">
-                    <div class="img" style="background-image: url(images/bg_2.jpg);">
+                    <div class="img" data-bg="images/bg_2.jpg">
                         <div class="overlay"></div>
                         <h2>Ready to Explore Sri Lanka?</h2>
                         <p>Let Wander Lanka Tours create your perfect Sri Lankan adventure</p>
@@ -726,6 +726,33 @@
         <i class="fa fa-whatsapp whatsapp-icon"></i>
     </a>
 
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var lazyBackgrounds = [].slice.call(document.querySelectorAll("[data-bg]"));
+
+            if ("IntersectionObserver" in window) {
+                let lazyBackgroundObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            let lazyBackground = entry.target;
+                            lazyBackground.style.backgroundImage = 'url(' + lazyBackground.dataset.bg + ')';
+                            lazyBackgroundObserver.unobserve(lazyBackground);
+                        }
+                    });
+                });
+
+                lazyBackgrounds.forEach(function(lazyBackground) {
+                    lazyBackgroundObserver.observe(lazyBackground);
+                });
+            } else {
+                // Fallback
+                lazyBackgrounds.forEach(function(lazyBackground) {
+                     lazyBackground.style.backgroundImage = 'url(' + lazyBackground.dataset.bg + ')';
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

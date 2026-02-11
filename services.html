@@ -76,7 +76,7 @@
         <video autoplay muted loop playsinline webkit-playsinline preload="auto" id="hero-video" class="hero-video">
             <source src="https://cdn.pixabay.com/video/2025/06/18/286459_large.mp4" type="video/mp4">
         </video>
-        <div class="hero-video-fallback" style="background-image: url('images/bg_1.jpg');"></div>
+        <div class="hero-video-fallback" data-bg="images/bg_1.jpg"></div>
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
@@ -107,7 +107,7 @@
             <div class="row mb-5">
                 <div class="col-md-6 ftco-animate">
                     <div class="img"
-                        style="background-image: url(images/dest-sigiriya.jpg); height: 400px; background-size: cover; background-position: center; border-radius: 10px;">
+                        style="height: 400px; background-size: cover; background-position: center; border-radius: 10px" data-bg="images/dest-sigiriya.jpg">
                     </div>
                 </div>
                 <div class="col-md-6 ftco-animate">
@@ -136,7 +136,7 @@
             <div class="row mb-5">
                 <div class="col-md-6 ftco-animate order-md-last">
                     <div class="img"
-                        style="background-image: url(images/dest-yala.jpg); height: 400px; background-size: cover; background-position: center; border-radius: 10px;">
+                        style="height: 400px; background-size: cover; background-position: center; border-radius: 10px" data-bg="images/dest-yala.jpg">
                     </div>
                 </div>
                 <div class="col-md-6 ftco-animate">
@@ -165,7 +165,7 @@
             <div class="row mb-5">
                 <div class="col-md-6 ftco-animate">
                     <div class="img"
-                        style="background-image: url(images/beach.png); height: 400px; background-size: cover; background-position: center; border-radius: 10px;">
+                        style="height: 400px; background-size: cover; background-position: center; border-radius: 10px" data-bg="images/beach.png">
                     </div>
                 </div>
                 <div class="col-md-6 ftco-animate">
@@ -192,7 +192,7 @@
             <div class="row mb-5">
                 <div class="col-md-6 ftco-animate order-md-last">
                     <div class="img"
-                        style="background-image: url(images/dest-adams-peak.jpg); height: 400px; background-size: cover; background-position: center; border-radius: 10px;">
+                        style="height: 400px; background-size: cover; background-position: center; border-radius: 10px" data-bg="images/dest-adams-peak.jpg">
                     </div>
                 </div>
                 <div class="col-md-6 ftco-animate">
@@ -220,7 +220,7 @@
             <div class="row mb-5">
                 <div class="col-md-6 ftco-animate">
                     <div class="img"
-                        style="background-image: url(images/teaplantation.png); height: 400px; background-size: cover; background-position: center; border-radius: 10px;">
+                        style="height: 400px; background-size: cover; background-position: center; border-radius: 10px" data-bg="images/teaplantation.png">
                     </div>
                 </div>
                 <div class="col-md-6 ftco-animate">
@@ -248,7 +248,7 @@
             <div class="row mb-5">
                 <div class="col-md-6 ftco-animate order-md-last">
                     <div class="img"
-                        style="background-image: url(images/dest-ella.jpg); height: 400px; background-size: cover; background-position: center; border-radius: 10px;">
+                        style="height: 400px; background-size: cover; background-position: center; border-radius: 10px" data-bg="images/dest-ella.jpg">
                     </div>
                 </div>
                 <div class="col-md-6 ftco-animate">
@@ -280,7 +280,7 @@
             <div class="row mb-5">
                 <div class="col-md-6 ftco-animate">
                     <div class="img"
-                        style="background-image: url(images/airport.png); height: 400px; background-size: cover; background-position: center; border-radius: 10px;">
+                        style="height: 400px; background-size: cover; background-position: center; border-radius: 10px" data-bg="images/airport.png">
                     </div>
                 </div>
                 <div class="col-md-6 ftco-animate">
@@ -310,7 +310,7 @@
             <div class="row mb-5">
                 <div class="col-md-6 ftco-animate order-md-last">
                     <div class="img"
-                        style="background-image: url(images/taxi.png); height: 400px; background-size: cover; background-position: center; border-radius: 10px;">
+                        style="height: 400px; background-size: cover; background-position: center; border-radius: 10px" data-bg="images/taxi.png">
                     </div>
                 </div>
                 <div class="col-md-6 ftco-animate">
@@ -386,7 +386,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12 text-center">
-                    <div class="img" style="background-image: url(images/bg_2.jpg);">
+                    <div class="img" data-bg="images/bg_2.jpg">
                         <div class="overlay"></div>
                         <h2>Ready to Book Your Tour?</h2>
                         <p>Contact us today to plan your perfect Sri Lankan adventure</p>
@@ -625,6 +625,33 @@
         <i class="fa fa-whatsapp whatsapp-icon"></i>
     </a>
 
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var lazyBackgrounds = [].slice.call(document.querySelectorAll("[data-bg]"));
+
+            if ("IntersectionObserver" in window) {
+                let lazyBackgroundObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            let lazyBackground = entry.target;
+                            lazyBackground.style.backgroundImage = 'url(' + lazyBackground.dataset.bg + ')';
+                            lazyBackgroundObserver.unobserve(lazyBackground);
+                        }
+                    });
+                });
+
+                lazyBackgrounds.forEach(function(lazyBackground) {
+                    lazyBackgroundObserver.observe(lazyBackground);
+                });
+            } else {
+                // Fallback
+                lazyBackgrounds.forEach(function(lazyBackground) {
+                     lazyBackground.style.backgroundImage = 'url(' + lazyBackground.dataset.bg + ')';
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
