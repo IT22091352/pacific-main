@@ -24,7 +24,12 @@
 
     <link
         href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+        rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet">
+    </noscript>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
@@ -39,6 +44,12 @@
     <link rel="stylesheet" href="css/hero-fixes.css?v=2">
     <link rel="stylesheet" href="css/mobile-enhancements.css">
     <link rel="stylesheet" href="css/auth-modal.css">
+    <style>
+        .lazy-section {
+            content-visibility: auto;
+            contain-intrinsic-size: 800px;
+        }
+    </style>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 
@@ -47,8 +58,8 @@
     <nav class="navbar" id="navbar">
         <div class="logo-container">
             <a href="index.html">
-                <img src="images/logo/logo.png" alt="Wander Lanka Tours Logo" class="nav-logo"
-                    style="max-height: 80px;">
+                <img src="images/logo/logo.png" alt="Wander Lanka Tours Logo" class="nav-logo" style="max-height: 80px;"
+                    width="200" height="80" decoding="async">
             </a>
         </div>
 
@@ -64,7 +75,7 @@
 
         <div id="authButton" class="user-actions">
             <!-- Auth content injected by JS -->
-            <button onclick="openModal('loginModal')" class="btn-login-nav">Login</button>
+            <a href="login.html" onclick="openModal('loginModal'); return false;" class="btn-login-nav">Login</a>
         </div>
 
         <div class="burger">
@@ -75,7 +86,8 @@
     </nav>
 
     <section class="hero-wrap hero-wrap-2 js-fullheight">
-        <video autoplay muted loop playsinline webkit-playsinline preload="auto" id="hero-video" class="hero-video">
+        <video autoplay muted loop playsinline webkit-playsinline preload="none" id="hero-video" class="hero-video"
+            poster="images/bg_1.jpg">
             <source src="https://cdn.pixabay.com/video/2024/11/20/242272_large.mp4" type="video/mp4">
         </video>
         <div class="hero-video-fallback" style="background-image: url('images/bg_1.jpg');"></div>
@@ -201,7 +213,7 @@
     </section>
 
     <!-- Reviews Section -->
-    <section class="ftco-section testimony-section bg-light">
+    <section class="ftco-section testimony-section bg-light lazy-section">
         <div class="container">
             <div class="row justify-content-center pb-4">
                 <div class="col-md-7 text-center heading-section ftco-animate">
@@ -356,7 +368,8 @@
                 <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
                     <div class="footer-brand">
                         <a href="index.html" class="logo">
-                            <img src="images/logo/footer.png" alt="Wander Lanka Tours" class="footer-logo-img">
+                            <img src="images/logo/footer.png" alt="Wander Lanka Tours" class="footer-logo-img"
+                                width="150" height="50" loading="lazy">
                         </a>
                         <p>Your trusted Sri Lankan tour guide, bringing you authentic experiences and unforgettable
                             memories across the Pearl of the Indian Ocean.</p>
@@ -475,7 +488,8 @@
                     </div>
 
                     <div class="extra-links">
-                        <a href="#" onclick="switchToForgot(event)" class="forgot-link">Forgot Password?</a>
+                        <a href="forgot-password.html" onclick="switchToForgot(event); return false;"
+                            class="forgot-link">Forgot Password?</a>
                     </div>
 
                     <button type="submit" class="btn-auth">
@@ -486,7 +500,8 @@
                 <div class="divider">OR</div>
 
                 <div class="modal-footer" style="background: none; border: none; padding: 0;">
-                    <p>Don't have an account? <a onclick="switchToSignup()">Sign up here</a></p>
+                    <p>Don't have an account? <a href="signup.html" onclick="switchToSignup(); return false;">Sign up
+                            here</a></p>
                 </div>
             </div>
         </div>
@@ -518,7 +533,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <p>Remembered it? <a onclick="switchToLogin()">Login here</a></p>
+                <p>Remembered it? <a href="login.html" onclick="switchToLogin(); return false;">Login here</a></p>
             </div>
         </div>
     </div>
@@ -564,7 +579,8 @@
                 <div class="divider">OR</div>
 
                 <div class="modal-footer" style="background: none; border: none; padding: 0;">
-                    <p>Already have an account? <a onclick="switchToLogin()">Login here</a></p>
+                    <p>Already have an account? <a href="login.html" onclick="switchToLogin(); return false;">Login
+                            here</a></p>
                 </div>
             </div>
         </div>

@@ -24,7 +24,12 @@
 
     <link
         href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+        rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet">
+    </noscript>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
@@ -41,14 +46,20 @@
     <link rel="stylesheet" href="css/modal-fix.css?v=2.1">
     <link rel="stylesheet" href="css/mobile-enhancements.css">
     <link rel="stylesheet" href="css/auth-modal.css">
+    <style>
+        .lazy-section {
+            content-visibility: auto;
+            contain-intrinsic-size: 800px;
+        }
+    </style>
 </head>
 
 <body>
     <nav class="navbar" id="navbar">
         <div class="logo-container">
             <a href="index.html">
-                <img src="images/logo/logo.png" alt="Wander Lanka Tours Logo" class="nav-logo"
-                    style="max-height: 80px;">
+                <img src="images/logo/logo.png" alt="Wander Lanka Tours Logo" class="nav-logo" style="max-height: 80px;"
+                    width="200" height="80" decoding="async">
             </a>
         </div>
 
@@ -64,7 +75,7 @@
 
         <div id="authButton" class="user-actions">
             <!-- Auth content injected by JS -->
-            <button onclick="openModal('loginModal')" class="btn-login-nav">Login</button>
+            <a href="login.html" onclick="openModal('loginModal'); return false;" class="btn-login-nav">Login</a>
         </div>
 
         <div class="burger">
@@ -75,10 +86,11 @@
     </nav>
 
     <section class="hero-wrap hero-wrap-2 js-fullheight">
-        <video autoplay muted loop playsinline webkit-playsinline preload="auto" id="hero-video" class="hero-video">
+        <video autoplay muted loop playsinline webkit-playsinline preload="none" id="hero-video" class="hero-video"
+            poster="images/bg_1.jpg">
             <source src="https://cdn.pixabay.com/video/2023/08/22/177127-856658451_large.mp4" type="video/mp4">
         </video>
-        <div class="hero-video-fallback" data-bg="'images/bg_1.jpg'"></div>
+        <div class="hero-video-fallback" data-bg="images/bg_1.jpg"></div>
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
@@ -180,8 +192,7 @@
 
                 <!-- Kandy -->
                 <div class="destination-detail" id="kandy" data-category="cultural">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/kandy/temple-of-tooth.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/kandy/temple-of-tooth.jpg">
                         <div class="card-badge category">CULTURAL</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.9</div>
                     </div>
@@ -234,8 +245,7 @@
 
                 <!-- Nuwara Eliya -->
                 <div class="destination-detail" id="nuwara-eliya" data-category="adventure">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/NuwaraEliya/nuwaraeliya.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/NuwaraEliya/nuwaraeliya.jpg">
                         <div class="card-badge category">HILL COUNTRY</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
@@ -347,8 +357,7 @@
 
                 <!-- Horton Plains -->
                 <div class="destination-detail" id="horton-plains" data-category="adventure">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/hortonplains/hortonplains.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/hortonplains/hortonplains.jpg">
                         <div class="card-badge category">ADVENTURE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.9</div>
                     </div>
@@ -559,8 +568,7 @@
                 <!-- Royal Botanical Gardens -->
                 <!-- Peradeniya Botanical Gardens -->
                 <div class="destination-detail" id="peradeniya" data-category="wildlife">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Peradeniya/Peradeniya.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Peradeniya/Peradeniya.jpg">
                         <div class="card-badge category">NATURE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
@@ -614,8 +622,7 @@
 
                 <!-- Hakgala Botanical Garden -->
                 <div class="destination-detail" id="hakgala" data-category="wildlife">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/haggala/hakgala.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/haggala/hakgala.jpg">
                         <div class="card-badge category">NATURE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.7</div>
                     </div>
@@ -669,8 +676,7 @@
                 <!-- Western Province -->
                 <!-- Colombo -->
                 <div class="destination-detail" id="colombo" data-category="cultural">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/colombo/colombo.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/colombo/colombo.jpg">
                         <div class="card-badge category">CITY</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
                     </div>
@@ -723,8 +729,7 @@
 
                 <!-- Negombo -->
                 <div class="destination-detail" id="negombo" data-category="beach">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/negombo/negombo.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/negombo/negombo.jpg">
                         <div class="card-badge category">BEACH</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.4</div>
                     </div>
@@ -783,8 +788,7 @@
 
                 <!-- Mount Lavinia -->
                 <div class="destination-detail" id="mount-lavinia" data-category="beach">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/MountLavinia/MountLavinia.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/MountLavinia/MountLavinia.jpg">
                         <div class="card-badge category">BEACH</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.3</div>
                     </div>
@@ -839,8 +843,7 @@
 
                 <!-- Kalutara -->
                 <div class="destination-detail" id="kalutara" data-category="cultural">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Kalutara\ Bodhiya/kaluthara.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Kalutara\ Bodhiya/kaluthara.jpg">
                         <div class="card-badge category">RELIGIOUS</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.6</div>
                     </div>
@@ -891,8 +894,7 @@
 
                 <!-- Kelaniya -->
                 <div class="destination-detail" id="kelaniya" data-category="cultural">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Kelaniya/kelaniya.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Kelaniya/kelaniya.jpg">
                         <div class="card-badge category">RELIGIOUS</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
@@ -1054,8 +1056,7 @@
                 <!-- Mirissa (Restored) -->
                 <!-- Mirissa -->
                 <div class="destination-detail" id="mirissa" data-category="beach">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/mirissa/mirissa.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/mirissa/mirissa.jpg">
                         <div class="card-badge category">BEACH</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
@@ -1110,8 +1111,7 @@
                 <!-- Unawatuna (Detailed) -->
                 <!-- Unawatuna -->
                 <div class="destination-detail" id="unawatuna" data-category="beach">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Unawatuna/Unawatuna.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Unawatuna/Unawatuna.jpg">
                         <div class="card-badge category">BEACH</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.7</div>
                     </div>
@@ -1170,8 +1170,7 @@
                 <!-- Hikkaduwa (Detailed) -->
                 <!-- Hikkaduwa -->
                 <div class="destination-detail" id="hikkaduwa" data-category="beach">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Hikkaduwa/Hikkaduwa.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Hikkaduwa/Hikkaduwa.jpg">
                         <div class="card-badge category">BEACH</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.6</div>
                     </div>
@@ -1226,8 +1225,7 @@
                 <!-- Mirissa (Simplified) -->
                 <!-- Bentota -->
                 <div class="destination-detail" id="bentota" data-category="beach">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/benthota/Bentota.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/benthota/Bentota.jpg">
                         <div class="card-badge category">BEACH</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
                     </div>
@@ -1284,8 +1282,7 @@
                 <!-- Udawalawe (Simplified) -->
                 <!-- Udawalawe -->
                 <div class="destination-detail" id="udawalawe" data-category="wildlife">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Udawalawe/Udawalawe.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Udawalawe/Udawalawe.jpg">
                         <div class="card-badge category">WILDLIFE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
@@ -1341,8 +1338,7 @@
                 <!-- Tangalle (Simplified) -->
                 <!-- Tangalle -->
                 <div class="destination-detail" id="tangalle" data-category="beach">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/tangalle/tangalle.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/tangalle/tangalle.jpg">
                         <div class="card-badge category">BEACH</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
                     </div>
@@ -1400,8 +1396,7 @@
                 <!-- Nallur (Detailed) -->
                 <!-- Nallur -->
                 <div class="destination-detail" id="nallur" data-category="cultural">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Nallur/Nallur.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Nallur/Nallur.jpg">
                         <div class="card-badge category">CULTURAL</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
@@ -1453,8 +1448,7 @@
                 <!-- Jaffna Fort (Detailed) -->
                 <!-- Jaffna Fort -->
                 <div class="destination-detail" id="jaffna" data-category="heritage">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/jaffna/jaffnaport.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/jaffna/jaffnaport.jpg">
                         <div class="card-badge category">HERITAGE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.6</div>
                     </div>
@@ -1508,8 +1502,7 @@
                 <!-- Nagadeepa (Detailed) -->
                 <!-- Nagadeepa -->
                 <div class="destination-detail" id="nagadeepa" data-category="cultural">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Nagadeepa/Nagadeepa.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Nagadeepa/Nagadeepa.jpg">
                         <div class="card-badge category">RELIGIOUS</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.7</div>
                     </div>
@@ -1561,8 +1554,7 @@
                 <!-- Delft (Detailed) -->
                 <!-- Delft Island -->
                 <div class="destination-detail" id="delft" data-category="adventure">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/delf/delf.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/delf/delf.jpg">
                         <div class="card-badge category">ADVENTURE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
                     </div>
@@ -1617,8 +1609,7 @@
                 <!-- Casuarina (Detailed) -->
                 <!-- Casuarina -->
                 <div class="destination-detail" id="casuarina" data-category="beach">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Casuarina/CasuarinaBeach.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Casuarina/CasuarinaBeach.jpg">
                         <div class="card-badge category">BEACH</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.4</div>
                     </div>
@@ -1727,8 +1718,7 @@
                 </div>
                 <!-- Nilaveli -->
                 <div class="destination-detail" id="nilaveli" data-category="beach">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Nilaveli/Nilaveli.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Nilaveli/Nilaveli.jpg">
                         <div class="card-badge category">BEACH</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
@@ -1778,8 +1768,7 @@
                 </div>
                 <!-- Arugam Bay -->
                 <div class="destination-detail" id="arugam-bay" data-category="beach">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Arugambay/ArugamBay.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Arugambay/ArugamBay.jpg">
                         <div class="card-badge category">SURFING</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.9</div>
                     </div>
@@ -1887,8 +1876,7 @@
                 </div>
                 <!-- Koneswaram Temple -->
                 <div class="destination-detail" id="koneswaram" data-category="cultural">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/koneshwaram/koneshwaram.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/koneshwaram/koneshwaram.jpg">
                         <div class="card-badge category">RELIGIOUS</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
@@ -1997,8 +1985,7 @@
                 <!-- Polonnaruwa (Simplified) -->
                 <!-- Polonnaruwa -->
                 <div class="destination-detail" id="polonnaruwa" data-category="heritage">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/polonnaruwa/polonnaruwa.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/polonnaruwa/polonnaruwa.jpg">
                         <div class="card-badge category">HERITAGE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.9</div>
                     </div>
@@ -2054,8 +2041,7 @@
 
                 <!-- Minneriya -->
                 <div class="destination-detail" id="minneriya" data-category="wildlife">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/minneriya/Minneriya.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/minneriya/Minneriya.jpg">
                         <div class="card-badge category">WILDLIFE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
@@ -2106,8 +2092,7 @@
                 </div>
                 <!-- Mihintale -->
                 <div class="destination-detail" id="mihintale" data-category="cultural">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Mihintale/Mihintale.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Mihintale/Mihintale.jpg">
                         <div class="card-badge category">RELIGIOUS</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.6</div>
                     </div>
@@ -2159,8 +2144,7 @@
                 </div>
                 <!-- Ritigala -->
                 <div class="destination-detail" id="ritigala" data-category="cultural">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Ritigala/Ritigala.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Ritigala/Ritigala.jpg">
                         <div class="card-badge category">NATURE/HISTORY</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
                     </div>
@@ -2266,8 +2250,7 @@
                 </div>
                 <!-- Yapahuwa -->
                 <div class="destination-detail" id="yapahuwa" data-category="heritage">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Yapahuwa/Yapahuwa.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Yapahuwa/Yapahuwa.jpg">
                         <div class="card-badge category">HERITAGE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
                     </div>
@@ -2320,8 +2303,7 @@
                 </div>
                 <!-- Wilpattu -->
                 <div class="destination-detail" id="wilpattu" data-category="wildlife">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/wilpaththu/wilpaththu.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/wilpaththu/wilpaththu.jpg">
                         <div class="card-badge category">WILDLIFE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
@@ -2374,8 +2356,7 @@
                 </div>
                 <!-- Munneswaram -->
                 <div class="destination-detail" id="munneswaram" data-category="cultural">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Munneswaram/Munneswaram.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Munneswaram/Munneswaram.jpg">
                         <div class="card-badge category">RELIGIOUS</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.5</div>
                     </div>
@@ -2528,8 +2509,7 @@
                 </div>
                 <!-- Lipton's Seat -->
                 <div class="destination-detail" id="liptons-seat" data-category="adventure">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Lipton/LiptonSeat.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Lipton/LiptonSeat.jpg">
                         <div class="card-badge category">NATURE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.6</div>
                     </div>
@@ -2577,8 +2557,7 @@
                 </div>
                 <!-- Kataragama -->
                 <div class="destination-detail" id="kataragama" data-category="cultural">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/katharagama/katharagama.JPG">
+                    <div class="destination-detail-img" data-bg="images/destinations/katharagama/katharagama.JPG">
                         <div class="card-badge category">RELIGIOUS</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.8</div>
                     </div>
@@ -2733,8 +2712,7 @@
                 </div>
                 <!-- Pinnawala -->
                 <div class="destination-detail" id="pinnawala" data-category="wildlife">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/pinnawala/Pinnawala.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/pinnawala/Pinnawala.jpg">
                         <div class="card-badge category">WILDLIFE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.6</div>
                     </div>
@@ -2788,8 +2766,7 @@
 
                 <!-- Kitulgala -->
                 <div class="destination-detail" id="kitulgala" data-category="adventure">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/Kitulgala/Kitulgala.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/Kitulgala/Kitulgala.jpg">
                         <div class="card-badge category">ADVENTURE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.7</div>
                     </div>
@@ -2839,8 +2816,7 @@
                 </div>
                 <!-- Bopath Ella -->
                 <div class="destination-detail" id="bopath-ella" data-category="adventure">
-                    <div class="destination-detail-img"
-                        data-bg="images/destinations/BopathElla/BopathElla.jpg">
+                    <div class="destination-detail-img" data-bg="images/destinations/BopathElla/BopathElla.jpg">
                         <div class="card-badge category">NATURE</div>
                         <div class="card-badge rating"><i class="fa fa-star"></i> 4.3</div>
                     </div>
@@ -2913,7 +2889,8 @@
                 <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
                     <div class="footer-brand">
                         <a href="index.html" class="logo">
-                            <img src="images/logo/footer.png" alt="Wander Lanka Tours" class="footer-logo-img">
+                            <img src="images/logo/footer.png" alt="Wander Lanka Tours" class="footer-logo-img"
+                                width="150" height="50" loading="lazy">
                         </a>
                         <p>Your trusted Sri Lankan tour guide, bringing you authentic experiences and unforgettable
                             memories across the Pearl of the Indian Ocean.</p>
@@ -3011,7 +2988,8 @@
                     </div>
 
                     <div class="extra-links">
-                        <a href="#" onclick="switchToForgot(event)" class="forgot-link">Forgot Password?</a>
+                        <a href="forgot-password.html" onclick="switchToForgot(event); return false;"
+                            class="forgot-link">Forgot Password?</a>
                     </div>
 
                     <button type="submit" class="btn-auth">
@@ -3022,7 +3000,8 @@
                 <div class="divider">OR</div>
 
                 <div class="modal-footer" style="background: none; border: none; padding: 0;">
-                    <p>Don't have an account? <a onclick="switchToSignup()">Sign up here</a></p>
+                    <p>Don't have an account? <a href="signup.html" onclick="switchToSignup(); return false;">Sign up
+                            here</a></p>
                 </div>
             </div>
         </div>
@@ -3054,7 +3033,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <p>Remembered it? <a onclick="switchToLogin()">Login here</a></p>
+                <p>Remembered it? <a href="login.html" onclick="switchToLogin(); return false;">Login here</a></p>
             </div>
         </div>
     </div>
@@ -3100,7 +3079,8 @@
                 <div class="divider">OR</div>
 
                 <div class="modal-footer" style="background: none; border: none; padding: 0;">
-                    <p>Already have an account? <a onclick="switchToLogin()">Login here</a></p>
+                    <p>Already have an account? <a href="login.html" onclick="switchToLogin(); return false;">Login
+                            here</a></p>
                 </div>
             </div>
         </div>
@@ -3147,12 +3127,12 @@
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             var lazyBackgrounds = [].slice.call(document.querySelectorAll("[data-bg]"));
 
             if ("IntersectionObserver" in window) {
-                let lazyBackgroundObserver = new IntersectionObserver(function(entries, observer) {
-                    entries.forEach(function(entry) {
+                let lazyBackgroundObserver = new IntersectionObserver(function (entries, observer) {
+                    entries.forEach(function (entry) {
                         if (entry.isIntersecting) {
                             let lazyBackground = entry.target;
                             lazyBackground.style.backgroundImage = 'url(' + lazyBackground.dataset.bg + ')';
@@ -3161,13 +3141,13 @@
                     });
                 });
 
-                lazyBackgrounds.forEach(function(lazyBackground) {
+                lazyBackgrounds.forEach(function (lazyBackground) {
                     lazyBackgroundObserver.observe(lazyBackground);
                 });
             } else {
                 // Fallback
-                lazyBackgrounds.forEach(function(lazyBackground) {
-                     lazyBackground.style.backgroundImage = 'url(' + lazyBackground.dataset.bg + ')';
+                lazyBackgrounds.forEach(function (lazyBackground) {
+                    lazyBackground.style.backgroundImage = 'url(' + lazyBackground.dataset.bg + ')';
                 });
             }
         });
