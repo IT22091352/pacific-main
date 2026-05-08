@@ -279,7 +279,7 @@ function createPremiumReviewCard(review) {
             <div class="user-info">
                 <div class="avatar">${initials}</div>
                 <div class="details">
-                    <h4>${name}</h4>
+                    <h3>${name}</h3>
                     ${country ? `<span class="country"><i class="fa fa-map-marker"></i> ${country}</span>` : ''}
                     ${tourPackage ? `<span class="tour-package">${tourPackage}</span>` : ''}
                     ${!country && !tourPackage ? '<span>International Traveler</span>' : ''}
