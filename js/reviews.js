@@ -210,19 +210,9 @@ function updateStats(reviews) {
     if (avgEl)   avgEl.textContent   = avg;
 }
 
-// ── Build dual-row marquee ────────────────────────────────────
+// ── Build dual-row marquee (desktop) + mobile slider ─────────
 function renderMarquee(container, reviews) {
-    // Ensure enough cards by tripling the list for seamless infinite scroll
-    const doubled = [...reviews, ...reviews, ...reviews];
-
-    // Split into two rows
-    const mid = Math.ceil(reviews.length / 2);
-    const row1 = [...doubled.slice(0, doubled.length / 2), ...doubled.slice(0, doubled.length / 2)];
-    const row2 = [...doubled.slice(doubled.length / 2), ...doubled.slice(doubled.length / 2)];
-
-    // Use full list for both rows, offset row2
     const allDoubled = [...reviews, ...reviews, ...reviews, ...reviews];
-
     const row1Html = allDoubled.map(r => buildCard(r)).join('');
     const row2Html = [...allDoubled].reverse().map(r => buildCard(r)).join('');
 
@@ -234,6 +224,205 @@ function renderMarquee(container, reviews) {
             <div class="marquee-track">${row2Html}</div>
         </div>
     `;
+
+    // Mobile swipe slider injected after the marquee wrapper
+    renderMobileSlider(reviews);
+}
+
+// ── Build mobile swipe slider ─────────────────────────────────
+function renderMobileSlider(reviews) {
+    const section = document.getElementById('testimonials');
+    if (!section) return;
+
+    const existing = section.querySelector('.testimonials-mobile-slider');
+    if (existing) existing.remove();
+
+    const cardsHtml = reviews.map(r => buildCard(r)).join('');
+    const dotsHtml  = reviews.map((_, i) =>
+        `<button class="tslider-dot${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="Go to slide ${i + 1}"></button>`
+    ).join('');
+
+    const slider = document.createElement('div');
+    slider.className = 'testimonials-mobile-slider';
+    slider.innerHTML = `
+        <div class="tslider-track-wrap" id="tslider-wrap">
+            <div class="tslider-track" id="tslider-track">${cardsHtml}</div>
+        </div>
+        <p class="tslider-hint"><i class="fa fa-hand-o-right"></i> Swipe to explore</p>
+        <div class="tslider-dots" id="tslider-dots">${dotsHtml}</div>
+        <div class="tslider-arrows">
+            <button class="tslider-arrow" id="tslider-prev" aria-label="Previous review">
+                <i class="fa fa-chevron-left"></i>
+            </button>
+            <button class="tslider-arrow" id="tslider-next" aria-label="Next review">
+                <i class="fa fa-chevron-right"></i>
+            </button>
+        </div>
+    `;
+
+    const marqueeWrapper = section.querySelector('.testimonials-marquee-wrapper');
+    if (marqueeWrapper) {
+        marqueeWrapper.insertAdjacentElement('afterend', slider);
+    } else {
+        section.appendChild(slider);
+    }
+
+    const firstCard = slider.querySelector('.tcard');
+    if (firstCard) firstCard.classList.add('active-slide');
+
+    initSwiper(slider, reviews.length);
+}
+
+// ── Touch / mouse drag swipe engine ──────────────────────────
+function initSwiper(slider, total) {
+    const wrap  = slider.querySelector('.tslider-track-wrap');
+    const track = slider.querySelector('.tslider-track');
+    const dots  = slider.querySelectorAll('.tslider-dot');
+    const prev  = slider.querySelector('#tslider-prev');
+    const next  = slider.querySelector('#tslider-next');
+
+    if (!wrap || !track) return;
+
+    let current    = 0;
+    let startX     = 0;
+    let startY     = 0;
+    let isDragging = false;
+    let isHoriz    = null;
+    let baseOffset = 0;
+
+    function getCardWidth() {
+        const card = track.querySelector('.tcard');
+        if (!card) return 0;
+        return card.offsetWidth + 16; // 16 = gap
+    }
+
+    function clamp(val, min, max) { return Math.min(max, Math.max(min, val)); }
+
+    function goTo(index, animate = true) {
+        current = clamp(index, 0, total - 1);
+        const offset = -(current * getCardWidth());
+        if (!animate) track.classList.add('no-transition');
+        track.style.transform = `translateX(${offset}px)`;
+        if (!animate) requestAnimationFrame(() => track.classList.remove('no-transition'));
+        updateDots();
+        updateArrows();
+        updateActiveCard();
+    }
+
+    function updateDots() {
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+
+    function updateArrows() {
+        if (prev) prev.disabled = current === 0;
+        if (next) next.disabled = current === total - 1;
+    }
+
+    function updateActiveCard() {
+        track.querySelectorAll('.tcard').forEach((c, i) => {
+            c.classList.toggle('active-slide', i === current);
+        });
+    }
+
+    // ── Touch events ──────────────────────────────────────────
+    wrap.addEventListener('touchstart', (e) => {
+        const t  = e.touches[0];
+        startX   = t.clientX;
+        startY   = t.clientY;
+        isDragging = true;
+        isHoriz    = null;
+        baseOffset = -(current * getCardWidth());
+        track.classList.add('no-transition');
+    }, { passive: true });
+
+    wrap.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const t  = e.touches[0];
+        const dx = t.clientX - startX;
+        const dy = t.clientY - startY;
+
+        if (isHoriz === null) isHoriz = Math.abs(dx) > Math.abs(dy);
+        if (!isHoriz) return;
+        e.preventDefault();
+
+        const resist   = 0.35;
+        const minOff   = -((total - 1) * getCardWidth());
+        let rawOffset  = baseOffset + dx;
+        if (rawOffset > 0)       rawOffset = rawOffset * resist;
+        if (rawOffset < minOff)  rawOffset = minOff + (rawOffset - minOff) * resist;
+        track.style.transform = `translateX(${rawOffset}px)`;
+    }, { passive: false });
+
+    wrap.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        track.classList.remove('no-transition');
+        if (!isHoriz) return;
+        const dx        = e.changedTouches[0].clientX - startX;
+        const threshold = getCardWidth() * 0.3;
+        if (dx < -threshold && current < total - 1) current++;
+        else if (dx > threshold && current > 0)     current--;
+        goTo(current);
+    }, { passive: true });
+
+    // ── Mouse drag (desktop testing) ──────────────────────────
+    wrap.addEventListener('mousedown', (e) => {
+        startX     = e.clientX;
+        isDragging = true;
+        baseOffset = -(current * getCardWidth());
+        track.classList.add('no-transition');
+        wrap.classList.add('is-dragging');
+        e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const dx      = e.clientX - startX;
+        const resist  = 0.35;
+        const minOff  = -((total - 1) * getCardWidth());
+        let rawOffset = baseOffset + dx;
+        if (rawOffset > 0)       rawOffset = rawOffset * resist;
+        if (rawOffset < minOff)  rawOffset = minOff + (rawOffset - minOff) * resist;
+        track.style.transform = `translateX(${rawOffset}px)`;
+    });
+
+    window.addEventListener('mouseup', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        track.classList.remove('no-transition');
+        wrap.classList.remove('is-dragging');
+        const dx        = e.clientX - startX;
+        const threshold = getCardWidth() * 0.25;
+        if (dx < -threshold && current < total - 1) current++;
+        else if (dx > threshold && current > 0)     current--;
+        goTo(current);
+    });
+
+    // ── Arrow buttons ─────────────────────────────────────────
+    if (prev) prev.addEventListener('click', () => { if (current > 0)          goTo(current - 1); });
+    if (next) next.addEventListener('click', () => { if (current < total - 1)  goTo(current + 1); });
+
+    // ── Dot clicks ────────────────────────────────────────────
+    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+
+    // ── Keyboard navigation ───────────────────────────────────
+    slider.setAttribute('tabindex', '0');
+    slider.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); if (current > 0)          goTo(current - 1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); if (current < total - 1)  goTo(current + 1); }
+    });
+
+    // ── Recalculate on orientation change / resize ────────────
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => goTo(current, false), 120);
+    });
+
+    // Initial state
+    updateArrows();
+    updateDots();
+    updateActiveCard();
 }
 
 // ── Build a single tcard HTML ─────────────────────────────────

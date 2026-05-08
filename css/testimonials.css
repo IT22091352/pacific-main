@@ -635,40 +635,258 @@
     color: #334155;
 }
 
-/* Responsive Cards */
-@media (max-width: 768px) {
-    .testimonials-section {
-        padding: 70px 0 50px;
-    }
+/* ── Mobile Swipe Slider ──────────────────────────────────── */
 
-    .testimonials-stats {
-        gap: 28px;
-    }
+/* Mobile slider container – hidden on desktop */
+.testimonials-mobile-slider {
+    display: none;
+    position: relative;
+    padding: 0 0 60px;
+}
 
-    .stat-number {
-        font-size: 1.5rem;
-    }
+/* The draggable track */
+.tslider-track-wrap {
+    overflow: hidden;
+    touch-action: pan-y;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: grab;
+}
 
+.tslider-track-wrap.is-dragging {
+    cursor: grabbing;
+}
+
+.tslider-track {
+    display: flex;
+    gap: 16px;
+    transition: transform 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+    align-items: stretch;
+}
+
+.tslider-track.no-transition {
+    transition: none;
+}
+
+/* Cards inside the mobile slider fill full width */
+.testimonials-mobile-slider .tcard {
+    flex: 0 0 calc(100vw - 48px);
+    width: calc(100vw - 48px);
+    max-width: 420px;
+    padding: 24px;
+    cursor: default;
+    /* Disable hover lift on touch devices */
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.testimonials-mobile-slider .tcard:hover {
+    transform: none;
+    box-shadow: 0 4px 24px rgba(249,109,0,0.1);
+}
+
+/* Slide-in active card glow */
+.testimonials-mobile-slider .tcard.active-slide {
+    border-color: rgba(249,109,0,0.3);
+    box-shadow: 0 4px 30px rgba(249,109,0,0.12);
+}
+
+/* Dot pagination */
+.tslider-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+}
+
+.tslider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.25s, width 0.25s, border-radius 0.25s;
+    flex-shrink: 0;
+}
+
+.tslider-dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background: #f97316;
+}
+
+/* Arrow navigation */
+.tslider-arrows {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.tslider-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.22s, color 0.22s, border-color 0.22s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.tslider-arrow:hover,
+.tslider-arrow:active {
+    background: rgba(249,109,0,0.2);
+    border-color: rgba(249,109,0,0.4);
+    color: #f97316;
+}
+
+.tslider-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Swipe hint text */
+.tslider-hint {
+    text-align: center;
+    color: rgba(255,255,255,0.25);
+    font-size: 0.72rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    position: absolute;
+    bottom: 56px;
+    left: 0;
+    right: 0;
+    animation: hint-fade 2s ease-out 1.5s forwards;
+    opacity: 1;
+}
+
+.tslider-hint i {
+    font-size: 0.75rem;
+}
+
+@keyframes hint-fade {
+    to { opacity: 0; pointer-events: none; }
+}
+
+/* ── Responsive Breakpoints ───────────────────────────────── */
+
+/* Tablet tweaks (keep marquee, just tighter) */
+@media (max-width: 1024px) {
     .tcard {
-        flex: 0 0 280px;
-        width: 280px;
-        padding: 22px;
-    }
-
-    .review-form-card {
-        padding: 28px 20px;
-        border-radius: 16px;
+        flex: 0 0 300px;
+        width: 300px;
     }
 }
 
-@media (max-width: 480px) {
-    .testimonials-marquee-wrapper::before,
-    .testimonials-marquee-wrapper::after {
-        width: 60px;
+/* Mobile – SWITCH to swipe slider */
+@media (max-width: 767px) {
+    .testimonials-section {
+        padding: 60px 0 50px;
     }
 
-    .tcard {
-        flex: 0 0 260px;
-        width: 260px;
+    /* Hide the desktop marquee */
+    .testimonials-marquee-wrapper {
+        display: none;
+    }
+
+    /* Show the mobile slider */
+    .testimonials-mobile-slider {
+        display: block;
+        padding: 0 24px 70px;
+        position: relative;
+    }
+
+    .testimonials-stats {
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .stat-number {
+        font-size: 1.6rem;
+    }
+
+    .stat-label {
+        font-size: 0.68rem;
+    }
+
+    .testimonials-header {
+        margin-bottom: 40px;
+        padding: 0 16px;
+    }
+
+    .testimonials-header h2 {
+        font-size: 1.75rem;
+    }
+
+    .testimonials-header p {
+        font-size: 0.92rem;
+    }
+
+    /* Review form on mobile */
+    .review-form-section {
+        padding: 50px 0;
+    }
+
+    .review-form-card {
+        padding: 24px 18px;
+        border-radius: 16px;
+        margin: 0 4px;
+    }
+
+    .review-submit-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .btn-outline-cancel {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+        margin-top: 8px;
+    }
+}
+
+/* Extra small phones */
+@media (max-width: 400px) {
+    .testimonials-mobile-slider {
+        padding: 0 16px 70px;
+    }
+
+    .testimonials-mobile-slider .tcard {
+        flex: 0 0 calc(100vw - 32px);
+        width: calc(100vw - 32px);
+        padding: 20px 16px;
+    }
+
+    .stat-number {
+        font-size: 1.4rem;
+    }
+
+    .tslider-arrows {
+        gap: 8px;
     }
 }
