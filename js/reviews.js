@@ -419,6 +419,47 @@ function initSwiper(slider, total) {
         resizeTimer = setTimeout(() => goTo(current, false), 120);
     });
 
+    // ── Auto-play (4 s per slide, loops back, pauses on interaction) ──
+    const AUTO_DELAY   = 4000;  // ms between slides
+    const RESUME_DELAY = 7000;  // ms of inactivity before resuming
+    let autoTimer  = null;
+    let resumeTimer = null;
+
+    function startAutoPlay() {
+        stopAutoPlay();
+        autoTimer = setInterval(() => {
+            // Loop back to first slide after last
+            const nextIndex = (current + 1) % total;
+            goTo(nextIndex);
+        }, AUTO_DELAY);
+    }
+
+    function stopAutoPlay() {
+        if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+    }
+
+    function pauseAndResume() {
+        stopAutoPlay();
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(startAutoPlay, RESUME_DELAY);
+    }
+
+    // Pause auto-play on any manual interaction
+    wrap.addEventListener('touchstart',  pauseAndResume, { passive: true });
+    wrap.addEventListener('mousedown',   pauseAndResume);
+    if (prev) prev.addEventListener('click', pauseAndResume);
+    if (next) next.addEventListener('click', pauseAndResume);
+    dots.forEach(dot => dot.addEventListener('click', pauseAndResume));
+
+    // Pause when slider is visible and resume when hidden (Page Visibility API)
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stopAutoPlay();
+        else startAutoPlay();
+    });
+
+    // Start auto-play
+    startAutoPlay();
+
     // Initial state
     updateArrows();
     updateDots();
