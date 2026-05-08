@@ -16,7 +16,7 @@
             // Determine API URL based on environment (local vs production)
             const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
                 ? 'http://localhost:5000/api'
-                : '/api';
+                : 'https://ceylon-sang-tour-backend.vercel.app/api';
 
             const response = await fetch(`${API_BASE}/config/emailjs`);
             if (!response.ok) throw new Error('Failed to load email configuration');

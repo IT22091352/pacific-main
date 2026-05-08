@@ -89,7 +89,10 @@ if (process.env.NODE_ENV === 'development') {
 // Rate limiting
 const limiter = rateLimit({
     windowMs: 10 * 60 * 1000, // 10 minutes
-    max: 100 // limit each IP to 100 requests per windowMs
+    max: 100, // limit each IP to 100 requests per windowMs
+    keyGenerator: (req) => {
+        return req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown-ip';
+    }
 });
 app.use('/api/', limiter);
 
