@@ -43,6 +43,7 @@
     <link rel="stylesheet" href="css/ceylon-sang.css?v=7">
     <link rel="stylesheet" href="css/hero-fixes.css?v=2">
     <link rel="stylesheet" href="css/mobile-enhancements.css">
+    <link rel="stylesheet" href="css/testimonials.css">
     <link rel="stylesheet" href="css/auth-modal.css">
     <style>
         .lazy-section {
@@ -212,102 +213,136 @@
         </div>
     </section>
 
-    <!-- Reviews Section -->
-    <section class="ftco-section testimony-section bg-light lazy-section">
+    <!-- Testimonials/Reviews Section – Modern Marquee Design -->
+    <section class="testimonials-section" id="testimonials">
+        <!-- Section Header -->
         <div class="container">
-            <div class="row justify-content-center pb-4">
-                <div class="col-md-7 text-center heading-section ftco-animate">
-                    <span class="subheading">Testimonials</span>
-                    <h2 class="mb-4">What Our Travelers Say</h2>
-                    <p>Read reviews from tourists who have experienced Sri Lanka with Wander Lanka Tours</p>
+            <div class="testimonials-header ftco-animate">
+                <div class="section-badge">
+                    <i class="fa fa-star"></i> Traveler Reviews
+                </div>
+                <h2>What Our Travelers Say</h2>
+                <p>Real stories from real adventurers who explored Sri Lanka with us</p>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="testimonials-stats ftco-animate">
+                <div class="stat-item">
+                    <span class="stat-number" id="reviews-total-count">…</span>
+                    <span class="stat-label">Happy Travelers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="reviews-avg-rating">…</span>
+                    <span class="stat-label">Average Rating</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">5★</span>
+                    <span class="stat-label">Max Rating</span>
                 </div>
             </div>
-            <div class="row ftco-animate">
-                <div class="col-md-12">
-                    <!-- Custom Premium Carousel -->
-                    <!-- Dual-Row Horizontal Marquee -->
-                    <!-- Custom Premium Carousel -->
-                    <div id="reviews-carousel" class="owl-carousel owl-theme"></div>
-                </div>
-            </div>
+        </div>
+
+        <!-- Marquee Container -->
+        <div class="testimonials-marquee-wrapper">
+            <div id="reviews-marquee-container"></div>
         </div>
     </section>
 
     <!-- Leave a Review Section -->
-    <section class="ftco-section">
+    <section class="review-form-section" id="leave-review">
         <div class="container">
-            <div class="row justify-content-center pb-4">
-                <div class="col-md-12 heading-section text-center ftco-animate">
-                    <span class="subheading" id="review-form-subtitle">Share Your Experience</span>
-                    <h2 class="mb-4" id="review-form-title">Leave a Review</h2>
-                    <p id="review-form-description">Traveled with us? We'd love to hear about your experience!</p>
-                    <div id="edit-mode-indicator" class="alert alert-info"
-                        style="display:none; max-width: 600px; margin: 15px auto 0;">
-                        <i class="fa fa-edit"></i> You are editing your existing review
-                    </div>
+            <div class="testimonials-header ftco-animate" style="margin-bottom:40px;">
+                <div class="section-badge" style="background:rgba(249,109,0,0.1);border-color:rgba(249,109,0,0.3);color:#f97316;">
+                    <i class="fa fa-pencil"></i> Share Your Experience
+                </div>
+                <h2 id="review-form-title" style="color:#0f172a;">Leave a Review</h2>
+                <p style="color:#64748b;">Traveled with us? We'd love to hear about your experience!</p>
+                <div id="edit-mode-indicator" class="edit-mode-banner" style="display:none;max-width:600px;margin:20px auto 0;">
+                    <i class="fa fa-edit"></i><span>You are editing your existing review</span>
                 </div>
             </div>
+
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <form id="reviewForm" class="contact-form bg-light p-5">
-                        <input type="hidden" id="edit-review-id" value="">
-                        <div id="reviewMessage" class="alert" style="display:none;"></div>
-                        <div class="form-group">
-                            <label for="review-name">Your Name *</label>
-                            <input type="text" class="form-control" id="review-name" placeholder="Enter your name"
-                                required disabled>
-                            <small class="text-muted">Name from your account</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="review-email">Email Address *</label>
-                            <input type="email" class="form-control" id="review-email" placeholder="Enter your email"
-                                required disabled>
-                            <small class="text-muted">Email from your account</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="review-country">Country</label>
-                            <input type="text" class="form-control" id="review-country" placeholder="Your country">
-                        </div>
-                        <div class="form-group">
-                            <label for="review-tour">Tour Package</label>
-                            <select class="form-control" id="review-tour">
-                                <option value="">Select the tour you joined</option>
-                                <option value="cultural">Cultural Triangle Explorer</option>
-                                <option value="beach-wildlife">Beach & Wildlife Safari</option>
-                                <option value="complete">Complete Sri Lanka</option>
-                                <option value="hill-country">Hill Country & Tea Trails</option>
-                                <option value="wildlife">Wildlife & Nature Adventure</option>
-                                <option value="coastal">Coastal Paradise Tour</option>
-                                <option value="weekend">Weekend Getaway</option>
-                                <option value="grand">Grand Sri Lanka Tour</option>
-                                <option value="custom">Custom Tour Package</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Rating *</label><br>
-                            <div class="star-rating">
-                                <input type="radio" id="star5" name="rating" value="5">
-                                <label for="star5" title="5 stars">★</label>
-                                <input type="radio" id="star4" name="rating" value="4">
-                                <label for="star4" title="4 stars">★</label>
-                                <input type="radio" id="star3" name="rating" value="3">
-                                <label for="star3" title="3 stars">★</label>
-                                <input type="radio" id="star2" name="rating" value="2">
-                                <label for="star2" title="2 stars">★</label>
-                                <input type="radio" id="star1" name="rating" value="1">
-                                <label for="star1" title="1 star">★</label>
+                    <div class="review-form-card">
+                        <form id="reviewForm">
+                            <input type="hidden" id="edit-review-id" value="">
+
+                            <!-- Auth Message -->
+                            <div id="reviewMessage" class="review-auth-alert" style="display:none;"></div>
+
+                            <!-- Name -->
+                            <div class="form-group" style="margin-bottom:22px;">
+                                <label for="review-name">Your Name</label>
+                                <input type="text" class="form-control" id="review-name"
+                                    placeholder="From your account" required disabled>
+                                <small style="color:#94a3b8;font-size:0.78rem;margin-top:5px;display:block;">Automatically filled from your account</small>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="review-text">Your Review *</label>
-                            <textarea class="form-control" id="review-text" rows="5"
-                                placeholder="Share your experience with Wander Lanka Tours..." required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Submit Review" class="btn btn-primary py-3 px-5"
-                                id="reviewSubmitBtn">
-                        </div>
-                    </form>
+
+                            <!-- Email -->
+                            <div class="form-group" style="margin-bottom:22px;">
+                                <label for="review-email">Email Address</label>
+                                <input type="email" class="form-control" id="review-email"
+                                    placeholder="From your account" required disabled>
+                                <small style="color:#94a3b8;font-size:0.78rem;margin-top:5px;display:block;">Automatically filled from your account</small>
+                            </div>
+
+                            <!-- Country -->
+                            <div class="form-group" style="margin-bottom:22px;">
+                                <label for="review-country">Country</label>
+                                <input type="text" class="form-control" id="review-country"
+                                    placeholder="e.g. United Kingdom">
+                            </div>
+
+                            <!-- Tour Package -->
+                            <div class="form-group" style="margin-bottom:22px;">
+                                <label for="review-tour">Tour Package</label>
+                                <select class="form-control" id="review-tour">
+                                    <option value="">Select the tour you joined</option>
+                                    <option value="cultural">Cultural Triangle Explorer</option>
+                                    <option value="beach-wildlife">Beach &amp; Wildlife Safari</option>
+                                    <option value="complete">Complete Sri Lanka</option>
+                                    <option value="hill-country">Hill Country &amp; Tea Trails</option>
+                                    <option value="wildlife">Wildlife &amp; Nature Adventure</option>
+                                    <option value="coastal">Coastal Paradise Tour</option>
+                                    <option value="weekend">Weekend Getaway</option>
+                                    <option value="grand">Grand Sri Lanka Tour</option>
+                                    <option value="custom">Custom Tour Package</option>
+                                </select>
+                            </div>
+
+                            <!-- Star Rating -->
+                            <div class="form-group" style="margin-bottom:22px;">
+                                <label>Your Rating <span style="color:#ef4444;">*</span></label>
+                                <div class="star-rating-modern">
+                                    <input type="radio" id="star5" name="rating" value="5">
+                                    <label for="star5" title="5 stars">&#9733;</label>
+                                    <input type="radio" id="star4" name="rating" value="4">
+                                    <label for="star4" title="4 stars">&#9733;</label>
+                                    <input type="radio" id="star3" name="rating" value="3">
+                                    <label for="star3" title="3 stars">&#9733;</label>
+                                    <input type="radio" id="star2" name="rating" value="2">
+                                    <label for="star2" title="2 stars">&#9733;</label>
+                                    <input type="radio" id="star1" name="rating" value="1">
+                                    <label for="star1" title="1 star">&#9733;</label>
+                                </div>
+                            </div>
+
+                            <!-- Review Text -->
+                            <div class="form-group" style="margin-bottom:28px;">
+                                <label for="review-text">Your Review <span style="color:#ef4444;">*</span></label>
+                                <textarea class="form-control" id="review-text" rows="5"
+                                    placeholder="Share your experience with Wander Lanka Tours..." required></textarea>
+                            </div>
+
+                            <!-- Submit -->
+                            <div class="form-group" style="margin-bottom:0;display:flex;align-items:center;flex-wrap:wrap;gap:12px;">
+                                <button type="submit" class="review-submit-btn" id="reviewSubmitBtn">
+                                    <i class="fa fa-paper-plane"></i> Submit Review
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

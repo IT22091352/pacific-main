@@ -1,17 +1,21 @@
-// Ceylon Sang - Reviews Management
-// Re-using the same API base URL
-const REVIEW_API_URL = (!window.location.hostname || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+// ============================================================
+//  Wander Lanka Tours – Reviews Module
+//  Modern Marquee Design | No Owl Carousel dependency
+// ============================================================
+
+const REVIEW_API_URL = (!window.location.hostname ||
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1')
     ? 'http://localhost:5000/api'
     : 'https://ceylon-sang-tour-backend.vercel.app/api';
 
 document.addEventListener('DOMContentLoaded', function () {
     initReviews();
-
-    // Listen for auth changes
     window.addEventListener('auth:login', checkReviewFormAuth);
     window.addEventListener('auth:logout', checkReviewFormAuth);
 });
 
+// ── Initialise ────────────────────────────────────────────────
 function initReviews() {
     checkReviewFormAuth();
     loadReviews();
@@ -21,20 +25,22 @@ function initReviews() {
         reviewForm.addEventListener('submit', handleReviewSubmit);
     }
 
+    // Handle deep-link edit (e.g. from card on index page → contact page)
     const urlParams = new URLSearchParams(window.location.search);
     const editId = urlParams.get('editReviewId');
     if (editId) {
-        const newUrl = window.location.pathname;
-        window.history.replaceState({}, document.title, newUrl);
-        setTimeout(() => editReview(editId), 500);
+        window.history.replaceState({}, document.title, window.location.pathname);
+        setTimeout(() => editReview(editId), 600);
     }
 }
 
+// ── Auth token helpers ────────────────────────────────────────
 function getFeedbackToken() {
     let token = localStorage.getItem('feedbackToken');
     if (!token) {
         token = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
         localStorage.setItem('feedbackToken', token);
@@ -42,81 +48,69 @@ function getFeedbackToken() {
     return token;
 }
 
+// ── Review Form Auth Gate ─────────────────────────────────────
 function checkReviewFormAuth() {
     const token = localStorage.getItem('token');
     const userName = localStorage.getItem('userName');
     const userEmail = localStorage.getItem('userEmail');
-    const submitBtn = document.getElementById('reviewSubmitBtn');
-    const nameInput = document.getElementById('review-name');
-    const emailInput = document.getElementById('review-email');
+
+    const submitBtn   = document.getElementById('reviewSubmitBtn');
+    const nameInput   = document.getElementById('review-name');
+    const emailInput  = document.getElementById('review-email');
     const countryInput = document.getElementById('review-country');
-    const tourInput = document.getElementById('review-tour');
-    const msgInput = document.getElementById('review-message') || document.getElementById('review-text');
-    const messageDiv = document.getElementById('reviewMessage');
-    const stars = document.querySelectorAll('input[name="rating"]');
+    const tourInput   = document.getElementById('review-tour');
+    const msgInput    = document.getElementById('review-message') || document.getElementById('review-text');
+    const messageDiv  = document.getElementById('reviewMessage');
+    const stars       = document.querySelectorAll('input[name="rating"]');
 
     if (!token) {
-        // Not logged in: Disable form and show login prompt
+        // Not logged in – disable form
         if (messageDiv) {
-            messageDiv.style.display = 'block';
-            messageDiv.className = 'alert alert-warning text-center';
-            messageDiv.innerHTML = '<strong>Please <a href="javascript:void(0)" onclick="openModal(\'loginModal\')">login</a> to leave a review.</strong>';
+            messageDiv.style.display = 'flex';
+            messageDiv.className = 'review-auth-alert';
+            messageDiv.innerHTML = `
+                <i class="fa fa-lock"></i>
+                <span>Please <a href="javascript:void(0)" onclick="openModal('loginModal')">login</a> to leave a review.</span>
+            `;
         }
 
-        if (nameInput) {
-            nameInput.value = '';
-            nameInput.disabled = true;
-            nameInput.placeholder = "Login required";
-        }
-        if (emailInput) {
-            emailInput.value = '';
-            emailInput.disabled = true;
-            emailInput.placeholder = "Login required";
-        }
-        if (countryInput) countryInput.disabled = true;
-        if (tourInput) tourInput.disabled = true;
-        if (msgInput) msgInput.disabled = true;
+        [nameInput, emailInput, countryInput, tourInput, msgInput].forEach(el => {
+            if (el) {
+                el.value = '';
+                el.disabled = true;
+                el.placeholder = 'Login required';
+            }
+        });
         stars.forEach(s => s.disabled = true);
 
         if (submitBtn) {
-            submitBtn.innerHTML = 'Login to Review';
-            submitBtn.type = 'button'; // Prevent form submission
-            submitBtn.onclick = function () { openModal('loginModal'); };
-            submitBtn.classList.remove('btn-primary');
-            submitBtn.classList.add('btn-secondary');
+            submitBtn.innerHTML = '<i class="fa fa-lock"></i> Login to Review';
+            submitBtn.type = 'button';
+            submitBtn.onclick = () => openModal('loginModal');
+            submitBtn.className = 'review-submit-btn btn-secondary';
         }
-
     } else {
-        // Logged in: Enable form (except name/email which are fixed)
+        // Logged in – enable form
         if (messageDiv) messageDiv.style.display = 'none';
 
-        if (nameInput) {
-            nameInput.value = userName || '';
-            nameInput.disabled = true; // Still disabled as it comes from account
-            nameInput.placeholder = "Your Name";
-        }
-        if (emailInput) {
-            emailInput.value = userEmail || '';
-            emailInput.disabled = true; // Still disabled as it comes from account
-            emailInput.placeholder = "Your Email";
-        }
-
+        if (nameInput)  { nameInput.value  = userName || '';  nameInput.disabled  = true; }
+        if (emailInput) { emailInput.value = userEmail || ''; emailInput.disabled = true; }
         if (countryInput) countryInput.disabled = false;
-        if (tourInput) tourInput.disabled = false;
-        if (msgInput) msgInput.disabled = false;
+        if (tourInput)    tourInput.disabled    = false;
+        if (msgInput)     msgInput.disabled     = false;
         stars.forEach(s => s.disabled = false);
 
         if (submitBtn) {
-            submitBtn.innerText = 'Submit Review';
+            submitBtn.innerHTML = '<i class="fa fa-paper-plane"></i> Submit Review';
             submitBtn.type = 'submit';
-            submitBtn.onclick = null; // Remove the direct onclick handler so it submits form
-            submitBtn.classList.add('btn-primary');
-            submitBtn.classList.remove('btn-secondary');
+            submitBtn.onclick = null;
+            submitBtn.className = 'review-submit-btn';
             submitBtn.disabled = false;
         }
     }
 }
 
+// ── Ownership check ───────────────────────────────────────────
 function isReviewOwner(review) {
     const userId = localStorage.getItem('userId');
     if (userId && review.user && review.user._id === userId) return true;
@@ -125,291 +119,291 @@ function isReviewOwner(review) {
     return false;
 }
 
-// Load reviews for Owl Carousel
+// ── Load Reviews → render marquee ─────────────────────────────
 async function loadReviews() {
-    const carouselContainer = document.getElementById('reviews-carousel');
+    const container = document.getElementById('reviews-marquee-container');
+    if (!container) return;
 
-    if (!carouselContainer) return;
+    // Skeleton loading state
+    container.innerHTML = buildSkeletons();
 
     try {
         const response = await fetch(`${REVIEW_API_URL}/reviews`);
-        const contentType = response.headers.get("content-type");
+        const contentType = response.headers.get('content-type');
 
-        if (!contentType || !contentType.includes("application/json")) {
+        if (!contentType || !contentType.includes('application/json')) {
             const text = await response.text();
-            throw new Error(`Server returned non-JSON response: ${text.substring(0, 100)}...`);
+            throw new Error(`Server returned non-JSON: ${text.substring(0, 80)}`);
         }
 
         const result = await response.json();
 
         if (result.success && result.data.length > 0) {
-            // Deduplicate by ID
+            // Deduplicate
             const seen = new Set();
-            const uniqueReviews = result.data.filter(r => {
+            const reviews = result.data.filter(r => {
                 if (seen.has(r._id)) return false;
                 seen.add(r._id);
                 return true;
             });
 
             // Store globally for modal access
-            window.loadedReviewsMap = new Map();
-            uniqueReviews.forEach(r => window.loadedReviewsMap.set(r._id, r));
+            window.loadedReviewsMap = new Map(reviews.map(r => [r._id, r]));
 
-            // Generate HTML for all reviews
-            const reviewsHTML = uniqueReviews.map(review => createPremiumReviewCard(review)).join('');
+            // Update stats
+            updateStats(reviews);
 
-            // Safe re-initialization logic
-            const $container = $(carouselContainer);
-
-            // 0. Hide container to prevent "row by row" flash
-            carouselContainer.style.opacity = '0';
-            carouselContainer.style.transition = 'opacity 0.2s ease-in';
-
-            // 1. Force thorough destruction of previous instance
-            if ($container.data('owl.carousel')) {
-                try {
-                    $container.trigger('destroy.owl.carousel');
-                } catch (e) {
-                    console.warn('Silent suppress of Owl destroy error:', e);
-                }
-            }
-
-            // 2. NUCLEAR DOM RESET: Wipe all plugin classes and data
-            carouselContainer.className = 'testimonial-carousel owl-carousel owl-theme';
-            $container.removeData();
-
-            // 3. Inject new HTML
-            carouselContainer.innerHTML = reviewsHTML;
-
-            // 4. Re-initialize Owl Carousel
-            setTimeout(() => {
-                $container.owlCarousel({
-                    loop: uniqueReviews.length > 3,
-                    margin: 20,
-                    nav: false,
-                    dots: true,
-                    autoplay: true,
-                    autoplayTimeout: 3000,
-                    autoplayHoverPause: true,
-                    smartSpeed: 800,
-                    responsive: {
-                        0: { items: 1 },
-                        600: { items: 2 },
-                        1000: { items: 3 }
-                    },
-                    // Reveal only after init is done
-                    onInitialized: function () {
-                        carouselContainer.style.opacity = '1';
-                    }
-                });
-
-                // Fallback reveal in case event doesn't fire
-                setTimeout(() => carouselContainer.style.opacity = '1', 100);
-            }, 50);
+            // Build marquee
+            renderMarquee(container, reviews);
 
         } else {
-            carouselContainer.innerHTML = '<p class="text-center w-100">No reviews yet.</p>';
+            container.innerHTML = `
+                <div class="reviews-empty-state">
+                    <i class="fa fa-comments-o"></i>
+                    <h4 style="color:rgba(255,255,255,0.6)">No reviews yet</h4>
+                    <p>Be the first to share your experience!</p>
+                </div>`;
         }
     } catch (error) {
         console.error('Error loading reviews:', error);
-        carouselContainer.innerHTML = `
-            <div class="text-center w-100 p-5">
-                 <h4 class="text-danger">Failed to load reviews</h4>
-                 <p class="text-muted">${error.message}</p>
-                 <small>Check console for details.</small>
+        container.innerHTML = `
+            <div class="reviews-error-state">
+                <i class="fa fa-exclamation-triangle"></i>
+                <h4 style="color:rgba(255,255,255,0.6)">Could not load reviews</h4>
+                <p>${error.message}</p>
+                <button onclick="loadReviews()" style="
+                    margin-top:12px; background:rgba(249,109,0,0.2);
+                    border:1px solid rgba(249,109,0,0.4); color:#f97316;
+                    border-radius:8px; padding:8px 20px; cursor:pointer;
+                ">Retry</button>
             </div>`;
     }
 }
 
-function generateStars(rating) {
-    let stars = '';
-    for (let i = 1; i <= 5; i++) {
-        if (i <= rating) {
-            stars += '<i class="fa fa-star text-warning"></i>';
-        } else {
-            stars += '<i class="fa fa-star-o text-muted"></i>';
-        }
-    }
-    return stars;
+// ── Skeleton placeholders ─────────────────────────────────────
+function buildSkeletons() {
+    const card = `
+        <div class="tcard-skeleton">
+            <div class="skeleton-line short" style="margin-bottom:14px;height:10px;"></div>
+            <div class="skeleton-line medium"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line medium" style="margin-bottom:24px;"></div>
+            <div style="display:flex;gap:12px;align-items:center;">
+                <div class="skeleton-line" style="width:42px;height:42px;border-radius:50%;margin:0;flex-shrink:0;"></div>
+                <div style="flex:1;">
+                    <div class="skeleton-line short" style="margin-bottom:6px;height:10px;"></div>
+                    <div class="skeleton-line" style="width:40%;height:8px;"></div>
+                </div>
+            </div>
+        </div>`;
+    return `<div class="marquee-row"><div class="marquee-track" style="animation:none">${card.repeat(4)}</div></div>`;
 }
 
-function createPremiumReviewCard(review) {
-    const stars = generateStars(review.rating);
-    const country = review.country || '';
-    const tourPackage = review.tourPackage ? getTourLabel(review.tourPackage) : '';
-    const initials = (review.user ? review.user.name : (review.guestName || 'G')).charAt(0).toUpperCase();
-    const name = escapeHtml(review.user ? review.user.name : review.guestName);
+// ── Update stats numbers ──────────────────────────────────────
+function updateStats(reviews) {
+    const total = reviews.length;
+    const avg   = total > 0 ? (reviews.reduce((s, r) => s + Number(r.rating), 0) / total).toFixed(1) : '–';
 
-    let actions = '';
-    if (isReviewOwner(review)) {
-        actions = `
-            <div class="review-actions-menu">
-                <button class="btn-icon-menu" onclick="openGlobalMenu(event, '${review._id}')">
-                    <i class="fa fa-ellipsis-v"></i>
-                </button>
-            </div>
-        `;
-    }
+    const totalEl = document.getElementById('reviews-total-count');
+    const avgEl   = document.getElementById('reviews-avg-rating');
+    if (totalEl) totalEl.textContent = total + '+';
+    if (avgEl)   avgEl.textContent   = avg;
+}
 
-    // Logic for truncation and Read More
-    const maxChars = 120;
-    const fullText = escapeHtml(review.comment);
-    let displayHtml = fullText;
-    let readMoreBtn = '';
+// ── Build dual-row marquee ────────────────────────────────────
+function renderMarquee(container, reviews) {
+    // Ensure enough cards by tripling the list for seamless infinite scroll
+    const doubled = [...reviews, ...reviews, ...reviews];
+
+    // Split into two rows
+    const mid = Math.ceil(reviews.length / 2);
+    const row1 = [...doubled.slice(0, doubled.length / 2), ...doubled.slice(0, doubled.length / 2)];
+    const row2 = [...doubled.slice(doubled.length / 2), ...doubled.slice(doubled.length / 2)];
+
+    // Use full list for both rows, offset row2
+    const allDoubled = [...reviews, ...reviews, ...reviews, ...reviews];
+
+    const row1Html = allDoubled.map(r => buildCard(r)).join('');
+    const row2Html = [...allDoubled].reverse().map(r => buildCard(r)).join('');
+
+    container.innerHTML = `
+        <div class="marquee-row">
+            <div class="marquee-track">${row1Html}</div>
+        </div>
+        <div class="marquee-row reverse">
+            <div class="marquee-track">${row2Html}</div>
+        </div>
+    `;
+}
+
+// ── Build a single tcard HTML ─────────────────────────────────
+function buildCard(review) {
+    const stars      = generateStars(review.rating);
+    const initials   = ((review.user ? review.user.name : (review.guestName || 'G')) || 'G').charAt(0).toUpperCase();
+    const name       = escapeHtml(review.user ? review.user.name : (review.guestName || 'Anonymous'));
+    const country    = review.country ? escapeHtml(review.country) : '';
+    const tourLabel  = review.tourPackage ? getTourLabel(review.tourPackage) : '';
+    const maxChars   = 130;
+    const fullText   = escapeHtml(review.comment || '');
+
+    let displayText  = fullText;
+    let readMoreBtn  = '';
 
     if (fullText.length > maxChars) {
-        // Truncate cleanly at word boundary if possible
         let sub = fullText.substring(0, maxChars);
         const lastSpace = sub.lastIndexOf(' ');
         if (lastSpace > 0) sub = sub.substring(0, lastSpace);
-
-        displayHtml = `${sub}...`;
-        readMoreBtn = `<button type="button" class="btn-read-more" onclick="window.showFullReview('${review._id}'); return false;">Read More</button>`;
+        displayText = `${sub}…`;
+        readMoreBtn = `<button type="button" class="btn-read-more" onclick="event.stopPropagation();window.showFullReview('${review._id}')">Read more</button>`;
     }
+
+    const actionsHtml = isReviewOwner(review) ? `
+        <div class="tcard-actions">
+            <button class="btn-icon-menu" onclick="event.stopPropagation();openGlobalMenu(event,'${review._id}')" title="Options">
+                <i class="fa fa-ellipsis-v"></i>
+            </button>
+        </div>` : '';
+
+    const metaHtml = [
+        country   ? `<span class="tcard-country"><i class="fa fa-map-marker"></i>${country}</span>` : '',
+        tourLabel ? `<span class="tcard-package">${tourLabel}</span>` : '',
+        (!country && !tourLabel) ? '<span class="tcard-country">International Traveler</span>' : ''
+    ].filter(Boolean).join('');
 
     return `
-        <div class="testimonial-card-premium" id="review-${review._id}">
-            ${actions}
-            <div class="quote-icon"><i class="fa fa-quote-left"></i></div>
-            <div class="rating-stars">${stars}</div>
-            <p class="review-text">
-                ${displayHtml}
-                ${readMoreBtn}
-            </p>
-            <div class="user-info">
-                <div class="avatar">${initials}</div>
-                <div class="details">
+        <div class="tcard" id="review-${review._id}">
+            ${actionsHtml}
+            <span class="tcard-quote">"</span>
+            <div class="tcard-stars">${stars}</div>
+            <p class="tcard-text">${displayText}${readMoreBtn}</p>
+            <div class="tcard-user">
+                <div class="tcard-avatar">${initials}</div>
+                <div class="tcard-info">
                     <h4>${name}</h4>
-                    ${country ? `<span class="country"><i class="fa fa-map-marker"></i> ${country}</span>` : ''}
-                    ${tourPackage ? `<span class="tour-package">${tourPackage}</span>` : ''}
-                    ${!country && !tourPackage ? '<span>International Traveler</span>' : ''}
+                    <div class="tcard-meta">${metaHtml}</div>
                 </div>
             </div>
-        </div>
-    `;
+        </div>`;
 }
 
-// Function to show full review modal
+// ── Star HTML ─────────────────────────────────────────────────
+function generateStars(rating) {
+    let html = '';
+    for (let i = 1; i <= 5; i++) {
+        html += i <= rating
+            ? '<i class="fa fa-star"></i>'
+            : '<i class="fa fa-star-o"></i>';
+    }
+    return html;
+}
+
+// ── Full-review modal ─────────────────────────────────────────
 window.showFullReview = function (reviewId) {
-    console.log('Opening review:', reviewId);
-    if (!window.loadedReviewsMap) {
-        console.error('Reviews map not loaded');
-        alert('Review data not ready. Please refresh.');
-        return;
-    }
-
+    if (!window.loadedReviewsMap) { alert('Review data not ready. Please refresh.'); return; }
     const review = window.loadedReviewsMap.get(reviewId);
-    if (!review) {
-        console.error('Review not found in map:', reviewId);
-        return;
-    }
+    if (!review) return;
 
-    // Remove existing modal if any
     const existing = document.getElementById('reviewDetailModal');
     if (existing) existing.remove();
 
-    // Create Modal HTML re-using your modal structure styles
-    const modal = document.createElement('div');
-    modal.id = 'reviewDetailModal';
-    modal.className = 'modal'; // Uses your existing modal class
-    modal.style.display = 'block'; // Make it visible in layout
-    modal.style.zIndex = '10000'; // High z-index to sit over everything
-
     const stars = generateStars(review.rating);
-    const name = escapeHtml(review.user ? review.user.name : review.guestName);
+    const name  = escapeHtml(review.user ? review.user.name : (review.guestName || 'Anonymous'));
+
+    const modal = document.createElement('div');
+    modal.id        = 'reviewDetailModal';
+    modal.className = 'modal';
+    modal.style.cssText = 'display:block;z-index:10000;';
 
     modal.innerHTML = `
-        <div class="modal-content" style="max-width: 600px; margin: 10% auto;">
-            <div class="modal-header">
-                <h2>${name}'s Review</h2>
-                <button class="close-modal" onclick="document.getElementById('reviewDetailModal').remove()">&times;</button>
+        <div class="modal-content" style="max-width:600px;margin:8% auto;background:#1e293b;border:1px solid rgba(255,255,255,0.1);border-radius:20px;overflow:hidden;">
+            <div class="modal-header" style="background:rgba(249,109,0,0.08);border-bottom:1px solid rgba(255,255,255,0.08);padding:24px 28px;display:flex;justify-content:space-between;align-items:flex-start;">
+                <div>
+                    <h2 style="color:#fff;margin:0 0 4px;font-size:1.3rem;">${name}'s Review</h2>
+                    <div style="display:flex;gap:3px;">${stars}</div>
+                </div>
+                <button class="close-modal" onclick="document.getElementById('reviewDetailModal').remove()" style="background:rgba(255,255,255,0.08);border:none;color:rgba(255,255,255,0.6);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;">&times;</button>
             </div>
-            <div class="modal-body">
-                <div class="text-center mb-3">
-                    <div class="rating-stars" style="font-size: 1.2rem;">${stars}</div>
-                </div>
-                <div class="review-full-content" style="font-size: 1rem; line-height: 1.8; color: #444; max-height: 400px; overflow-y: auto;">
-                    ${escapeHtml(review.comment)}
-                </div>
-                <div class="mt-4 text-center">
-                    <span class="text-muted"><i class="fa fa-map-marker"></i> ${review.country || 'International'}</span>
-                    ${review.tourPackage ? `<br><span class="text-primary">${getTourLabel(review.tourPackage)}</span>` : ''}
+            <div class="modal-body" style="padding:28px;">
+                <p style="font-size:1.02rem;line-height:1.85;color:rgba(255,255,255,0.75);margin-bottom:24px;">${escapeHtml(review.comment || '')}</p>
+                <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;display:flex;gap:16px;flex-wrap:wrap;">
+                    ${review.country ? `<span style="color:rgba(255,255,255,0.45);font-size:0.85rem;"><i class="fa fa-map-marker" style="color:#f97316;margin-right:5px;"></i>${escapeHtml(review.country)}</span>` : ''}
+                    ${review.tourPackage ? `<span style="background:rgba(249,109,0,0.12);color:#f97316;border-radius:20px;padding:3px 12px;font-size:0.8rem;font-weight:600;">${getTourLabel(review.tourPackage)}</span>` : ''}
                 </div>
             </div>
-        </div>
-    `;
+        </div>`;
 
     document.body.appendChild(modal);
 
-    // Trigger transition
-    requestAnimationFrame(() => {
-        modal.classList.add('show');
-    });
+    requestAnimationFrame(() => modal.classList.add('show'));
 
-    // Close on outside click
-    modal.onclick = function (event) {
-        if (event.target == modal) {
+    modal.onclick = (e) => {
+        if (e.target === modal) {
             modal.classList.remove('show');
             setTimeout(() => modal.remove(), 300);
         }
-    }
-}
+    };
+};
 
+// ── Helpers ───────────────────────────────────────────────────
 function escapeHtml(text) {
     if (!text) return '';
-    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    return text
+        .replace(/&/g,  '&amp;')
+        .replace(/</g,  '&lt;')
+        .replace(/>/g,  '&gt;')
+        .replace(/"/g,  '&quot;')
+        .replace(/'/g,  '&#039;');
 }
 
-function getTourLabel(packageKey) {
-    const packages = {
-        'island-escape': 'Island Escape (10 Days)',
-        'cultural-odyssey': 'Cultural Odyssey (7 Days)',
+function getTourLabel(key) {
+    const map = {
+        'island-escape':      'Island Escape (10 Days)',
+        'cultural-odyssey':   'Cultural Odyssey (7 Days)',
+        'cultural':           'Cultural Triangle Explorer',
         'wildlife-adventure': 'Wildlife Adventure (6 Days)',
-        'luxury-honeymoon': 'Luxury Honeymoon (8 Days)'
+        'wildlife':           'Wildlife & Nature Adventure',
+        'luxury-honeymoon':   'Luxury Honeymoon (8 Days)',
+        'beach-wildlife':     'Beach & Wildlife Safari',
+        'complete':           'Complete Sri Lanka',
+        'hill-country':       'Hill Country & Tea Trails',
+        'coastal':            'Coastal Paradise Tour',
+        'weekend':            'Weekend Getaway',
+        'grand':              'Grand Sri Lanka Tour',
+        'custom':             'Custom Tour Package',
     };
-    return packages[packageKey] || packageKey;
+    return map[key] || key;
 }
 
+// ── Owner dropdown ────────────────────────────────────────────
 function openGlobalMenu(event, reviewId) {
     event.stopPropagation();
-    event.preventDefault();
     closeGlobalMenu();
-    const btn = event.currentTarget;
+
+    const btn  = event.currentTarget;
     const rect = btn.getBoundingClientRect();
     const menu = document.createElement('div');
-    menu.id = 'global-review-menu';
+    menu.id        = 'global-review-menu';
     menu.className = 'global-dropdown-menu';
+
+    menu.style.cssText = `
+        position:fixed;
+        top:${rect.bottom + 6}px;
+        left:${rect.left - 90}px;
+        z-index:9999;
+        min-width:130px;
+        display:flex;
+        flex-direction:column;
+    `;
+
     menu.innerHTML = `
-        <a href="javascript:void(0)" onclick="editReview('${reviewId}'); closeGlobalMenu()">
+        <a href="javascript:void(0)" onclick="editReview('${reviewId}');closeGlobalMenu()">
             <i class="fa fa-pencil"></i> Edit
         </a>
-        <a href="javascript:void(0)" onclick="deleteReview('${reviewId}'); closeGlobalMenu()">
+        <a href="javascript:void(0)" onclick="deleteReview('${reviewId}');closeGlobalMenu()">
             <i class="fa fa-trash"></i> Delete
-        </a>
-    `;
-    menu.style.position = 'fixed';
-    menu.style.top = `${rect.bottom + 5}px`;
-    menu.style.left = `${rect.left - 80}px`;
-    menu.style.zIndex = '9999';
-    menu.style.background = '#fff';
-    menu.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
-    menu.style.borderRadius = '8px';
-    menu.style.padding = '8px 0';
-    menu.style.minWidth = '120px';
-    menu.style.display = 'flex';
-    menu.style.flexDirection = 'column';
+        </a>`;
+
     document.body.appendChild(menu);
-    const links = menu.querySelectorAll('a');
-    links.forEach(a => {
-        a.style.display = 'block';
-        a.style.padding = '8px 15px';
-        a.style.color = '#333';
-        a.style.textDecoration = 'none';
-        a.style.fontSize = '14px';
-        a.style.transition = 'background 0.2s';
-        a.onmouseenter = () => a.style.background = '#f3f4f6';
-        a.onmouseleave = () => a.style.background = 'transparent';
-    });
 }
 
 function closeGlobalMenu() {
@@ -417,12 +411,13 @@ function closeGlobalMenu() {
     if (menu) menu.remove();
 }
 
-window.addEventListener('click', function (event) {
-    if (!event.target.closest('#global-review-menu') && !event.target.closest('.btn-icon-menu')) {
+window.addEventListener('click', (e) => {
+    if (!e.target.closest('#global-review-menu') && !e.target.closest('.btn-icon-menu')) {
         closeGlobalMenu();
     }
 });
 
+// ── Edit Review ───────────────────────────────────────────────
 function editReview(reviewId) {
     const reviewForm = document.getElementById('reviewForm');
     if (!reviewForm) {
@@ -439,130 +434,199 @@ function editReview(reviewId) {
 }
 
 function populateReviewForm(review) {
-    const formTitle = document.getElementById('review-form-title');
-    const submitBtn = document.getElementById('reviewSubmitBtn');
+    const formTitle     = document.getElementById('review-form-title');
+    const submitBtn     = document.getElementById('reviewSubmitBtn');
     const editIndicator = document.getElementById('edit-mode-indicator');
-    const reviewForm = document.getElementById('reviewForm');
+    const reviewForm    = document.getElementById('reviewForm');
 
     if (reviewForm) reviewForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
     const msgInput = document.getElementById('review-message') || document.getElementById('review-text');
-    if (msgInput) msgInput.value = review.comment;
+    if (msgInput)     msgInput.value = review.comment;
+
     const pkgInput = document.getElementById('review-package') || document.getElementById('review-tour');
-    if (pkgInput) pkgInput.value = review.tourPackage || '';
+    if (pkgInput)     pkgInput.value = review.tourPackage || '';
+
     const countryInput = document.getElementById('review-country');
     if (countryInput) countryInput.value = review.country || '';
+
     const star = document.querySelector(`input[name="rating"][value="${review.rating}"]`);
     if (star) star.checked = true;
-    if (review.guestName && document.getElementById('review-name')) document.getElementById('review-name').value = review.guestName;
+
+    if (review.guestName  && document.getElementById('review-name'))  document.getElementById('review-name').value  = review.guestName;
     if (review.guestEmail && document.getElementById('review-email')) document.getElementById('review-email').value = review.guestEmail;
 
-    if (formTitle) formTitle.innerText = 'Edit Your Review';
-    if (editIndicator) editIndicator.style.display = 'block';
+    if (formTitle)     formTitle.textContent = 'Edit Your Review';
+    if (editIndicator) {
+        editIndicator.style.display = 'flex';
+        editIndicator.className = 'edit-mode-banner';
+        editIndicator.innerHTML = '<i class="fa fa-edit"></i><span>You are editing your existing review</span>';
+    }
 
-    submitBtn.innerText = 'Update Review';
-    submitBtn.dataset.editingId = review._id;
+    if (submitBtn) {
+        submitBtn.innerHTML = '<i class="fa fa-check"></i> Update Review';
+        submitBtn.dataset.editingId = review._id;
+    }
 
     if (!document.getElementById('cancelEditBtn')) {
         const cancelBtn = document.createElement('button');
-        cancelBtn.type = 'button';
-        cancelBtn.id = 'cancelEditBtn';
+        cancelBtn.type      = 'button';
+        cancelBtn.id        = 'cancelEditBtn';
         cancelBtn.className = 'btn-outline-cancel';
-        cancelBtn.innerHTML = '<i class="fa fa-times"></i> Cancel Edit';
-        cancelBtn.onclick = cancelEdit;
-        submitBtn.parentNode.appendChild(cancelBtn);
+        cancelBtn.innerHTML = '<i class="fa fa-times"></i> Cancel';
+        cancelBtn.onclick   = cancelEdit;
+        submitBtn.parentNode.insertBefore(cancelBtn, submitBtn.nextSibling);
     }
 }
 
 function cancelEdit() {
-    document.getElementById('reviewForm').reset();
-    document.getElementById('review-form-title').innerText = 'Leave a Review';
-    document.getElementById('edit-mode-indicator').style.display = 'none';
+    const form = document.getElementById('reviewForm');
+    if (form) form.reset();
+
+    const formTitle = document.getElementById('review-form-title');
+    if (formTitle) formTitle.textContent = 'Leave a Review';
+
+    const editIndicator = document.getElementById('edit-mode-indicator');
+    if (editIndicator) editIndicator.style.display = 'none';
+
     const submitBtn = document.getElementById('reviewSubmitBtn');
-    submitBtn.innerText = 'Submit Review';
-    delete submitBtn.dataset.editingId;
+    if (submitBtn) {
+        submitBtn.innerHTML = '<i class="fa fa-paper-plane"></i> Submit Review';
+        delete submitBtn.dataset.editingId;
+    }
+
     const cancelBtn = document.getElementById('cancelEditBtn');
     if (cancelBtn) cancelBtn.remove();
 }
 
+// ── Submit Review ─────────────────────────────────────────────
 async function handleReviewSubmit(e) {
     e.preventDefault();
     const submitBtn = document.getElementById('reviewSubmitBtn');
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Submitting...';
+    submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Submitting…';
 
     const formData = {
-        rating: document.querySelector('input[name="rating"]:checked')?.value,
-        comment: document.getElementById('review-message') ? document.getElementById('review-message').value : document.getElementById('review-text').value,
-        tourPackage: document.getElementById('review-package') ? document.getElementById('review-package').value : document.getElementById('review-tour').value,
-        country: document.getElementById('review-country').value,
-        guestName: document.getElementById('review-name').value,
-        guestEmail: document.getElementById('review-email').value,
+        rating:      document.querySelector('input[name="rating"]:checked')?.value,
+        comment:     (document.getElementById('review-message') || document.getElementById('review-text'))?.value,
+        tourPackage: (document.getElementById('review-package') || document.getElementById('review-tour'))?.value,
+        country:     document.getElementById('review-country')?.value,
+        guestName:   document.getElementById('review-name')?.value,
+        guestEmail:  document.getElementById('review-email')?.value,
     };
 
     if (!formData.rating) {
-        alert('Please select a star rating.');
+        showToast('Please select a star rating.', 'warning');
         submitBtn.disabled = false;
-        submitBtn.innerText = 'Submit Review';
+        submitBtn.innerHTML = '<i class="fa fa-paper-plane"></i> Submit Review';
         return;
     }
 
     const feedbackToken = getFeedbackToken();
-    const editingId = submitBtn.dataset.editingId;
-    const token = localStorage.getItem('token');
-    const headers = { 'Content-Type': 'application/json', 'x-feedback-token': feedbackToken };
+    const editingId     = submitBtn.dataset.editingId;
+    const token         = localStorage.getItem('token');
+    const headers       = { 'Content-Type': 'application/json', 'x-feedback-token': feedbackToken };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const url = editingId ? `${REVIEW_API_URL}/reviews/${editingId}` : `${REVIEW_API_URL}/reviews`;
+    const url    = editingId ? `${REVIEW_API_URL}/reviews/${editingId}` : `${REVIEW_API_URL}/reviews`;
     const method = editingId ? 'PUT' : 'POST';
 
     try {
         const response = await fetch(url, { method, headers, body: JSON.stringify(formData) });
-        const result = await response.json();
+        const result   = await response.json();
 
         if (response.ok) {
-            alert(editingId ? 'Review updated successfully!' : 'Review submitted successfully!');
+            showToast(editingId ? 'Review updated! ✓' : 'Review submitted! ✓', 'success');
             document.getElementById('reviewForm').reset();
+
             if (!token && result.data?._id) {
                 const myReviews = JSON.parse(localStorage.getItem('myGuestReviews') || '[]');
-                if (!myReviews.includes(result.data._id)) {
-                    myReviews.push(result.data._id);
-                    localStorage.setItem('myGuestReviews', JSON.stringify(myReviews));
-                }
-                localStorage.setItem('guestName', formData.guestName);
+                if (!myReviews.includes(result.data._id)) myReviews.push(result.data._id);
+                localStorage.setItem('myGuestReviews', JSON.stringify(myReviews));
+                localStorage.setItem('guestName',  formData.guestName);
                 localStorage.setItem('guestEmail', formData.guestEmail);
             }
+
             cancelEdit();
             loadReviews();
         } else {
-            alert(result.message || 'Failed to submit review.');
+            showToast(result.message || 'Failed to submit review.', 'error');
         }
     } catch (error) {
         console.error(error);
-        alert('Error submitting review.');
+        showToast('Error submitting review.', 'error');
     } finally {
         submitBtn.disabled = false;
-        submitBtn.innerText = editingId ? 'Update Review' : 'Submit Review';
+        const isEditing = !!submitBtn.dataset.editingId;
+        submitBtn.innerHTML = isEditing
+            ? '<i class="fa fa-check"></i> Update Review'
+            : '<i class="fa fa-paper-plane"></i> Submit Review';
     }
 }
 
+// ── Delete Review ─────────────────────────────────────────────
 async function deleteReview(reviewId) {
-    if (!confirm('Delete this review?')) return;
-    const token = localStorage.getItem('token');
+    if (!confirm('Are you sure you want to delete this review?')) return;
+
+    const token   = localStorage.getItem('token');
     const headers = { 'Content-Type': 'application/json', 'x-feedback-token': getFeedbackToken() };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
     try {
         const res = await fetch(`${REVIEW_API_URL}/reviews/${reviewId}`, { method: 'DELETE', headers });
         if (res.ok) {
-            alert('Review deleted.');
+            showToast('Review deleted.', 'success');
             let myReviews = JSON.parse(localStorage.getItem('myGuestReviews') || '[]');
             myReviews = myReviews.filter(id => id !== reviewId);
             localStorage.setItem('myGuestReviews', JSON.stringify(myReviews));
             loadReviews();
         } else {
             const result = await res.json();
-            alert(result.message || 'Failed to delete.');
+            showToast(result.message || 'Failed to delete.', 'error');
         }
-    } catch (e) { console.error(e); alert('Error deleting review.'); }
+    } catch (e) {
+        console.error(e);
+        showToast('Error deleting review.', 'error');
+    }
+}
+
+// ── Toast notification ────────────────────────────────────────
+function showToast(message, type = 'success') {
+    // Remove existing toast
+    const existing = document.getElementById('wlt-toast');
+    if (existing) existing.remove();
+
+    const colors = {
+        success: { bg: '#065f46', border: '#10b981', icon: 'fa-check-circle' },
+        error:   { bg: '#7f1d1d', border: '#ef4444', icon: 'fa-times-circle' },
+        warning: { bg: '#78350f', border: '#f59e0b', icon: 'fa-exclamation-circle' },
+    };
+    const c = colors[type] || colors.success;
+
+    const toast = document.createElement('div');
+    toast.id = 'wlt-toast';
+    toast.style.cssText = `
+        position:fixed;bottom:28px;right:28px;z-index:99999;
+        background:${c.bg};border:1px solid ${c.border};color:#fff;
+        border-radius:14px;padding:14px 22px;
+        display:flex;align-items:center;gap:12px;
+        font-size:0.92rem;font-weight:600;
+        box-shadow:0 12px 40px rgba(0,0,0,0.4);
+        transform:translateY(20px);opacity:0;
+        transition:transform 0.3s ease,opacity 0.3s ease;
+        max-width:320px;
+    `;
+    toast.innerHTML = `<i class="fa ${c.icon}" style="font-size:1.1rem;"></i>${message}`;
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(() => {
+        toast.style.transform = 'translateY(0)';
+        toast.style.opacity   = '1';
+    });
+
+    setTimeout(() => {
+        toast.style.transform = 'translateY(20px)';
+        toast.style.opacity   = '0';
+        setTimeout(() => toast.remove(), 350);
+    }, 3500);
 }

@@ -1,0 +1,674 @@
+/* =========================================================
+   Wander Lanka Tours – Testimonials / Reviews CSS
+   Modern Premium Design | 2026
+   ========================================================= */
+
+/* ── Section Wrapper ──────────────────────────────────────── */
+.testimonials-section {
+    background: linear-gradient(160deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    padding: 100px 0 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.testimonials-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 60% 50% at 20% 30%, rgba(249, 109, 0, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 70%, rgba(249, 109, 0, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* ── Section Header ───────────────────────────────────────── */
+.testimonials-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.testimonials-header .section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(249, 109, 0, 0.15);
+    border: 1px solid rgba(249, 109, 0, 0.35);
+    color: #f97316;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 7px 18px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+}
+
+.testimonials-header .section-badge i {
+    font-size: 0.85rem;
+}
+
+.testimonials-header h2 {
+    font-family: 'Merriweather', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 14px;
+    line-height: 1.2;
+}
+
+.testimonials-header p {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 1.05rem;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+/* ── Stats Bar ────────────────────────────────────────────── */
+.testimonials-stats {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    margin-bottom: 56px;
+    position: relative;
+    z-index: 2;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #f97316;
+    font-family: 'Merriweather', serif;
+    line-height: 1;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+}
+
+/* ── Marquee Track ────────────────────────────────────────── */
+.testimonials-marquee-wrapper {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+/* Fade edges */
+.testimonials-marquee-wrapper::before,
+.testimonials-marquee-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.testimonials-marquee-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, #0f172a, transparent);
+}
+
+.testimonials-marquee-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, #0f172a, transparent);
+}
+
+.marquee-row {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.marquee-track {
+    display: flex;
+    gap: 24px;
+    animation: marquee-left 40s linear infinite;
+    will-change: transform;
+}
+
+.marquee-row.reverse .marquee-track {
+    animation: marquee-right 45s linear infinite;
+}
+
+.marquee-track:hover,
+.marquee-row:hover .marquee-track {
+    animation-play-state: paused;
+}
+
+@keyframes marquee-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+}
+
+/* ── Testimonial Card ─────────────────────────────────────── */
+.tcard {
+    flex: 0 0 340px;
+    width: 340px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 28px;
+    position: relative;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+    cursor: default;
+    overflow: hidden;
+}
+
+.tcard::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(249, 109, 0, 0.06) 0%, transparent 60%);
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.tcard:hover {
+    border-color: rgba(249, 109, 0, 0.4);
+    box-shadow: 0 8px 40px rgba(249, 109, 0, 0.12), 0 0 0 1px rgba(249, 109, 0, 0.15);
+    transform: translateY(-4px);
+}
+
+.tcard:hover::before {
+    opacity: 1;
+}
+
+/* Quote mark */
+.tcard .tcard-quote {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    font-size: 4rem;
+    line-height: 1;
+    color: rgba(249, 109, 0, 0.12);
+    font-family: Georgia, serif;
+    font-weight: 700;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Star rating */
+.tcard .tcard-stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 14px;
+}
+
+.tcard .tcard-stars i {
+    color: #f59e0b;
+    font-size: 0.9rem;
+}
+
+.tcard .tcard-stars i.fa-star-o {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+/* Review text */
+.tcard .tcard-text {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.75;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 1;
+}
+
+.tcard .btn-read-more {
+    background: none;
+    border: none;
+    color: #f97316;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 4px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s;
+}
+
+.tcard .btn-read-more:hover {
+    color: #fb923c;
+}
+
+/* User info */
+.tcard .tcard-user {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 18px;
+}
+
+.tcard .tcard-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f97316 0%, #dc6803 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(249, 109, 0, 0.35);
+}
+
+.tcard .tcard-info h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 3px;
+}
+
+.tcard .tcard-info .tcard-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tcard .tcard-country {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.45);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tcard .tcard-country i {
+    color: #f97316;
+    font-size: 0.7rem;
+}
+
+.tcard .tcard-package {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #f97316;
+    background: rgba(249, 109, 0, 0.12);
+    border-radius: 20px;
+    padding: 2px 8px;
+}
+
+/* Owner actions menu button */
+.tcard .tcard-actions {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+}
+
+.tcard .btn-icon-menu {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.5);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-size: 0.8rem;
+    padding: 0;
+}
+
+.tcard .btn-icon-menu:hover {
+    background: rgba(249, 109, 0, 0.2);
+    color: #f97316;
+    border-color: rgba(249, 109, 0, 0.3);
+}
+
+/* ── Loading / Empty / Error states ──────────────────────── */
+.tcard-skeleton {
+    flex: 0 0 340px;
+    width: 340px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 20px;
+    padding: 28px;
+    overflow: hidden;
+}
+
+.skeleton-line {
+    height: 12px;
+    background: linear-gradient(90deg,
+        rgba(255,255,255,0.05) 25%,
+        rgba(255,255,255,0.1) 50%,
+        rgba(255,255,255,0.05) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.skeleton-line.short { width: 60%; }
+.skeleton-line.medium { width: 80%; }
+
+@keyframes skeleton-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.reviews-empty-state,
+.reviews-error-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: rgba(255, 255, 255, 0.45);
+    position: relative;
+    z-index: 2;
+}
+
+.reviews-empty-state i,
+.reviews-error-state i {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    display: block;
+    color: rgba(249, 109, 0, 0.35);
+}
+
+/* ── Global Dropdown Menu ─────────────────────────────────── */
+.global-dropdown-menu {
+    background: #1e293b !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+.global-dropdown-menu a {
+    color: rgba(255, 255, 255, 0.75) !important;
+    font-size: 0.85rem !important;
+    padding: 10px 18px !important;
+    transition: background 0.2s, color 0.2s !important;
+}
+
+.global-dropdown-menu a:hover {
+    background: rgba(249, 109, 0, 0.12) !important;
+    color: #f97316 !important;
+}
+
+.global-dropdown-menu a i {
+    width: 16px;
+    margin-right: 6px;
+}
+
+/* ── Review Detail Modal (Dark Theme) ─────────────────────── */
+#reviewDetailModal .modal-content {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-radius: 20px;
+}
+
+#reviewDetailModal .modal-header {
+    background: rgba(249, 109, 0, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px 20px 0 0;
+}
+
+#reviewDetailModal .modal-header h2 {
+    color: #fff;
+}
+
+#reviewDetailModal .close-modal {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#reviewDetailModal .close-modal:hover {
+    color: #f97316;
+}
+
+#reviewDetailModal .review-full-content {
+    color: rgba(255, 255, 255, 0.75) !important;
+    font-size: 1rem;
+    line-height: 1.85;
+}
+
+/* ── Review Form (Contact Page) ───────────────────────────── */
+.review-form-section {
+    background: #f8fafc;
+    padding: 80px 0;
+}
+
+.review-form-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.review-form-card .form-group label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.review-form-card .form-control {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    background: #f8fafc;
+    color: #1e293b;
+}
+
+.review-form-card .form-control:focus {
+    outline: none;
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 109, 0, 0.12);
+    background: #fff;
+}
+
+.review-form-card .form-control:disabled {
+    background: #f1f5f9;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+/* Star rating widget */
+.star-rating-modern {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.star-rating-modern input {
+    display: none;
+}
+
+.star-rating-modern label {
+    font-size: 2rem;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: color 0.15s, transform 0.15s;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: normal;
+}
+
+.star-rating-modern label:hover,
+.star-rating-modern label:hover ~ label,
+.star-rating-modern input:checked ~ label {
+    color: #f59e0b;
+}
+
+.star-rating-modern label:hover {
+    transform: scale(1.2);
+}
+
+.star-rating-modern input:checked + label {
+    transform: scale(1.15);
+}
+
+/* Auth alert in form */
+.review-auth-alert {
+    background: linear-gradient(135deg, #fff7ed, #ffedd5);
+    border: 1px solid #fed7aa;
+    border-radius: 12px;
+    padding: 16px 20px;
+    color: #92400e;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.review-auth-alert i {
+    font-size: 1.3rem;
+    color: #f97316;
+    flex-shrink: 0;
+}
+
+.review-auth-alert a {
+    color: #f97316;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* Edit mode indicator */
+.edit-mode-banner {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 14px 20px;
+    color: #1e40af;
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+.edit-mode-banner i {
+    color: #3b82f6;
+    font-size: 1rem;
+}
+
+/* Submit & cancel buttons */
+.review-submit-btn {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 36px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.3px;
+}
+
+.review-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(249, 109, 0, 0.35);
+}
+
+.review-submit-btn:disabled {
+    opacity: 0.65;
+    transform: none;
+    cursor: not-allowed;
+}
+
+.review-submit-btn.btn-secondary {
+    background: #94a3b8;
+    box-shadow: none;
+}
+
+.btn-outline-cancel {
+    background: transparent;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 13px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    margin-left: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-outline-cancel:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+    color: #334155;
+}
+
+/* Responsive Cards */
+@media (max-width: 768px) {
+    .testimonials-section {
+        padding: 70px 0 50px;
+    }
+
+    .testimonials-stats {
+        gap: 28px;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .tcard {
+        flex: 0 0 280px;
+        width: 280px;
+        padding: 22px;
+    }
+
+    .review-form-card {
+        padding: 28px 20px;
+        border-radius: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonials-marquee-wrapper::before,
+    .testimonials-marquee-wrapper::after {
+        width: 60px;
+    }
+
+    .tcard {
+        flex: 0 0 260px;
+        width: 260px;
+    }
+}

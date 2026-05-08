@@ -65,6 +65,7 @@
     <link rel="stylesheet" href="css/hero-fixes.css?v=2">
     <link rel="stylesheet" href="css/ceylon-sang-grid.css">
     <link rel="stylesheet" href="css/mobile-enhancements.css">
+    <link rel="stylesheet" href="css/testimonials.css">
     <link rel="stylesheet" href="css/auth-modal.css">
     <style>
         /* Performance Optimizations */
@@ -380,23 +381,38 @@
         </div>
     </section>
 
-    <!-- Testimonials/Reviews Section -->
-    <section class="ftco-section testimony-section bg-light lazy-section">
+    <!-- Testimonials/Reviews Section – Modern Marquee Design -->
+    <section class="testimonials-section" id="testimonials">
+        <!-- Section Header -->
         <div class="container">
-            <div class="row justify-content-center pb-4">
-                <div class="col-md-7 text-center heading-section ftco-animate">
-                    <span class="subheading">Testimonials</span>
-                    <h2 class="mb-4">What Our Travelers Say</h2>
+            <div class="testimonials-header ftco-animate">
+                <div class="section-badge">
+                    <i class="fa fa-star"></i> Traveler Reviews
+                </div>
+                <h2>What Our Travelers Say</h2>
+                <p>Real stories from real adventurers who explored Sri Lanka with us</p>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="testimonials-stats ftco-animate">
+                <div class="stat-item">
+                    <span class="stat-number" id="reviews-total-count">…</span>
+                    <span class="stat-label">Happy Travelers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="reviews-avg-rating">…</span>
+                    <span class="stat-label">Average Rating</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">5★</span>
+                    <span class="stat-label">Max Rating</span>
                 </div>
             </div>
-            <div class="row ftco-animate">
-                <div class="col-md-12">
-                    <!-- Custom Premium Carousel -->
-                    <!-- Dual-Row Horizontal Marquee -->
-                    <!-- Custom Premium Carousel -->
-                    <div id="reviews-carousel" class="owl-carousel owl-theme"></div>
-                </div>
-            </div>
+        </div>
+
+        <!-- Marquee Container -->
+        <div class="testimonials-marquee-wrapper">
+            <div id="reviews-marquee-container"></div>
         </div>
     </section>
 
